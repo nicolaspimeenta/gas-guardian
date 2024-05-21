@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Login</class>
+ <widget class="QWidget" name="Login">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GasGuardian</string>
+  </property>
+  <widget class="QFrame" name="ContainerLogin">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>130</y>
+     <width>153</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="LabelLogin">
+      <property name="text">
+       <string>Login</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="InputLogin">
+      <property name="maxLength">
+       <number>100</number>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Normal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="LabelSenha">
+      <property name="text">
+       <string>Senha</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QLineEdit" name="InputSenha">
+      <property name="maxLength">
+       <number>100</number>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::PasswordEchoOnEdit</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QFrame" name="ContainerBotoes">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>360</y>
+     <width>601</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="Cancelar">
+      <property name="text">
+       <string>Cancelar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/cancel.svg</normaloff>../../assets/cancel.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Confirmar">
+      <property name="text">
+       <string>Confirmar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/check.svg</normaloff>../../assets/check.svg</iconset>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
