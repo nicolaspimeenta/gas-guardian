@@ -3,6 +3,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from src.forms.FormularioPosto import FormularioPosto
 from src.forms.FormularioPessoa import FormularioPessoa
 from src.forms.FormularioTipos import FormularioTipos
+from src.forms.FormularioTanques import FormularioTanques
 
 
 class Cadastros(AbstractTela):
@@ -11,6 +12,7 @@ class Cadastros(AbstractTela):
     self.formularioPessoa = FormularioPessoa()
     self.formularioPosto = FormularioPosto()
     self.formularioTipos = FormularioTipos()
+    self.formularioTanques = FormularioTanques()
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:
@@ -28,7 +30,14 @@ class Cadastros(AbstractTela):
       return
     
     if tab_ativa == 1: # Tanques
-      return
+      selected_row = self.TanquesTable.currentRow()
+      if btn=='Editar' and selected_row == -1:
+        self.mostra_aviso("Selecione uma linha para editar.")
+        return
+      self.formularioTanques.open_form(
+        id_row=selected_row if btn=='Editar' else None,
+        title=f"Editando Tanque ({selected_row+1})" if btn=='Editar' else "Novo Tanque"
+        )
     
     if tab_ativa == 2: # Tipos
       selected_row = self.TiposTable.currentRow()
@@ -62,6 +71,7 @@ class Cadastros(AbstractTela):
   def fetch_data(self) -> None:
     self.fill_table_from_json("pessoas", self.PessoasTable)
     self.fill_table_from_json("tipos-combustivel", self.TiposTable)
+    self.fill_table_from_json("tanques", self.TanquesTable)
     self.fill_table_from_json("posto", self.PostoTable)
     
   def excluir(self) -> None:
@@ -72,7 +82,11 @@ class Cadastros(AbstractTela):
       return
     
     if tab_ativa == 1: # Tanques
-      return
+      selected_row = self.TanquesTable.currentRow()
+      if selected_row == -1:
+        self.mostra_aviso("Selecione uma linha para excluir.")
+      else:
+        self.exclui_linha(entidade="tanques", id=selected_row)
     
     if tab_ativa == 2: # Tipos
       selected_row = self.TiposTable.currentRow()
@@ -165,7 +179,7 @@ class Cadastros(AbstractTela):
     self.TanquesTable.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.TanquesTable.setShowGrid(False)
     self.TanquesTable.setObjectName("TanquesTable")
-    self.TanquesTable.setColumnCount(4)
+    self.TanquesTable.setColumnCount(5)
     self.TanquesTable.setRowCount(0)
     item = QtWidgets.QTableWidgetItem()
     item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
@@ -179,8 +193,11 @@ class Cadastros(AbstractTela):
     item = QtWidgets.QTableWidgetItem()
     item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
     self.TanquesTable.setHorizontalHeaderItem(3, item)
+    item = QtWidgets.QTableWidgetItem()
+    item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
+    self.TanquesTable.setHorizontalHeaderItem(4, item)
     self.TanquesTable.horizontalHeader().setCascadingSectionResizes(False)
-    self.TanquesTable.horizontalHeader().setDefaultSectionSize(122)
+    self.TanquesTable.horizontalHeader().setDefaultSectionSize(136)
     self.TanquesTable.horizontalHeader().setMinimumSectionSize(15)
     self.TanquesTable.horizontalHeader().setStretchLastSection(True)
     self.TanquesTable.verticalHeader().setHighlightSections(True)
@@ -301,7 +318,7 @@ class Cadastros(AbstractTela):
     Cadastros.setWindowTitle(_translate("Cadastros", "GasGuardian"))
     self.TableBombas.setSortingEnabled(False)
     item = self.TableBombas.horizontalHeaderItem(0)
-    item.setText(_translate("Cadastros", "Ativa"))
+    item.setText(_translate("Cadastros", "ID da Bomba"))
     item = self.TableBombas.horizontalHeaderItem(1)
     item.setText(_translate("Cadastros", "Auto-Abastecimento"))
     item = self.TableBombas.horizontalHeaderItem(2)
@@ -309,19 +326,21 @@ class Cadastros(AbstractTela):
     self.tabWidget.setTabText(self.tabWidget.indexOf(self.Bombas), _translate("Cadastros", "Bombas"))
     self.TanquesTable.setSortingEnabled(False)
     item = self.TanquesTable.horizontalHeaderItem(0)
-    item.setText(_translate("Cadastros", "Tipo de Combustível"))
+    item.setText(_translate("Cadastros", "ID do Tanque"))
     item = self.TanquesTable.horizontalHeaderItem(1)
-    item.setText(_translate("Cadastros", "Volume Atual"))
+    item.setText(_translate("Cadastros", "Tipo de Combustível"))
     item = self.TanquesTable.horizontalHeaderItem(2)
-    item.setText(_translate("Cadastros", "Capacidade Máxima"))
+    item.setText(_translate("Cadastros", "Volume Atual"))
     item = self.TanquesTable.horizontalHeaderItem(3)
+    item.setText(_translate("Cadastros", "Capacidade Máxima (L)"))
+    item = self.TanquesTable.horizontalHeaderItem(4)
     item.setText(_translate("Cadastros", "Porcentagem do Alerta"))
     self.tabWidget.setTabText(self.tabWidget.indexOf(self.Tanques), _translate("Cadastros", "Tanques"))
     self.TiposTable.setSortingEnabled(False)
     item = self.TiposTable.horizontalHeaderItem(0)
     item.setText(_translate("Cadastros", "Nome"))
     item = self.TiposTable.horizontalHeaderItem(1)
-    item.setText(_translate("Cadastros", "Preço"))
+    item.setText(_translate("Cadastros", "Preço (R$)"))
     self.tabWidget.setTabText(self.tabWidget.indexOf(self.Tipos), _translate("Cadastros", "Tipos"))
     self.PessoasTable.setSortingEnabled(False)
     item = self.PessoasTable.horizontalHeaderItem(0)

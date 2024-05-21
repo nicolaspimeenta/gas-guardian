@@ -1,5 +1,5 @@
 import json
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtWidgets
 
 class AbstractTela(QtWidgets.QMainWindow):
   def __init__(self):

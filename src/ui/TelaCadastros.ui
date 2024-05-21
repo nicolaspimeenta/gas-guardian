@@ -59,7 +59,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <property name="movable">
      <bool>true</bool>
@@ -97,7 +97,7 @@
       </attribute>
       <column>
        <property name="text">
-        <string>Ativa</string>
+        <string>ID da Bomba</string>
        </property>
        <property name="textAlignment">
         <set>AlignLeading|AlignVCenter</set>
@@ -147,7 +147,7 @@
        <number>15</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>122</number>
+       <number>136</number>
       </attribute>
       <attribute name="horizontalHeaderStretchLastSection">
        <bool>true</bool>
@@ -155,6 +155,14 @@
       <attribute name="verticalHeaderHighlightSections">
        <bool>true</bool>
       </attribute>
+      <column>
+       <property name="text">
+        <string>ID do Tanque</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignLeading|AlignVCenter</set>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>Tipo de Combustível</string>
@@ -173,7 +181,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Capacidade Máxima</string>
+        <string>Capacidade Máxima (L)</string>
        </property>
        <property name="textAlignment">
         <set>AlignLeading|AlignVCenter</set>
@@ -227,7 +235,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Preço</string>
+        <string>Preço (R$)</string>
        </property>
        <property name="textAlignment">
         <set>AlignLeading|AlignVCenter</set>

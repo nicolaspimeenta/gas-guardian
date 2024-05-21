@@ -11,7 +11,7 @@ class FormularioTipos(AbstractForm):
     # função chamada ao clicar botão "Confirmar"
     form_data = {
       'nome': self.inputNome.text().strip(), 
-      'preco': self.inputPreco.text().strip()
+      'preco': self.inputPreco.text().strip().replace(',', '.')
     }
     if self.is_form_valido(form_data):
       if self.is_edit():
@@ -37,7 +37,7 @@ class FormularioTipos(AbstractForm):
       return False
     
     try:
-      form_data['preco'] = round(float(form_data['preco'].replace(',', '.')), 2) # Checa se o preço é um número
+      form_data['preco'] = round(float(form_data['preco']), 2) # Checa se o preço é um número
       form_data['preco'] = "{:.2f}".format(form_data['preco']) # Transforma em uma string com 2 casas decimais
     except:
       self.mostra_aviso("O campo 'Preço' precisa ser um número.")
