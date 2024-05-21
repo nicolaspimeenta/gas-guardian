@@ -1,1 +1,1 @@
-[{"id_tanque": "IDTANQUE1", "tipo": "Gasolina", "volume_atual": 0, "capacidade_maxima": "904.894", "porcentagem_alerta": "60"}]
+[{"id_tanque": "IDTANQUE1", "tipo": "Diesel", "volume_atual": 0, "capacidade_maxima": "904.894", "porcentagem_alerta": "60"}, {"id_tanque": "IDTANQUE2", "tipo": "Gasolina", "volume_atual": 0, "capacidade_maxima": "400", "porcentagem_alerta": "80"}]

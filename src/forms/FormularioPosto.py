@@ -35,10 +35,9 @@ class FormularioPosto(AbstractForm):
     return True
   
   def fill_form(self) -> None:
-    if self.is_edit():
-      self.inputNome.setText(self.posto_data[self.id_row]['nomePosto'])
-      self.inputCnpj.setText(self.posto_data[self.id_row]['cnpj'])
-      self.inputPix.setText(self.posto_data[self.id_row]['chavePix'])
+    self.inputNome.setText(self.posto_data[self.id_row]['nomePosto'])
+    self.inputCnpj.setText(self.posto_data[self.id_row]['cnpj'])
+    self.inputPix.setText(self.posto_data[self.id_row]['chavePix'])
   
   def cria_tela(self, FormularioPosto) -> None:
     FormularioPosto.setObjectName("FormularioPosto")

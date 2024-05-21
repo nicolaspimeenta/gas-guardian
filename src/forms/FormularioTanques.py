@@ -62,6 +62,10 @@ class FormularioTanques(AbstractForm):
       self.inputCapacidade.setText(self.tanques_data[self.id_row]['capacidade_maxima'])
       self.inputPorcentagem.setSpecialValueText(self.tanques_data[self.id_row]['porcentagem_alerta'])
       self.inputTipo.setCurrentText(self.tanques_data[self.id_row]['tipo'])
+    else:
+      self.inputId.clear()
+      self.inputCapacidade.clear()
+      self.inputPorcentagem.clear()
   
   def cria_tela(self, FormularioTanque) -> None:
     FormularioTanque.setObjectName("FormularioTanque")

@@ -53,6 +53,9 @@ class FormularioTipos(AbstractForm):
     if self.is_edit():
       self.inputNome.setText(self.tipos_data[self.id_row]['nome'])
       self.inputPreco.setText(self.tipos_data[self.id_row]['preco'])
+    else:
+      self.inputNome.clear()
+      self.inputPreco.clear()
   
   def cria_tela(self, FormularioTipos) -> None:
     FormularioTipos.setObjectName("FormularioTipos")

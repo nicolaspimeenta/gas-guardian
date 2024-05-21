@@ -18,7 +18,7 @@ class FormularioPessoa(AbstractForm):
       'telefoneCelular': self.inputCelular.text().strip(),
       'login': self.inputLogin.text().strip(),
       'senha': self.encode_senha(self.inputSenha.text().strip()),
-      'is_gestor': self.Gestor.isChecked()
+      'is_gestor': self.inputGestor.isChecked()
       }
     if self.is_form_valido(form_data):
       if self.is_edit():
@@ -62,7 +62,15 @@ class FormularioPessoa(AbstractForm):
       self.inputEmail.setText(self.pessoas_data[self.id_row]['email'])
       self.inputLogin.setText(self.pessoas_data[self.id_row]['login'])
       self.inputSenha.setText(self.pessoas_data[self.id_row]['senha'])
-      self.Gestor.setChecked(bool(self.pessoas_data[self.id_row]['is_gestor']))
+      self.inputGestor.setChecked(bool(self.pessoas_data[self.id_row]['is_gestor']))
+    else:
+      self.inputNome.clear()
+      self.inputCpf.clear()
+      self.inputCelular.clear()
+      self.inputEmail.clear()
+      self.inputLogin.clear()
+      self.inputSenha.clear()
+      self.inputGestor.clear()
   
   def encode_senha(self, senha) -> str:
     if self.is_edit() and self.pessoas_data[self.id_row]['senha'] == senha:
@@ -170,14 +178,14 @@ class FormularioPessoa(AbstractForm):
     self.inputLogin.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
     self.inputLogin.setObjectName("inputLogin")
     self.formLayout.setWidget(8, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputLogin)
-    self.Gestor = QtWidgets.QCheckBox(parent=self.ContainerForm)
+    self.inputGestor = QtWidgets.QCheckBox(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.Gestor.sizePolicy().hasHeightForWidth())
-    self.Gestor.setSizePolicy(sizePolicy)
-    self.Gestor.setObjectName("Gestor")
-    self.formLayout.setWidget(9, QtWidgets.QFormLayout.ItemRole.LabelRole, self.Gestor)
+    sizePolicy.setHeightForWidth(self.inputGestor.sizePolicy().hasHeightForWidth())
+    self.inputGestor.setSizePolicy(sizePolicy)
+    self.inputGestor.setObjectName("Gestor")
+    self.formLayout.setWidget(9, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputGestor)
     self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioPessoa)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 180, 301, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
@@ -207,7 +215,7 @@ class FormularioPessoa(AbstractForm):
     self.label.setText(_translate("FormularioPessoa", "Nome *"))
     self.label_5.setText(_translate("FormularioPessoa", "Login *"))
     self.label_6.setText(_translate("FormularioPessoa", "Senha *"))
-    self.Gestor.setText(_translate("FormularioPessoa", "Gestor"))
+    self.inputGestor.setText(_translate("FormularioPessoa", "Gestor"))
     self.Cancelar.setText(_translate("FormularioPessoa", "Cancelar"))
     self.Confirmar.setText(_translate("FormularioPessoa", "Confirmar"))
     QtCore.QMetaObject.connectSlotsByName(FormularioPessoa)
