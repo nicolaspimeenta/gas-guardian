@@ -33,8 +33,8 @@ class FormularioPessoa(AbstractForm):
         self.hide()
 
   def is_form_valido(self, form_data) -> bool:
-    if not (self.is_edit() and form_data['cpf'] == self.pessoas_data[self.id_row]['cpf']): # apenas checar se tiver mudado o cpf ou não for edição
-      for pessoa in self.pessoas_data: # Checa se o Pessoa já foi cadastrado
+    if not (self.is_edit() and form_data['cpf'] == self.pessoas_data[self.id_row]['cpf']):
+      for pessoa in self.pessoas_data:
         if pessoa['cpf'] == form_data['cpf']:
           self.mostra_aviso("Pessoa já cadastrada.")
           return False
