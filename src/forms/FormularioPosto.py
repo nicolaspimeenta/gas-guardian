@@ -1,23 +1,23 @@
 from validate_docbr import CNPJ
-from src.abstract.FormBase import FormBase
+from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormPosto(FormBase):
+class FormularioPosto(AbstractForm):
   def __init__(self):
-    super().__init__(id_row=0, title='Editando Posto', dados='posto')
-    self.abre_tela(self)
+    super().__init__(entidade='posto')
+    self.cria_tela(self)
+    self.posto_data = self.carrega_dados(entidade='posto')
 
   def confirmar(self) -> None:
     # função chamada ao clicar botão "Confirmar"
-    posto_data = self.carrega_dados(entidade='posto')
     form_data = {
-      'nomePosto': self.InputNome.text().strip(), 
-      'chavePix': self.InputPix.text().strip(),
-      'cnpj': self.InputCnpj.text().strip()
+      'nomePosto': self.inputNome.text().strip(), 
+      'chavePix': self.inputPix.text().strip(),
+      'cnpj': self.inputCnpj.text().strip()
       }
     if self.is_form_valido(form_data):
-      posto_data[self.id_row] = form_data
-      self.salva_dados(posto_data, entidade='posto')
+      self.posto_data[self.id_row] = form_data
+      self.salva_dados(self.posto_data, entidade='posto')
       self.hide()
 
   def is_form_valido(self, form_data) -> bool:
@@ -34,12 +34,18 @@ class FormPosto(FormBase):
     
     return True
   
-  def abre_tela(self, FormPosto) -> None:
-    FormPosto.setObjectName("FormPosto")
-    FormPosto.resize(260, 150)
-    FormPosto.setMinimumSize(QtCore.QSize(260, 150))
-    FormPosto.setMaximumSize(QtCore.QSize(260, 150))
-    self.ContainerForm = QtWidgets.QFrame(parent=FormPosto)
+  def fill_form(self) -> None:
+    if self.is_edit():
+      self.inputNome.setText(self.posto_data[self.id_row]['nomePosto'])
+      self.inputCnpj.setText(self.posto_data[self.id_row]['cnpj'])
+      self.inputPix.setText(self.posto_data[self.id_row]['chavePix'])
+  
+  def cria_tela(self, FormularioPosto) -> None:
+    FormularioPosto.setObjectName("FormularioPosto")
+    FormularioPosto.resize(260, 150)
+    FormularioPosto.setMinimumSize(QtCore.QSize(260, 150))
+    FormularioPosto.setMaximumSize(QtCore.QSize(260, 150))
+    self.ContainerForm = QtWidgets.QFrame(parent=FormularioPosto)
     self.ContainerForm.setGeometry(QtCore.QRect(0, 0, 261, 241))
     self.ContainerForm.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerForm.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -52,25 +58,25 @@ class FormPosto(FormBase):
     self.label_2 = QtWidgets.QLabel(parent=self.ContainerForm)
     self.label_2.setObjectName("label_2")
     self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.label_2)
-    self.InputNome = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    self.inputNome = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.InputNome.sizePolicy().hasHeightForWidth())
-    self.InputNome.setSizePolicy(sizePolicy)
-    self.InputNome.setObjectName("InputNome")
-    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.InputNome)
-    self.InputCnpj = QtWidgets.QLineEdit(parent=self.ContainerForm)
-    self.InputCnpj.setMaxLength(100)
-    self.InputCnpj.setObjectName("InputCnpj")
-    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.InputCnpj)
+    sizePolicy.setHeightForWidth(self.inputNome.sizePolicy().hasHeightForWidth())
+    self.inputNome.setSizePolicy(sizePolicy)
+    self.inputNome.setObjectName("InputNome")
+    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputNome)
+    self.inputCnpj = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    self.inputCnpj.setMaxLength(100)
+    self.inputCnpj.setObjectName("InputCnpj")
+    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputCnpj)
     self.label_3 = QtWidgets.QLabel(parent=self.ContainerForm)
     self.label_3.setObjectName("label_3")
     self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_3)
-    self.InputPix = QtWidgets.QLineEdit(parent=self.ContainerForm)
-    self.InputPix.setObjectName("InputPix")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.InputPix)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=FormPosto)
+    self.inputPix = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    self.inputPix.setObjectName("InputPix")
+    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.inputPix)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioPosto)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 113, 261, 41))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -92,18 +98,13 @@ class FormPosto(FormBase):
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
     _translate = QtCore.QCoreApplication.translate
-    self.InputCnpj.setInputMask(_translate("FormPosto", "00.000.000/0000-00"))
-    FormPosto.setWindowTitle(_translate("FormPosto", "Dados do Posto"))
-    self.label.setText(_translate("FormPosto", "Nome *"))
-    self.label_2.setText(_translate("FormPosto", "CNPJ *"))
-    self.label_3.setText(_translate("FormPosto", "Chave PIX *"))
-    self.Cancelar.setText(_translate("FormPosto", "Cancelar"))
-    self.Confirmar.setText(_translate("FormPosto", "Confirmar"))
-    QtCore.QMetaObject.connectSlotsByName(FormPosto)
+    self.inputCnpj.setInputMask(_translate("FormularioPosto", "00.000.000/0000-00"))
+    FormularioPosto.setWindowTitle(_translate("FormularioPosto", "Dados do Posto"))
+    self.label.setText(_translate("FormularioPosto", "Nome *"))
+    self.label_2.setText(_translate("FormularioPosto", "CNPJ *"))
+    self.label_3.setText(_translate("FormularioPosto", "Chave PIX *"))
+    self.Cancelar.setText(_translate("FormularioPosto", "Cancelar"))
+    self.Confirmar.setText(_translate("FormularioPosto", "Confirmar"))
+    QtCore.QMetaObject.connectSlotsByName(FormularioPosto)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.cancelar)
-    posto_data = self.carrega_dados(entidade='posto')
-    if self.is_edit():
-      self.InputNome.setText(posto_data[self.id_row]['nomePosto'])
-      self.InputCnpj.setText(posto_data[self.id_row]['cnpj'])
-      self.InputPix.setText(posto_data[self.id_row]['chavePix'])

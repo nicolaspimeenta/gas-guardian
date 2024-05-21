@@ -1,43 +1,40 @@
 from base64 import b64encode
-import json
-import re
 from validate_docbr import CPF
-from src.abstract.FormBase import FormBase
+from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormPessoa(FormBase):
-  def __init__(self, id_row: int, title: str):
-    super().__init__(id_row=id_row, title=title, dados='pessoas')
-    self.abre_tela(self)
+class FormularioPessoa(AbstractForm):
+  def __init__(self):
+    super().__init__(entidade='pessoas')
+    self.cria_tela(self)
+    self.pessoas_data = self.carrega_dados(entidade='pessoas')
 
   def confirmar(self) -> None:
     # função chamada ao clicar botão "Confirmar"
-    pessoas_data = self.carrega_dados(entidade='pessoas')
     form_data = {
-      'nome': self.InputNome.text().strip(), 
-      'cpf': self.InputCpf.text().strip(),
-      'email': self.InputEmail.text().strip(),
-      'telefoneCelular': self.InputCelular.text().strip(),
-      'login': self.InputUsuario.text().strip(),
-      'senha': self.inputSenha.text().strip(),
-      'gestor': self.Gestor.isChecked()
+      'nome': self.inputNome.text().strip(), 
+      'cpf': self.inputCpf.text().strip(),
+      'email': self.inputEmail.text().strip(),
+      'telefoneCelular': self.inputCelular.text().strip(),
+      'login': self.inputLogin.text().strip(),
+      'senha': self.encode_senha(self.inputSenha.text().strip()),
+      'is_gestor': self.Gestor.isChecked()
       }
     if self.is_form_valido(form_data):
       if self.is_edit():
-        pessoas_data[self.id_row] = form_data
-        self.salva_dados(pessoas_data, entidade='pessoas')
+        self.pessoas_data[self.id_row] = form_data
+        self.salva_dados(self.pessoas_data, entidade='pessoas')
         self.hide()
       else:
-        pessoas_data.append(form_data)
+        self.pessoas_data.append(form_data)
         QtWidgets.QMessageBox.information(self, "Sucesso", "Uma nova Pessoa foi cadastrada.",
         QtWidgets.QMessageBox.StandardButton.Ok)
-        self.salva_dados(pessoas_data, entidade='pessoas')
+        self.salva_dados(self.pessoas_data, entidade='pessoas')
         self.hide()
 
   def is_form_valido(self, form_data) -> bool:
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    if not (self.is_edit() and form_data['cpf'] == pessoas_data[self.id_row]['cpf']): # apenas checar se tiver mudado o cpf ou não for edição
-      for pessoa in pessoas_data: # Checa se o Pessoa já foi cadastrado
+    if not (self.is_edit() and form_data['cpf'] == self.pessoas_data[self.id_row]['cpf']): # apenas checar se tiver mudado o cpf ou não for edição
+      for pessoa in self.pessoas_data: # Checa se o Pessoa já foi cadastrado
         if pessoa['cpf'] == form_data['cpf']:
           self.mostra_aviso("Pessoa já cadastrada.")
           return False
@@ -57,62 +54,72 @@ class FormPessoa(FormBase):
 
     return True
   
+  def fill_form(self) -> None:
+    if self.is_edit():
+      self.inputNome.setText(self.pessoas_data[self.id_row]['nome'])
+      self.inputCpf.setText(self.pessoas_data[self.id_row]['cpf'])
+      self.inputCelular.setText(self.pessoas_data[self.id_row]['telefoneCelular'])
+      self.inputEmail.setText(self.pessoas_data[self.id_row]['email'])
+      self.inputLogin.setText(self.pessoas_data[self.id_row]['login'])
+      self.inputSenha.setText(self.pessoas_data[self.id_row]['senha'])
+      self.Gestor.setChecked(bool(self.pessoas_data[self.id_row]['is_gestor']))
+  
   def encode_senha(self, senha) -> str:
-    if self.is_edit() and self.pessoas_data[self.id_row]['senha'] == senha: 
+    if self.is_edit() and self.pessoas_data[self.id_row]['senha'] == senha:
       return senha
     senha_bytes = senha.encode('utf-8')
     senha_codificada = b64encode(senha_bytes)
     
     return senha_codificada.decode('utf-8')
   
-  def abre_tela(self, FormPessoa) -> None:
-    FormPessoa.setObjectName("FormPessoa")
-    FormPessoa.resize(297, 217)
-    self.ContainerForm = QtWidgets.QFrame(parent=FormPessoa)
+  def cria_tela(self, FormularioPessoa) -> None:
+    FormularioPessoa.setObjectName("FormularioPessoa")
+    FormularioPessoa.resize(300, 217)
+    self.ContainerForm = QtWidgets.QFrame(parent=FormularioPessoa)
     self.ContainerForm.setGeometry(QtCore.QRect(0, 0, 301, 201))
     self.ContainerForm.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerForm.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerForm.setObjectName("ContainerForm")
     self.formLayout = QtWidgets.QFormLayout(self.ContainerForm)
     self.formLayout.setObjectName("formLayout")
-    self.InputNome = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    self.inputNome = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.InputNome.sizePolicy().hasHeightForWidth())
-    self.InputNome.setSizePolicy(sizePolicy)
-    self.InputNome.setObjectName("InputNome")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.InputNome)
-    self.InputCpf = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    sizePolicy.setHeightForWidth(self.inputNome.sizePolicy().hasHeightForWidth())
+    self.inputNome.setSizePolicy(sizePolicy)
+    self.inputNome.setObjectName("InputNome")
+    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputNome)
+    self.inputCpf = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.InputCpf.sizePolicy().hasHeightForWidth())
-    self.InputCpf.setSizePolicy(sizePolicy)
-    self.InputCpf.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-    self.InputCpf.setObjectName("InputCpf")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.InputCpf)
+    sizePolicy.setHeightForWidth(self.inputCpf.sizePolicy().hasHeightForWidth())
+    self.inputCpf.setSizePolicy(sizePolicy)
+    self.inputCpf.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+    self.inputCpf.setObjectName("InputCpf")
+    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputCpf)
     self.label_4 = QtWidgets.QLabel(parent=self.ContainerForm)
     self.label_4.setObjectName("label_4")
     self.formLayout.setWidget(4, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_4)
-    self.InputCelular = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    self.inputCelular = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.InputCelular.sizePolicy().hasHeightForWidth())
-    self.InputCelular.setSizePolicy(sizePolicy)
-    self.InputCelular.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-    self.InputCelular.setObjectName("InputCelular")
-    self.formLayout.setWidget(5, QtWidgets.QFormLayout.ItemRole.LabelRole, self.InputCelular)
-    self.InputEmail = QtWidgets.QLineEdit(parent=self.ContainerForm)
+    sizePolicy.setHeightForWidth(self.inputCelular.sizePolicy().hasHeightForWidth())
+    self.inputCelular.setSizePolicy(sizePolicy)
+    self.inputCelular.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+    self.inputCelular.setObjectName("InputCelular")
+    self.formLayout.setWidget(5, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputCelular)
+    self.inputEmail = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.InputEmail.sizePolicy().hasHeightForWidth())
-    self.InputEmail.setSizePolicy(sizePolicy)
-    self.InputEmail.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-    self.InputEmail.setObjectName("InputEmail")
-    self.formLayout.setWidget(5, QtWidgets.QFormLayout.ItemRole.FieldRole, self.InputEmail)
+    sizePolicy.setHeightForWidth(self.inputEmail.sizePolicy().hasHeightForWidth())
+    self.inputEmail.setSizePolicy(sizePolicy)
+    self.inputEmail.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+    self.inputEmail.setObjectName("InputEmail")
+    self.formLayout.setWidget(5, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputEmail)
     self.label_3 = QtWidgets.QLabel(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
@@ -171,7 +178,7 @@ class FormPessoa(FormBase):
     self.Gestor.setSizePolicy(sizePolicy)
     self.Gestor.setObjectName("Gestor")
     self.formLayout.setWidget(9, QtWidgets.QFormLayout.ItemRole.LabelRole, self.Gestor)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=FormPessoa)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioPessoa)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 180, 301, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -193,26 +200,16 @@ class FormPessoa(FormBase):
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
     _translate = QtCore.QCoreApplication.translate
-    FormPessoa.setWindowTitle(_translate("FormPessoa", "Nova Pessoa"))
-    self.label_4.setText(_translate("FormPessoa", "Celular"))
-    self.InputCelular.setInputMask(_translate("FormPessoa", "(00) 00000-0000"))
-    self.label_3.setText(_translate("FormPessoa", "Email"))
-    self.label_2.setText(_translate("FormPessoa", "CPF *"))
-    self.label.setText(_translate("FormPessoa", "Nome *"))
-    self.label_5.setText(_translate("FormPessoa", "Login *"))
-    self.label_6.setText(_translate("FormPessoa", "Senha *"))
-    self.Gestor.setText(_translate("FormPessoa", "Gestor"))
-    self.Cancelar.setText(_translate("FormPessoa", "Cancelar"))
-    self.Confirmar.setText(_translate("FormPessoa", "Confirmar"))
-    QtCore.QMetaObject.connectSlotsByName(FormPessoa)
+    self.label_4.setText(_translate("FormularioPessoa", "Celular"))
+    self.inputCelular.setInputMask(_translate("FormularioPessoa", "(00) 00000-0000"))
+    self.label_3.setText(_translate("FormularioPessoa", "Email"))
+    self.label_2.setText(_translate("FormularioPessoa", "CPF *"))
+    self.label.setText(_translate("FormularioPessoa", "Nome *"))
+    self.label_5.setText(_translate("FormularioPessoa", "Login *"))
+    self.label_6.setText(_translate("FormularioPessoa", "Senha *"))
+    self.Gestor.setText(_translate("FormularioPessoa", "Gestor"))
+    self.Cancelar.setText(_translate("FormularioPessoa", "Cancelar"))
+    self.Confirmar.setText(_translate("FormularioPessoa", "Confirmar"))
+    QtCore.QMetaObject.connectSlotsByName(FormularioPessoa)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.cancelar)
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    if self.is_edit():
-      self.InputNome.setText(pessoas_data[self.id_row]['nome'])
-      self.InputCpf.setText(pessoas_data[self.id_row]['cpf'])
-      self.InputCelular.setText(pessoas_data[self.id_row]['telefoneCelular'])
-      self.InputEmail.setText(pessoas_data[self.id_row]['email'])
-      self.inputLogin.setText(pessoas_data[self.id_row]['login'])
-      self.inputSenha.setText(pessoas_data[self.id_row]['senha'])
-      self.Gestor.setChecked(bool(pessoas_data[self.id_row]['gestor']))

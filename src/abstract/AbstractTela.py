@@ -1,7 +1,7 @@
 import json
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class TelaBase(QtWidgets.QMainWindow):
+class AbstractTela(QtWidgets.QMainWindow):
   def __init__(self):
     super().__init__()
 

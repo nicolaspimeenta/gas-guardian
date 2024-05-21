@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FormPosto</class>
- <widget class="QWidget" name="FormPosto">
+ <class>FormularioPosto</class>
+ <widget class="QWidget" name="FormularioPosto">
   <property name="geometry">
    <rect>
     <x>0</x>

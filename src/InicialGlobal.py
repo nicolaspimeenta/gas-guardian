@@ -1,10 +1,9 @@
-from src.abstract.TelaBase import TelaBase
+from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
-
-class InicialGlobal(TelaBase):
+class InicialGlobal(AbstractTela):
   def __init__(self):
     super().__init__()
-    self.abre_tela(self)
+    self.cria_tela(self)
 
   def iniciar_abastecimento(self):
     # função chamada ao clicar botão "INICIAR ABASTECIMENTO"
@@ -13,11 +12,11 @@ class InicialGlobal(TelaBase):
   def acessa_sistema(self):
     # função chamada ao clicar botão "Acessar Sistema"
     self.hide()
-    from src.forms.FormLogin import Login
-    self.login = Login()
-    self.login.show()
+    from src.forms.FormularioLogin import FormularioLogin
+    self.formularioLogin = FormularioLogin()
+    self.formularioLogin.show()
 
-  def abre_tela(self, InicialGlobal):
+  def cria_tela(self, InicialGlobal):
     InicialGlobal.setObjectName("InicialGlobal")
     InicialGlobal.resize(600, 400)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)

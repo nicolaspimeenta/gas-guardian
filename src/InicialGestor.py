@@ -1,10 +1,9 @@
-from src.abstract.TelaBase import TelaBase
+from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
-
-class InicialGestor(TelaBase):
+class InicialGestor(AbstractTela):
   def __init__(self):
     super().__init__()
-    self.abre_tela(self)
+    self.cria_tela(self)
 
   def cadastros(self):
     # função chamada ao clicar botão "CADASTROS"
@@ -16,11 +15,11 @@ class InicialGestor(TelaBase):
   def desconectar(self):
     # função chamada ao clicar botão "Desconectar"
     self.hide()
-    from src.forms.FormLogin import Login
-    self.login = Login()
-    self.login.show()
+    from src.forms.FormularioLogin import FormularioLogin
+    self.formularioLogin = FormularioLogin()
+    self.formularioLogin.show()
 
-  def abre_tela(self, InicialGestor):
+  def cria_tela(self, InicialGestor):
     InicialGestor.setObjectName("InicialGestor")
     InicialGestor.setWindowModality(QtCore.Qt.WindowModality.NonModal)
     InicialGestor.resize(600, 400)

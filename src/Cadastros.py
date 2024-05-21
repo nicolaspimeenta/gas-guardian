@@ -1,11 +1,17 @@
-from src.abstract.TelaBase import TelaBase
+from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
+from src.forms.FormularioPosto import FormularioPosto
+from src.forms.FormularioPessoa import FormularioPessoa
+from src.forms.FormularioTipos import FormularioTipos
 
 
-class Cadastros(TelaBase):
+class Cadastros(AbstractTela):
   def __init__(self):
     super().__init__()
-    self.abre_tela(self)
+    self.formularioPessoa = FormularioPessoa()
+    self.formularioPosto = FormularioPosto()
+    self.formularioTipos = FormularioTipos()
+    self.cria_tela(self)
 
   def tela_inicial(self) -> None:
     # função chamada ao clicar botão "Tela Inicial"
@@ -29,48 +35,32 @@ class Cadastros(TelaBase):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      from src.forms.FormTipos import FormTipos
-      self.FormTipos = FormTipos(
+      self.formularioTipos.open_form(
         id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Tipo ({selected_row+1})" if btn=='Editar' else "Novo Tipo"
         )
-      self.FormTipos.show()
 
     if tab_ativa == 3: # Pessoas
       selected_row = self.PessoasTable.currentRow()
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      from src.forms.FormPessoa import FormPessoa
-      self.FormPessoa = FormPessoa(
+      self.formularioPessoa.open_form(
         id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Funcionário ({selected_row+1})" if btn=='Editar' else "Novo Funcionário"
         )
-      self.FormPessoa.show()
     
-    if tab_ativa == 4: # Usuários
-      selected_row = self.UsuariosTable.currentRow()
-      if btn=='Editar' and selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para editar.")
-        return
-      from src.forms.FormUsuario import FormUsuario
-      self.FormUsuario = FormUsuario(
-        id_row=selected_row if btn=='Editar' else None,
-        title=f"Editando Usuário ({selected_row+1})" if btn=='Editar' else "Novo Usuário"
-        )
-      self.FormUsuario.show()
-    
-    if tab_ativa == 5: # Posto
+    if tab_ativa == 4: # Posto
       if btn=='Novo':
         self.mostra_aviso("Não é permitido criar um registro de Posto.")
         return
-      from src.forms.FormPosto import FormPosto
-      self.FormPosto = FormPosto()
-      self.FormPosto.show()
+      self.formularioPosto.open_form(
+        id_row=0,
+        title="Editando Posto"
+        )
       
   def fetch_data(self) -> None:
     self.fill_table_from_json("pessoas", self.PessoasTable)
-    self.fill_table_from_json("usuarios", self.UsuariosTable)
     self.fill_table_from_json("tipos-combustivel", self.TiposTable)
     self.fill_table_from_json("posto", self.PostoTable)
     
@@ -117,14 +107,6 @@ class Cadastros(TelaBase):
     QtWidgets.QMessageBox.StandardButton.Ok)
     self.fetch_data()
 
-  def exclui_user_id(self, id) -> None:
-    usuarios_data = self.carrega_dados('usuarios')
-    pessoas_data = self.carrega_dados('pessoas')
-    for pessoa in pessoas_data:
-      if pessoa['user_id'] == usuarios_data[id]['login']:
-        pessoa['user_id'] = ''
-    self.salva_dados(pessoas_data, 'pessoas')
-
   def fill_table_from_json(self, entidade, table) -> None:
     data = self.carrega_dados(entidade)
     if data:
@@ -138,18 +120,18 @@ class Cadastros(TelaBase):
     else:
       table.setRowCount(0)
 
-  def abre_tela(self, Cadastros) -> None:
+  def cria_tela(self, Cadastros) -> None:
     Cadastros.setObjectName("Cadastros")
-    Cadastros.resize(600, 400)
+    Cadastros.resize(800, 400)
     Cadastros.setMinimumSize(QtCore.QSize(600, 400))
-    Cadastros.setMaximumSize(QtCore.QSize(600, 400))
+    Cadastros.setMaximumSize(QtCore.QSize(800, 400))
     self.ContainerTabs = QtWidgets.QFrame(parent=Cadastros)
-    self.ContainerTabs.setGeometry(QtCore.QRect(0, 0, 600, 401))
+    self.ContainerTabs.setGeometry(QtCore.QRect(0, 0, 801, 401))
     self.ContainerTabs.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerTabs.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerTabs.setObjectName("ContainerTabs")
     self.tabWidget = QtWidgets.QTabWidget(parent=self.ContainerTabs)
-    self.tabWidget.setGeometry(QtCore.QRect(11, 1, 581, 401))
+    self.tabWidget.setGeometry(QtCore.QRect(11, 1, 781, 401))
     self.tabWidget.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
     self.tabWidget.setTabPosition(QtWidgets.QTabWidget.TabPosition.North)
     self.tabWidget.setTabShape(QtWidgets.QTabWidget.TabShape.Rounded)
@@ -158,7 +140,7 @@ class Cadastros(TelaBase):
     self.Bombas = QtWidgets.QWidget()
     self.Bombas.setObjectName("Bombas")
     self.TableBombas = QtWidgets.QTableWidget(parent=self.Bombas)
-    self.TableBombas.setGeometry(QtCore.QRect(20, 10, 541, 331))
+    self.TableBombas.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.TableBombas.setShowGrid(False)
     self.TableBombas.setObjectName("TableBombas")
     self.TableBombas.setColumnCount(3)
@@ -180,7 +162,7 @@ class Cadastros(TelaBase):
     self.Tanques = QtWidgets.QWidget()
     self.Tanques.setObjectName("Tanques")
     self.TanquesTable = QtWidgets.QTableWidget(parent=self.Tanques)
-    self.TanquesTable.setGeometry(QtCore.QRect(20, 10, 541, 331))
+    self.TanquesTable.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.TanquesTable.setShowGrid(False)
     self.TanquesTable.setObjectName("TanquesTable")
     self.TanquesTable.setColumnCount(4)
@@ -206,7 +188,7 @@ class Cadastros(TelaBase):
     self.Tipos = QtWidgets.QWidget()
     self.Tipos.setObjectName("Tipos")
     self.TiposTable = QtWidgets.QTableWidget(parent=self.Tipos)
-    self.TiposTable.setGeometry(QtCore.QRect(20, 10, 541, 331))
+    self.TiposTable.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.TiposTable.setShowGrid(False)
     self.TiposTable.setObjectName("TiposTable")
     self.TiposTable.setColumnCount(2)
@@ -224,10 +206,10 @@ class Cadastros(TelaBase):
     self.Pessoas = QtWidgets.QWidget()
     self.Pessoas.setObjectName("Pessoas")
     self.PessoasTable = QtWidgets.QTableWidget(parent=self.Pessoas)
-    self.PessoasTable.setGeometry(QtCore.QRect(20, 10, 541, 331))
+    self.PessoasTable.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.PessoasTable.setShowGrid(False)
     self.PessoasTable.setObjectName("PessoasTable")
-    self.PessoasTable.setColumnCount(6)
+    self.PessoasTable.setColumnCount(7)
     self.PessoasTable.setRowCount(0)
     item = QtWidgets.QTableWidgetItem()
     item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
@@ -247,31 +229,16 @@ class Cadastros(TelaBase):
     item = QtWidgets.QTableWidgetItem()
     item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
     self.PessoasTable.setHorizontalHeaderItem(5, item)
+    item = QtWidgets.QTableWidgetItem()
+    item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
+    self.PessoasTable.setHorizontalHeaderItem(6, item)
     self.PessoasTable.horizontalHeader().setDefaultSectionSize(90)
     self.PessoasTable.horizontalHeader().setStretchLastSection(True)
     self.tabWidget.addTab(self.Pessoas, "")
-    self.Usuarios = QtWidgets.QWidget()
-    self.Usuarios.setObjectName("Usuarios")
-    self.UsuariosTable = QtWidgets.QTableWidget(parent=self.Usuarios)
-    self.UsuariosTable.setGeometry(QtCore.QRect(20, 10, 541, 331))
-    self.UsuariosTable.setShowGrid(False)
-    self.UsuariosTable.setObjectName("UsuariosTable")
-    self.UsuariosTable.setColumnCount(2)
-    self.UsuariosTable.setRowCount(0)
-    item = QtWidgets.QTableWidgetItem()
-    item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
-    self.UsuariosTable.setHorizontalHeaderItem(0, item)
-    item = QtWidgets.QTableWidgetItem()
-    item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignVCenter)
-    self.UsuariosTable.setHorizontalHeaderItem(1, item)
-    self.UsuariosTable.horizontalHeader().setDefaultSectionSize(135)
-    self.UsuariosTable.horizontalHeader().setSortIndicatorShown(True)
-    self.UsuariosTable.horizontalHeader().setStretchLastSection(True)
-    self.tabWidget.addTab(self.Usuarios, "")
     self.Posto = QtWidgets.QWidget()
     self.Posto.setObjectName("Posto")
     self.PostoTable = QtWidgets.QTableWidget(parent=self.Posto)
-    self.PostoTable.setGeometry(QtCore.QRect(20, 10, 541, 331))
+    self.PostoTable.setGeometry(QtCore.QRect(20, 10, 731, 331))
     self.PostoTable.setShowGrid(False)
     self.PostoTable.setObjectName("PostoTable")
     self.PostoTable.setColumnCount(3)
@@ -290,7 +257,7 @@ class Cadastros(TelaBase):
     self.PostoTable.horizontalHeader().setStretchLastSection(True)
     self.tabWidget.addTab(self.Posto, "")
     self.ContainerBotoes = QtWidgets.QFrame(parent=Cadastros)
-    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 363, 601, 41))
+    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 363, 801, 41))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerBotoes.setObjectName("ContainerBotoes")
@@ -300,34 +267,34 @@ class Cadastros(TelaBase):
     self.horizontalLayout_2.addItem(spacerItem)
     self.TelaInicial = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon = QtGui.QIcon()
-    icon.addPixmap(QtGui.QPixmap(".\\telas\\ui\\../../assets/home.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/home.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
     self.TelaInicial.setIcon(icon)
     self.TelaInicial.setObjectName("TelaInicial")
     self.horizontalLayout_2.addWidget(self.TelaInicial)
-    self.Novo = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.NovoBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon1 = QtGui.QIcon()
-    icon1.addPixmap(QtGui.QPixmap(".\\telas\\ui\\../../assets/new.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Novo.setIcon(icon1)
-    self.Novo.setObjectName("Novo")
-    self.horizontalLayout_2.addWidget(self.Novo)
-    self.Atualizar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/new.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.NovoBtn.setIcon(icon1)
+    self.NovoBtn.setObjectName("NovoBtn")
+    self.horizontalLayout_2.addWidget(self.NovoBtn)
+    self.AtualizarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon2 = QtGui.QIcon()
-    icon2.addPixmap(QtGui.QPixmap(".\\telas\\ui\\../../assets/refresh.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Atualizar.setIcon(icon2)
-    self.Atualizar.setObjectName("Atualizar")
-    self.horizontalLayout_2.addWidget(self.Atualizar)
-    self.Editar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    icon2.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/refresh.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.AtualizarBtn.setIcon(icon2)
+    self.AtualizarBtn.setObjectName("AtualizarBtn")
+    self.horizontalLayout_2.addWidget(self.AtualizarBtn)
+    self.EditarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon3 = QtGui.QIcon()
-    icon3.addPixmap(QtGui.QPixmap(".\\telas\\ui\\../../assets/edit.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Editar.setIcon(icon3)
-    self.Editar.setObjectName("Editar")
-    self.horizontalLayout_2.addWidget(self.Editar)
-    self.Excluir = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    icon3.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/edit.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.EditarBtn.setIcon(icon3)
+    self.EditarBtn.setObjectName("EditarBtn")
+    self.horizontalLayout_2.addWidget(self.EditarBtn)
+    self.ExcluirBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon4 = QtGui.QIcon()
-    icon4.addPixmap(QtGui.QPixmap(".\\telas\\ui\\../../assets/delete.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Excluir.setIcon(icon4)
-    self.Excluir.setObjectName("Excluir")
-    self.horizontalLayout_2.addWidget(self.Excluir)
+    icon4.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/delete.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.ExcluirBtn.setIcon(icon4)
+    self.ExcluirBtn.setObjectName("ExcluirBtn")
+    self.horizontalLayout_2.addWidget(self.ExcluirBtn)
     spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout_2.addItem(spacerItem1)
     _translate = QtCore.QCoreApplication.translate
@@ -366,16 +333,12 @@ class Cadastros(TelaBase):
     item = self.PessoasTable.horizontalHeaderItem(3)
     item.setText(_translate("Cadastros", "Celular"))
     item = self.PessoasTable.horizontalHeaderItem(4)
-    item.setText(_translate("Cadastros", "Usuário"))
-    item = self.PessoasTable.horizontalHeaderItem(5)
-    item.setText(_translate("Cadastros", "Gestor"))
-    self.tabWidget.setTabText(self.tabWidget.indexOf(self.Pessoas), _translate("Cadastros", "Funcionários"))
-    self.UsuariosTable.setSortingEnabled(False)
-    item = self.UsuariosTable.horizontalHeaderItem(0)
     item.setText(_translate("Cadastros", "Login"))
-    item = self.UsuariosTable.horizontalHeaderItem(1)
+    item = self.PessoasTable.horizontalHeaderItem(5)
     item.setText(_translate("Cadastros", "Senha"))
-    self.tabWidget.setTabText(self.tabWidget.indexOf(self.Usuarios), _translate("Cadastros", "Usuários"))
+    item = self.PessoasTable.horizontalHeaderItem(6)
+    item.setText(_translate("Cadastros", "Gestor"))
+    self.tabWidget.setTabText(self.tabWidget.indexOf(self.Pessoas), _translate("Cadastros", "Pessoas"))
     self.PostoTable.setSortingEnabled(False)
     item = self.PostoTable.horizontalHeaderItem(0)
     item.setText(_translate("Cadastros", "Nome"))
@@ -385,16 +348,16 @@ class Cadastros(TelaBase):
     item.setText(_translate("Cadastros", "CNPJ"))
     self.tabWidget.setTabText(self.tabWidget.indexOf(self.Posto), _translate("Cadastros", "Posto"))
     self.TelaInicial.setText(_translate("Cadastros", "Tela Inicial"))
-    self.Novo.setText(_translate("Cadastros", "Novo"))
-    self.Atualizar.setText(_translate("Cadastros", "Atualizar"))
-    self.Editar.setText(_translate("Cadastros", "Editar"))
-    self.Excluir.setText(_translate("Cadastros", "Excluir"))
+    self.NovoBtn.setText(_translate("Cadastros", "Novo"))
+    self.AtualizarBtn.setText(_translate("Cadastros", "Atualizar"))
+    self.EditarBtn.setText(_translate("Cadastros", "Editar"))
+    self.ExcluirBtn.setText(_translate("Cadastros", "Excluir"))
     self.tabWidget.setCurrentIndex(0)
     QtCore.QMetaObject.connectSlotsByName(Cadastros)
     self.buttons_list = self.ContainerBotoes.findChildren(QtWidgets.QPushButton)
     self.TelaInicial.clicked.connect(self.tela_inicial)
-    self.Novo.clicked.connect(lambda: self.abre_form("Novo"))
-    self.Editar.clicked.connect(lambda: self.abre_form("Editar"))
-    self.Excluir.clicked.connect(self.excluir)
-    self.Atualizar.clicked.connect(self.fetch_data)
+    self.NovoBtn.clicked.connect(lambda: self.abre_form("Novo"))
+    self.EditarBtn.clicked.connect(lambda: self.abre_form("Editar"))
+    self.ExcluirBtn.clicked.connect(self.excluir)
+    self.AtualizarBtn.clicked.connect(self.fetch_data)
     self.fetch_data()

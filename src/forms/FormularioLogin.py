@@ -1,49 +1,41 @@
 from base64 import b64decode
 from PyQt6 import QtCore, QtGui, QtWidgets
-from src.abstract.FormBase import FormBase
+from src.abstract.AbstractForm import AbstractForm
+from src.InicialGestor import InicialGestor
+from src.InicialGlobal import InicialGlobal
 
-class Login(FormBase):
+class FormularioLogin(AbstractForm):
   def __init__(self):
-    super().__init__()
-    self.abre_tela(self)
+    super().__init__(entidade=None)
+    self.inicialGestor = InicialGestor()
+    self.inicialGlobal = InicialGlobal()
+    self.cria_tela(self)
 
   def confirmar(self) -> None:
     # função chamada ao clicar botão "Confirmar"
-    login_digitado = self.InputLogin.text()
-    senha_digitado = self.InputSenha.text()
+    login_digitado = self.inputLogin.text()
+    senha_digitado = self.inputSenha.text()
     pessoas_data = self.carrega_dados('pessoas')
     pessoa_logado = None
+
     for pessoa in pessoas_data:
       if pessoa['login'].strip().lower() == login_digitado.strip().lower() and self.decode_senha(pessoa['senha']) == senha_digitado:
         pessoa_logado = pessoa
-    if pessoa_logado:
-      is_gestor = None
-      pessoas_data = self.carrega_dados('pessoas')
-      for pessoa in pessoas_data:
-        if pessoa['user_id'] == pessoa_logado['login']:
-          is_gestor = bool(pessoa['gestor'])
-    else:
+
+    if pessoa_logado is None:
       self.mostra_aviso("Usuário ou senha incorretos.")
       return
-    
-    if is_gestor is None:
-      self.mostra_aviso("Nenhum funcionário associado a esse usuário.")
-      return
 
-    if is_gestor == True:
+    if bool(pessoa_logado['is_gestor']):
       self.hide()
-      from src.InicialGestor import InicialGestor
-      self.inicialGestor = InicialGestor()
       self.inicialGestor.show()
-    if is_gestor == False:
+    else:
       self.mostra_aviso("Logado como Operador.")
       return
 
   def cancelar(self) -> None:
     # função chamada ao clicar botão "Cancelar"
     self.hide()
-    from src.InicialGlobal import InicialGlobal
-    self.inicialGlobal = InicialGlobal()
     self.inicialGlobal.show()
 
   def decode_senha(self, senha) -> str:
@@ -51,7 +43,7 @@ class Login(FormBase):
     senha_original = senha_bytes.decode('utf-8')
     return senha_original
   
-  def abre_tela(self, Login) -> None:
+  def cria_tela(self, Login) -> None:
     Login.setObjectName("Login")
     Login.resize(600, 400)
     self.ContainerLogin = QtWidgets.QFrame(parent=Login)
@@ -64,19 +56,19 @@ class Login(FormBase):
     self.LabelLogin = QtWidgets.QLabel(parent=self.ContainerLogin)
     self.LabelLogin.setObjectName("LabelLogin")
     self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.LabelLogin)
-    self.InputLogin = QtWidgets.QLineEdit(parent=self.ContainerLogin)
-    self.InputLogin.setMaxLength(100)
-    self.InputLogin.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-    self.InputLogin.setObjectName("InputLogin")
-    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.InputLogin)
+    self.inputLogin = QtWidgets.QLineEdit(parent=self.ContainerLogin)
+    self.inputLogin.setMaxLength(100)
+    self.inputLogin.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+    self.inputLogin.setObjectName("InputLogin")
+    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.inputLogin)
     self.LabelSenha = QtWidgets.QLabel(parent=self.ContainerLogin)
     self.LabelSenha.setObjectName("LabelSenha")
     self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.LabelSenha)
-    self.InputSenha = QtWidgets.QLineEdit(parent=self.ContainerLogin)
-    self.InputSenha.setMaxLength(100)
-    self.InputSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
-    self.InputSenha.setObjectName("InputSenha")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.InputSenha)
+    self.inputSenha = QtWidgets.QLineEdit(parent=self.ContainerLogin)
+    self.inputSenha.setMaxLength(100)
+    self.inputSenha.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+    self.inputSenha.setObjectName("InputSenha")
+    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.inputSenha)
     self.ContainerBotoes = QtWidgets.QFrame(parent=Login)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 360, 601, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
