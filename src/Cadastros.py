@@ -18,14 +18,12 @@ class Cadastros(AbstractTela):
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:
-    # função chamada ao clicar botão "Tela Inicial"
     self.hide()
     from src.InicialGestor import InicialGestor
     self.inicialGestor = InicialGestor()
     self.inicialGestor.show()
 
   def abre_form(self, btn: str) -> None:
-    # função chamada ao clicar botão "Novo, Editar"
     tab_ativa = self.tabWidget.currentIndex()
 
     if tab_ativa == 0: # Bombas
@@ -85,7 +83,6 @@ class Cadastros(AbstractTela):
     self.fill_table(self.carrega_dados("posto"), self.PostoTable)
     
   def excluir(self) -> None:
-    # função chamada ao clicar botão "Excluir"
     tab_ativa = self.tabWidget.currentIndex()
 
     if tab_ativa == 0: # Bombas

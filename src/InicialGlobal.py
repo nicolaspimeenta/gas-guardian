@@ -5,18 +5,16 @@ class InicialGlobal(AbstractTela):
     super().__init__()
     self.cria_tela(self)
 
-  def iniciar_abastecimento(self):
-    # função chamada ao clicar botão "INICIAR ABASTECIMENTO"
+  def iniciar_abastecimento(self) -> None:
     print(self.IniciarAbastecimento)
 
-  def acessa_sistema(self):
-    # função chamada ao clicar botão "Acessar Sistema"
+  def acessa_sistema(self) -> None:
     self.hide()
     from src.forms.FormularioLogin import FormularioLogin
     self.formularioLogin = FormularioLogin()
     self.formularioLogin.show()
 
-  def cria_tela(self, InicialGlobal):
+  def cria_tela(self, InicialGlobal) -> None:
     InicialGlobal.setObjectName("InicialGlobal")
     InicialGlobal.resize(600, 400)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)

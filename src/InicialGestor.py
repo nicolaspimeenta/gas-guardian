@@ -5,21 +5,19 @@ class InicialGestor(AbstractTela):
     super().__init__()
     self.cria_tela(self)
 
-  def cadastros(self):
-    # função chamada ao clicar botão "CADASTROS"
+  def cadastros(self) -> None:
     self.hide()
     from src.Cadastros import Cadastros
     self.cadastros = Cadastros()
     self.cadastros.show()
 
-  def desconectar(self):
-    # função chamada ao clicar botão "Desconectar"
+  def desconectar(self) -> None:
     self.hide()
     from src.forms.FormularioLogin import FormularioLogin
     self.formularioLogin = FormularioLogin()
     self.formularioLogin.show()
 
-  def cria_tela(self, InicialGestor):
+  def cria_tela(self, InicialGestor) -> None:
     InicialGestor.setObjectName("InicialGestor")
     InicialGestor.setWindowModality(QtCore.Qt.WindowModality.NonModal)
     InicialGestor.resize(600, 400)
