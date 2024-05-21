@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>602</width>
-    <height>242</height>
+    <height>268</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Escolher Registros</string>
   </property>
-  <widget class="QTableWidget" name="TableRegistros">
+  <widget class="QTableWidget" name="tableRegistros">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -38,7 +38,7 @@
     <bool>true</bool>
    </attribute>
   </widget>
-  <widget class="QTableWidget" name="TableSelecionados">
+  <widget class="QTableWidget" name="tableSelecionados">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -63,7 +63,7 @@
     <bool>true</bool>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="Adicionar">
+  <widget class="QPushButton" name="adicionarBtn">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -80,7 +80,7 @@
      <normaloff>../../assets/right.svg</normaloff>../../assets/right.svg</iconset>
    </property>
   </widget>
-  <widget class="QLabel" name="RegistrosLabel">
+  <widget class="QLabel" name="registrosLabel">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -93,7 +93,7 @@
     <string>Registros:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="SelecionadosLabel">
+  <widget class="QLabel" name="selecionadosLabel">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -106,7 +106,7 @@
     <string>Selecionados:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Remover">
+  <widget class="QPushButton" name="removerBtn">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -122,6 +122,59 @@
     <iconset>
      <normaloff>../../assets/left.svg</normaloff>../../assets/left.svg</iconset>
    </property>
+  </widget>
+  <widget class="QFrame" name="ContainerBotoes">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>230</y>
+     <width>601</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="Cancelar">
+      <property name="text">
+       <string>Cancelar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/cancel.svg</normaloff>../../assets/cancel.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Confirmar">
+      <property name="text">
+       <string>Confirmar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/check.svg</normaloff>../../assets/check.svg</iconset>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

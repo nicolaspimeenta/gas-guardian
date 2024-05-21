@@ -1,7 +1,7 @@
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioTipos(AbstractForm):
+class FormularioTipo(AbstractForm):
   def __init__(self):
     super().__init__(entidade='tipos-combustivel')
     self.cria_tela(self)
@@ -57,12 +57,12 @@ class FormularioTipos(AbstractForm):
       self.inputNome.clear()
       self.inputPreco.clear()
   
-  def cria_tela(self, FormularioTipos) -> None:
-    FormularioTipos.setObjectName("FormularioTipos")
-    FormularioTipos.resize(260, 120)
-    FormularioTipos.setMinimumSize(QtCore.QSize(260, 120))
-    FormularioTipos.setMaximumSize(QtCore.QSize(260, 120))
-    self.ContainerForm = QtWidgets.QFrame(parent=FormularioTipos)
+  def cria_tela(self, FormularioTipo) -> None:
+    FormularioTipo.setObjectName("FormularioTipo")
+    FormularioTipo.resize(260, 120)
+    FormularioTipo.setMinimumSize(QtCore.QSize(260, 120))
+    FormularioTipo.setMaximumSize(QtCore.QSize(260, 120))
+    self.ContainerForm = QtWidgets.QFrame(parent=FormularioTipo)
     self.ContainerForm.setGeometry(QtCore.QRect(0, 10, 260, 60))
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
@@ -89,7 +89,7 @@ class FormularioTipos(AbstractForm):
     self.inputPreco.setMaxLength(10)
     self.inputPreco.setObjectName("InputPreco")
     self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputPreco)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioTipos)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioTipo)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 80, 261, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -111,11 +111,11 @@ class FormularioTipos(AbstractForm):
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
     _translate = QtCore.QCoreApplication.translate
-    self.label.setText(_translate("FormularioTipos", "Nome *"))
-    self.label_2.setText(_translate("FormularioTipos", "Preço *"))
-    self.Cancelar.setText(_translate("FormularioTipos", "Cancelar"))
-    self.Confirmar.setText(_translate("FormularioTipos", "Confirmar"))
-    QtCore.QMetaObject.connectSlotsByName(FormularioTipos)
+    self.label.setText(_translate("FormularioTipo", "Nome *"))
+    self.label_2.setText(_translate("FormularioTipo", "Preço *"))
+    self.Cancelar.setText(_translate("FormularioTipo", "Cancelar"))
+    self.Confirmar.setText(_translate("FormularioTipo", "Confirmar"))
+    QtCore.QMetaObject.connectSlotsByName(FormularioTipo)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.cancelar)
   

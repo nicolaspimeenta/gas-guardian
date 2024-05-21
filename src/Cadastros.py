@@ -2,17 +2,19 @@ from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.forms.FormularioPosto import FormularioPosto
 from src.forms.FormularioPessoa import FormularioPessoa
-from src.forms.FormularioTipos import FormularioTipos
-from src.forms.FormularioTanques import FormularioTanques
+from src.forms.FormularioTipo import FormularioTipo
+from src.forms.FormularioTanque import FormularioTanque
+from src.forms.FormularioBomba import FormularioBomba
 
 
 class Cadastros(AbstractTela):
   def __init__(self):
     super().__init__()
-    self.formularioPessoa = FormularioPessoa()
     self.formularioPosto = FormularioPosto()
-    self.formularioTipos = FormularioTipos()
-    self.formularioTanques = FormularioTanques()
+    self.formularioTipo = FormularioTipo()
+    self.formularioPessoa = FormularioPessoa()
+    self.formularioTanquee = FormularioBomba()
+    self.formularioBomba = FormularioTanque()
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:
@@ -27,14 +29,21 @@ class Cadastros(AbstractTela):
     tab_ativa = self.tabWidget.currentIndex()
 
     if tab_ativa == 0: # Bombas
-      return
+      selected_row = self.BombasTable.currentRow()
+      if btn=='Editar' and selected_row == -1:
+        self.mostra_aviso("Selecione uma linha para editar.")
+        return
+      self.formulario.open_form(
+        id_row=selected_row if btn=='Editar' else None,
+        title=f"Editando Bomba ({selected_row+1})" if btn=='Editar' else "Nova Bomba"
+        )
     
     if tab_ativa == 1: # Tanques
       selected_row = self.TanquesTable.currentRow()
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioTanques.open_form(
+      self.formularioTanque.open_form(
         id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Tanque ({selected_row+1})" if btn=='Editar' else "Novo Tanque"
         )
@@ -44,7 +53,7 @@ class Cadastros(AbstractTela):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioTipos.open_form(
+      self.formularioTipo.open_form(
         id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Tipo ({selected_row+1})" if btn=='Editar' else "Novo Tipo"
         )
@@ -69,18 +78,22 @@ class Cadastros(AbstractTela):
         )
       
   def fetch_data(self) -> None:
-    self.fill_table_from_json("pessoas", self.PessoasTable)
-    self.fill_table_from_json("tipos-combustivel", self.TiposTable)
-    self.fill_table_from_json("tanques", self.TanquesTable)
-    self.fill_table_from_json("bombas", self.BombasTable)
-    self.fill_table_from_json("posto", self.PostoTable)
+    self.fill_table(self.carrega_dados("pessoas"), self.PessoasTable)
+    self.fill_table(self.carrega_dados("tipos-combustivel"), self.TiposTable)
+    self.fill_table(self.carrega_dados("tanques"), self.TanquesTable)
+    self.fill_table(self.carrega_dados("bombas"), self.BombasTable)
+    self.fill_table(self.carrega_dados("posto"), self.PostoTable)
     
   def excluir(self) -> None:
     # função chamada ao clicar botão "Excluir"
     tab_ativa = self.tabWidget.currentIndex()
 
     if tab_ativa == 0: # Bombas
-      return
+      selected_row = self.BombasTable.currentRow()
+      if selected_row == -1:
+        self.mostra_aviso("Selecione uma linha para excluir.")
+      else:
+        self.exclui_linha(entidade="bombas", id=selected_row)
     
     if tab_ativa == 1: # Tanques
       selected_row = self.TanquesTable.currentRow()
@@ -121,19 +134,6 @@ class Cadastros(AbstractTela):
     QtWidgets.QMessageBox.critical(self, "Aviso", f"A linha {id+1} foi excluída",
     QtWidgets.QMessageBox.StandardButton.Ok)
     self.fetch_data()
-
-  def fill_table_from_json(self, entidade, table) -> None:
-    data = self.carrega_dados(entidade)
-    if data:
-      table.setRowCount(0)
-      table.setRowCount(len(data))
-      for row, info in enumerate(data):
-        info_list = info.values()
-        for column, item in enumerate(info_list):
-          cell_item = QtWidgets.QTableWidgetItem(str(item))
-          table.setItem(row, column, cell_item)
-    else:
-      table.setRowCount(0)
 
   def cria_tela(self, Cadastros) -> None:
     Cadastros.setObjectName("Cadastros")

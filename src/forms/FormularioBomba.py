@@ -1,18 +1,20 @@
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
+from src.componentes.EscolherRegistros import EscolherRegistrosComponent
 
-class FormularioBombas(AbstractForm):
+class FormularioBomba(AbstractForm):
   def __init__(self):
-    super().__init__(entidade='tanques')
+    super().__init__(entidade='bombas')
     self.cria_tela(self)
     self.bombas_data = self.carrega_dados(entidade='bombas')
+    self.escolherTiposComponent = EscolherRegistrosComponent(entidade='tipos-combustivel')
 
   def confirmar(self) -> None:
     # função chamada ao clicar botão "Confirmar"
     form_data = {
       'id_bomba': self.inputId.text().strip(),
-      'is_auto_abastecimento': self.inputAutoAbastecimento.isChecked(),
-      'tipos_combustivel': self.bombas_data[self.id_row]['volume_atual'] if self.is_edit() else 0
+      'is_auto_abastecimento': self.isAutoAbastecimento.isChecked(),
+      'tipos_combustivel': []
     }
     if self.is_form_valido(form_data):
       if self.is_edit():
@@ -50,11 +52,6 @@ class FormularioBombas(AbstractForm):
     return True
   
   def fill_form(self) -> None:
-    self.inputTipo.clear()
-    self.inputTipo.addItems(
-      tipo['nome'] for tipo in self.carrega_dados(entidade='tipos-combustivel')
-    )
-
     if self.is_edit():
       self.inputId.setText(self.bombas_data[self.id_row]['id_tanque'])
       self.inputCapacidade.setText(self.bombas_data[self.id_row]['capacidade_maxima'])
@@ -64,25 +61,20 @@ class FormularioBombas(AbstractForm):
       self.inputId.clear()
       self.inputCapacidade.clear()
       self.inputPorcentagem.clear()
+
+  def escolherTipo(self) -> None:
+    self.escolherTiposComponent.open()
   
-  def cria_tela(self, FormularioTanque) -> None:
-    FormularioTanque.setObjectName("FormularioTanque")
-    FormularioTanque.resize(300, 162)
-    self.ContainerForm = QtWidgets.QFrame(parent=FormularioTanque)
-    self.ContainerForm.setGeometry(QtCore.QRect(0, 10, 301, 151))
+  def cria_tela(self, FormularioBomba) -> None:
+    FormularioBomba.setObjectName("FormularioBomba")
+    FormularioBomba.resize(302, 140)
+    self.ContainerForm = QtWidgets.QFrame(parent=FormularioBomba)
+    self.ContainerForm.setGeometry(QtCore.QRect(0, 0, 301, 101))
     self.ContainerForm.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerForm.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerForm.setObjectName("ContainerForm")
     self.formLayout = QtWidgets.QFormLayout(self.ContainerForm)
     self.formLayout.setObjectName("formLayout")
-    self.label = QtWidgets.QLabel(parent=self.ContainerForm)
-    sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-    sizePolicy.setHorizontalStretch(0)
-    sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-    self.label.setSizePolicy(sizePolicy)
-    self.label.setObjectName("label")
-    self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label)
     self.inputId = QtWidgets.QLineEdit(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
@@ -90,44 +82,28 @@ class FormularioBombas(AbstractForm):
     sizePolicy.setHeightForWidth(self.inputId.sizePolicy().hasHeightForWidth())
     self.inputId.setSizePolicy(sizePolicy)
     self.inputId.setObjectName("inputId")
-    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputId)
-    self.label_3 = QtWidgets.QLabel(parent=self.ContainerForm)
+    self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputId)
+    self.label = QtWidgets.QLabel(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-    self.label_3.setSizePolicy(sizePolicy)
-    self.label_3.setObjectName("label_3")
-    self.formLayout.setWidget(0, QtWidgets.QFormLayout.ItemRole.FieldRole, self.label_3)
-    self.inputPorcentagem = QtWidgets.QSpinBox(parent=self.ContainerForm)
-    self.inputPorcentagem.setMinimum(1)
-    self.inputPorcentagem.setObjectName("inputPorcentagem")
-    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputPorcentagem)
-    self.label_2 = QtWidgets.QLabel(parent=self.ContainerForm)
+    sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+    self.label.setSizePolicy(sizePolicy)
+    self.label.setObjectName("label")
+    self.formLayout.setWidget(1, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label)
+    self.escolherTipoBtn = QtWidgets.QPushButton(parent=self.ContainerForm)
+    self.escolherTipoBtn.setObjectName("escolherTipoBtn")
+    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.SpanningRole, self.escolherTipoBtn)
+    self.isAutoAbastecimento = QtWidgets.QCheckBox(parent=self.ContainerForm)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
     sizePolicy.setHorizontalStretch(0)
     sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-    self.label_2.setSizePolicy(sizePolicy)
-    self.label_2.setObjectName("label_2")
-    self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.LabelRole, self.label_2)
-    self.inputCapacidade = QtWidgets.QLineEdit(parent=self.ContainerForm)
-    sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-    sizePolicy.setHorizontalStretch(0)
-    sizePolicy.setVerticalStretch(0)
-    sizePolicy.setHeightForWidth(self.inputCapacidade.sizePolicy().hasHeightForWidth())
-    self.inputCapacidade.setSizePolicy(sizePolicy)
-    self.inputCapacidade.setObjectName("inputCapacidade")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.LabelRole, self.inputCapacidade)
-    self.label_4 = QtWidgets.QLabel(parent=self.ContainerForm)
-    self.label_4.setObjectName("label_4")
-    self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.label_4)
-    self.inputTipo = QtWidgets.QComboBox(parent=self.ContainerForm)
-    self.inputTipo.setEnabled(True)
-    self.inputTipo.setObjectName("inputTipo")
-    self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputTipo)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioTanque)
-    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 120, 301, 44))
+    sizePolicy.setHeightForWidth(self.isAutoAbastecimento.sizePolicy().hasHeightForWidth())
+    self.isAutoAbastecimento.setSizePolicy(sizePolicy)
+    self.isAutoAbastecimento.setObjectName("isAutoAbastecimento")
+    self.formLayout.setWidget(2, QtWidgets.QFormLayout.ItemRole.FieldRole, self.isAutoAbastecimento)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioBomba)
+    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 100, 301, 41))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerBotoes.setObjectName("ContainerBotoes")
@@ -148,13 +124,14 @@ class FormularioBombas(AbstractForm):
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
     _translate = QtCore.QCoreApplication.translate
-    self.label.setText(_translate("FormularioTanque", "ID do Tanque *"))
-    self.label_3.setText(_translate("FormularioTanque", "Porcentagem de Alerta *"))
-    self.label_2.setText(_translate("FormularioTanque", "Capacidade máxima (L) *"))
-    self.label_4.setText(_translate("FormularioTanque", "Tipo de Combustível *"))
-    self.Cancelar.setText(_translate("FormularioTanque", "Cancelar"))
-    self.Confirmar.setText(_translate("FormularioTanque", "Confirmar"))
-    QtCore.QMetaObject.connectSlotsByName(FormularioTanque)
+    FormularioBomba.setWindowTitle(_translate("FormularioBomba", "Nova Pessoa"))
+    self.label.setText(_translate("FormularioBomba", "ID da Bomba *"))
+    self.escolherTipoBtn.setText(_translate("FormularioBomba", "Escolher Tipos de Combustível da Bomba"))
+    self.isAutoAbastecimento.setText(_translate("FormularioBomba", "Auto-abastecimento"))
+    self.Cancelar.setText(_translate("FormularioBomba", "Cancelar"))
+    self.Confirmar.setText(_translate("FormularioBomba", "Confirmar"))
+    QtCore.QMetaObject.connectSlotsByName(FormularioBomba)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.cancelar)
+    self.escolherTipoBtn.clicked.connect(self.escolherTipo)
   

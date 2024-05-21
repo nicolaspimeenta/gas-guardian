@@ -1,56 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FormularioTipo</class>
- <widget class="QWidget" name="FormularioTipo">
+ <class>FomularioBomba</class>
+ <widget class="QWidget" name="FomularioBomba">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>120</height>
+    <width>302</width>
+    <height>140</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>260</width>
-    <height>120</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>260</width>
-    <height>120</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Novo Tipo</string>
+   <string>Nova Pessoa</string>
   </property>
   <widget class="QFrame" name="ContainerForm">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>10</y>
-     <width>260</width>
-     <height>60</height>
+     <y>0</y>
+     <width>301</width>
+     <height>101</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>260</width>
-     <height>60</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>260</width>
-     <height>60</height>
-    </size>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -59,27 +29,46 @@
     <enum>QFrame::Raised</enum>
    </property>
    <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Nome</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Preço</string>
+    <item row="2" column="0">
+     <widget class="QLineEdit" name="inputId">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="InputNome"/>
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>ID da Bomba *</string>
+      </property>
+     </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="InputPreco">
-      <property name="maxLength">
-       <number>10</number>
+    <item row="3" column="0" colspan="2">
+     <widget class="QPushButton" name="escolherTipoBtn">
+      <property name="text">
+       <string>Escolher Tipos de Combustível da Bomba</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QCheckBox" name="isAutoAbastecimento">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Auto-abastecimento</string>
       </property>
      </widget>
     </item>
@@ -89,9 +78,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>80</y>
-     <width>261</width>
-     <height>44</height>
+     <y>100</y>
+     <width>301</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="frameShape">

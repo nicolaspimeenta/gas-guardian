@@ -14,6 +14,3 @@ class AbstractForm(AbstractTela):
 
   def is_edit(self) -> bool:
     return self.id_row != None
-  
-  def cancelar(self) -> None:
-    self.hide()

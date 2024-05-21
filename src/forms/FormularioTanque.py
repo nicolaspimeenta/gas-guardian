@@ -1,7 +1,7 @@
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioTanques(AbstractForm):
+class FormularioTanque(AbstractForm):
   def __init__(self):
     super().__init__(entidade='tanques')
     self.cria_tela(self)
@@ -67,10 +67,10 @@ class FormularioTanques(AbstractForm):
       self.inputCapacidade.clear()
       self.inputPorcentagem.clear()
   
-  def cria_tela(self, FormularioTanque) -> None:
-    FormularioTanque.setObjectName("FormularioTanque")
-    FormularioTanque.resize(300, 162)
-    self.ContainerForm = QtWidgets.QFrame(parent=FormularioTanque)
+  def cria_tela(self, formularioTanquee) -> None:
+    formularioTanquee.setObjectName("formularioTanquee")
+    formularioTanquee.resize(300, 162)
+    self.ContainerForm = QtWidgets.QFrame(parent=formularioTanquee)
     self.ContainerForm.setGeometry(QtCore.QRect(0, 10, 301, 151))
     self.ContainerForm.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerForm.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -128,7 +128,7 @@ class FormularioTanques(AbstractForm):
     self.inputTipo.setEnabled(True)
     self.inputTipo.setObjectName("inputTipo")
     self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputTipo)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioTanque)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=formularioTanquee)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 120, 301, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -150,13 +150,13 @@ class FormularioTanques(AbstractForm):
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
     _translate = QtCore.QCoreApplication.translate
-    self.label.setText(_translate("FormularioTanque", "ID do Tanque *"))
-    self.label_3.setText(_translate("FormularioTanque", "Porcentagem de Alerta *"))
-    self.label_2.setText(_translate("FormularioTanque", "Capacidade máxima (L) *"))
-    self.label_4.setText(_translate("FormularioTanque", "Tipo de Combustível *"))
-    self.Cancelar.setText(_translate("FormularioTanque", "Cancelar"))
-    self.Confirmar.setText(_translate("FormularioTanque", "Confirmar"))
-    QtCore.QMetaObject.connectSlotsByName(FormularioTanque)
+    self.label.setText(_translate("formularioTanquee", "ID do Tanque *"))
+    self.label_3.setText(_translate("formularioTanquee", "Porcentagem de Alerta *"))
+    self.label_2.setText(_translate("formularioTanquee", "Capacidade máxima (L) *"))
+    self.label_4.setText(_translate("formularioTanquee", "Tipo de Combustível *"))
+    self.Cancelar.setText(_translate("formularioTanquee", "Cancelar"))
+    self.Confirmar.setText(_translate("formularioTanquee", "Confirmar"))
+    QtCore.QMetaObject.connectSlotsByName(formularioTanquee)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.cancelar)
   
