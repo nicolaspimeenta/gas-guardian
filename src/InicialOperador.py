@@ -7,13 +7,13 @@ class InicialOperador(TelaBase):
     self.cria_tela(self)
 
   def registrar_abastecimento(self) -> None:
-    from src.forms.FormularioAbastecimento import FormularioAbastecimento
+    from src.formularios.FormularioAbastecimento import FormularioAbastecimento
     self.registrarAbastecimento = FormularioAbastecimento()
     self.registrarAbastecimento.open_form(id=None, title='Registrar Abastecimento')
 
   def desconectar(self) -> None:
     self.hide()
-    from src.forms.FormularioLogin import FormularioLogin
+    from src.formularios.FormularioLogin import FormularioLogin
     self.formularioLogin = FormularioLogin()
     self.formularioLogin.show()
 

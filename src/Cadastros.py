@@ -6,11 +6,11 @@
 
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
-from src.forms.FormularioPosto import FormularioPosto
-from src.forms.FormularioPessoa import FormularioPessoa
-from src.forms.FormularioTipo import FormularioTipo
-from src.forms.FormularioTanque import FormularioTanque
-from src.forms.FormularioBomba import FormularioBomba
+from src.formularios.FormularioPosto import FormularioPosto
+from src.formularios.FormularioPessoa import FormularioPessoa
+from src.formularios.FormularioTipo import FormularioTipo
+from src.formularios.FormularioTanque import FormularioTanque
+from src.formularios.FormularioBomba import FormularioBomba
 
 
 class Cadastros(TelaBase):

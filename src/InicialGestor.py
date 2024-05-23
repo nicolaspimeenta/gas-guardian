@@ -14,7 +14,7 @@ class InicialGestor(TelaBase):
 
   def desconectar(self) -> None:
     self.hide()
-    from src.forms.FormularioLogin import FormularioLogin
+    from src.formularios.FormularioLogin import FormularioLogin
     self.formularioLogin = FormularioLogin()
     self.formularioLogin.show()
 
