@@ -352,7 +352,7 @@ class Cadastros(TelaBase):
     item = self.TanquesTable.horizontalHeaderItem(1)
     item.setText(_translate("Cadastros", "Tipo de Combustível"))
     item = self.TanquesTable.horizontalHeaderItem(2)
-    item.setText(_translate("Cadastros", "Volume Atual"))
+    item.setText(_translate("Cadastros", "Volume Atual (L)"))
     item = self.TanquesTable.horizontalHeaderItem(3)
     item.setText(_translate("Cadastros", "Capacidade Máxima (L)"))
     item = self.TanquesTable.horizontalHeaderItem(4)
