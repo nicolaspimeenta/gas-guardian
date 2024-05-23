@@ -33,13 +33,13 @@ class FormularioAbastecimento(FormBase):
       bomba['id_bomba'] for bomba in self.carrega_dados(entidade='bombas') if bool(bomba['is_auto_abastecimento']) is False
     )
 
-  def bombaChanged(self) -> None:
+  def bomba_changed(self) -> None:
     self.inputTipo.clear()
     for bomba in self.carrega_dados(entidade='bombas'):
       if bomba['id_bomba'] == self.inputBomba.currentText():
         self.inputTipo.addItems(bomba['tipos_combustivel'])
 
-  def precoChanged(self) -> None:
+  def preco_changed(self) -> None:
     tipos_data = self.carrega_dados(entidade='tipos-combustivel')
     for tipo in tipos_data:
       if tipo['nome'] == self.inputTipo.currentText():
@@ -136,8 +136,8 @@ class FormularioAbastecimento(FormBase):
     self.Cancelar.setText("Cancelar")
     self.Confirmar.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioAbastecimento)
-    self.inputBomba.currentIndexChanged.connect(self.bombaChanged)
-    self.inputPreco.textChanged.connect(self.precoChanged)
+    self.inputBomba.currentIndexChanged.connect(self.bomba_changed)
+    self.inputPreco.textChanged.connect(self.preco_changed)
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.hide)
   
