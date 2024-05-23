@@ -1,9 +1,9 @@
 # UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
 
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioTipo(AbstractForm):
+class FormularioTipo(FormBase):
   def __init__(self):
     super().__init__(entidade='tipos-combustivel')
     self.cria_tela(self)

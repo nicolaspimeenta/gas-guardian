@@ -2,12 +2,12 @@
 
 from base64 import b64decode
 from PyQt6 import QtCore, QtGui, QtWidgets
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
 from src.InicialOperador import InicialOperador
 
-class FormularioLogin(AbstractForm):
+class FormularioLogin(FormBase):
   def __init__(self):
     super().__init__(entidade=None)
     self.inicialGestor = InicialGestor()

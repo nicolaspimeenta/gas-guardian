@@ -4,7 +4,7 @@
 # UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
 # UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
 
-from src.abstract.AbstractTela import AbstractTela
+from src.abstract.FormBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.forms.FormularioPosto import FormularioPosto
 from src.forms.FormularioPessoa import FormularioPessoa
@@ -13,7 +13,7 @@ from src.forms.FormularioTanque import FormularioTanque
 from src.forms.FormularioBomba import FormularioBomba
 
 
-class Cadastros(AbstractTela):
+class Cadastros(TelaBase):
   def __init__(self):
     super().__init__()
     self.formularioPosto = FormularioPosto()

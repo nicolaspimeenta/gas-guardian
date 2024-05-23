@@ -1,7 +1,7 @@
-from src.abstract.AbstractTela import AbstractTela
+from src.abstract.FormBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class InicialGestor(AbstractTela):
+class InicialGestor(TelaBase):
   def __init__(self):
     super().__init__()
     self.cria_tela(self)

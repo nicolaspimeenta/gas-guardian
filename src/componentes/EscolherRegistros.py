@@ -1,7 +1,7 @@
-from src.abstract.AbstractTela import AbstractTela
+from src.abstract.FormBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class EscolherRegistrosComponent(AbstractTela):
+class EscolherRegistrosComponent(TelaBase):
   def __init__(self, entidade: str):
     super().__init__()
     self.entidade = entidade

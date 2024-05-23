@@ -2,10 +2,10 @@
 
 from base64 import b64encode
 from validate_docbr import CPF
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioPessoa(AbstractForm):
+class FormularioPessoa(FormBase):
   def __init__(self):
     super().__init__(entidade='pessoas')
     self.cria_tela(self)

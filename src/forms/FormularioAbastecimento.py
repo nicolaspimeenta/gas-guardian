@@ -1,10 +1,10 @@
 # UC008: Registrar um Abastecimento
 
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 import datetime
 
-class FormularioAbastecimento(AbstractForm):
+class FormularioAbastecimento(FormBase):
   def __init__(self):
     super().__init__(entidade='abastecimentos')
     self.cria_tela(self)

@@ -1,9 +1,9 @@
 # UC003: Cadastrar, Visualizar, Editar e Excluir Tanques de Combustível
 
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioTanque(AbstractForm):
+class FormularioTanque(FormBase):
   def __init__(self):
     super().__init__(entidade='tanques')
     self.cria_tela(self)

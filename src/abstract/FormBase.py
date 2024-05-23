@@ -1,6 +1,6 @@
-from src.abstract.AbstractTela import AbstractTela
+from src.abstract.FormBase import TelaBase
 
-class AbstractForm(AbstractTela):
+class FormBase(TelaBase):
   def __init__(self, entidade: str):
     super().__init__()
     self.id_row = None

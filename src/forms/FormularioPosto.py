@@ -1,10 +1,10 @@
 # UC005: Editar os Dados do Posto de Gasolina
 
 from validate_docbr import CNPJ
-from src.abstract.AbstractForm import AbstractForm
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class FormularioPosto(AbstractForm):
+class FormularioPosto(FormBase):
   def __init__(self):
     super().__init__(entidade='posto')
     self.cria_tela(self)
