@@ -95,12 +95,12 @@ class FormularioLogin(FormBase):
     self.Confirmar.setIcon(icon1)
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
-    _translate = QtCore.QCoreApplication.translate
-    Login.setWindowTitle(_translate("Login", "GasGuardian"))
-    self.LabelLogin.setText(_translate("Login", "Login"))
-    self.LabelSenha.setText(_translate("Login", "Senha"))
-    self.Cancelar.setText(_translate("Login", "Cancelar"))
-    self.Confirmar.setText(_translate("Login", "Confirmar"))
+    Login.setWindowTitle("GasGuardian")
+    self.LabelLogin.setText("Login")
+    self.LabelSenha.setText("Senha")
+    self.Cancelar.setText("Cancelar")
+    self.Confirmar.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(Login)
+    #
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.hide)

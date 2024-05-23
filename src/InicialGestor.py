@@ -98,12 +98,12 @@ class InicialGestor(TelaBase):
     self.horizontalLayout.addWidget(self.Desconectar)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    _translate = QtCore.QCoreApplication.translate
-    InicialGestor.setWindowTitle(_translate("InicialGestor", "Form"))
-    self.Renovacao.setText(_translate("InicialGestor", "REGISTRAR RENOVAÇÃO DE ESTOQUE"))
-    self.Relatorios.setText(_translate("InicialGestor", "RELATÓRIOS"))
-    self.Cadastros.setText(_translate("InicialGestor", "CADASTROS"))
-    self.Desconectar.setText(_translate("InicialGestor", "Desconectar"))
+    InicialGestor.setWindowTitle("GasGuardian")
+    self.Renovacao.setText("REGISTRAR RENOVAÇÃO DE ESTOQUE")
+    self.Relatorios.setText("RELATÓRIOS")
+    self.Cadastros.setText("CADASTROS")
+    self.Desconectar.setText("Desconectar")
     QtCore.QMetaObject.connectSlotsByName(InicialGestor)
+    #
     self.Cadastros.clicked.connect(self.cadastros)
     self.Desconectar.clicked.connect(self.desconectar)

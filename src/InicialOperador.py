@@ -67,5 +67,6 @@ class InicialOperador(TelaBase):
     self.registrarAbastecimentoBtn.setText("REGISTRAR ABASTECIMENTO")
     self.Desconectar.setText("Desconectar")
     QtCore.QMetaObject.connectSlotsByName(InicialOperador)
+    #
     self.registrarAbastecimentoBtn.clicked.connect(self.registrar_abastecimento)
     self.Desconectar.clicked.connect(self.desconectar)

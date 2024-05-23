@@ -63,10 +63,9 @@ class InicialGlobal(TelaBase):
     self.AcessaSistema = QtWidgets.QPushButton(parent=self.ContainerBtnAcessarSistema)
     self.AcessaSistema.setObjectName("AcessaSistema")
     self.horizontalLayout.addWidget(self.AcessaSistema)
-    _translate = QtCore.QCoreApplication.translate
-    InicialGlobal.setWindowTitle(_translate("InicialGlobal", "GasGuardian"))
-    self.IniciarAbastecimento.setText(_translate("InicialGlobal", "INICIAR ABASTECIMENTO"))
-    self.AcessaSistema.setText(_translate("InicialGlobal", "Acessar Sistema"))
+    InicialGlobal.setWindowTitle("GasGuardian")
+    self.IniciarAbastecimento.setText("INICIAR ABASTECIMENTO")
+    self.AcessaSistema.setText("Acessar Sistema")
     QtCore.QMetaObject.connectSlotsByName(InicialGlobal)
     self.IniciarAbastecimento.clicked.connect(self.iniciar_abastecimento)
     self.AcessaSistema.clicked.connect(self.acessa_sistema)

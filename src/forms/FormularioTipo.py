@@ -113,12 +113,12 @@ class FormularioTipo(FormBase):
     self.Confirmar.setIcon(icon1)
     self.Confirmar.setObjectName("Confirmar")
     self.horizontalLayout.addWidget(self.Confirmar)
-    _translate = QtCore.QCoreApplication.translate
-    self.label.setText(_translate("FormularioTipo", "Nome *"))
-    self.label_2.setText(_translate("FormularioTipo", "Preço *"))
-    self.Cancelar.setText(_translate("FormularioTipo", "Cancelar"))
-    self.Confirmar.setText(_translate("FormularioTipo", "Confirmar"))
+    self.label.setText("Nome *")
+    self.label_2.setText("Preço *")
+    self.Cancelar.setText("Cancelar")
+    self.Confirmar.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioTipo)
+    #
     self.Confirmar.clicked.connect(self.confirmar)
     self.Cancelar.clicked.connect(self.hide)
   
