@@ -1,3 +1,5 @@
+# UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
+
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 

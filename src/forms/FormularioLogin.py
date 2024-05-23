@@ -1,3 +1,5 @@
+# UC009: Efetuar login
+
 from base64 import b64decode
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.abstract.AbstractForm import AbstractForm

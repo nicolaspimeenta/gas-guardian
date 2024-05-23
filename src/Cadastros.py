@@ -1,3 +1,9 @@
+# UC001: Cadastrar, Visualizar, Editar e Excluir Usuários
+# UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
+# UC003: Cadastrar, Visualizar, Editar e Excluir Tanques de Combustível
+# UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
+# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+
 from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.forms.FormularioPosto import FormularioPosto

@@ -1,3 +1,5 @@
+# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.componentes.EscolherRegistros import EscolherRegistrosComponent

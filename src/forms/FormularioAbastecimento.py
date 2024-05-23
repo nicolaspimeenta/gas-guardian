@@ -1,3 +1,5 @@
+# UC008: Registrar um Abastecimento
+
 from src.abstract.AbstractForm import AbstractForm
 from PyQt6 import QtCore, QtGui, QtWidgets
 import datetime
@@ -9,14 +11,14 @@ class FormularioAbastecimento(AbstractForm):
 
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados(entidade='abastecimentos')
-    form_data = {
-      'id_bomba': self.inputBomba.currentText(), 
+    novo_abastecimento = {
+      'id_bomba': self.inputBomba.currentText(),
       'id_tipo': self.inputTipo.currentText(),
       'preco': self.inputPreco.cleanText(),
       'litros': self.inputLitros.text().strip(),
-      'data': datetime.datetime.now().isoformat(),
+      'data': datetime.datetime.now().isoformat()
     }
-    abastecimento_data.append(form_data)
+    abastecimento_data.append(novo_abastecimento)
     QtWidgets.QMessageBox.information(self, "Sucesso", "Um novo Abastecimento foi cadastrado.",
     QtWidgets.QMessageBox.StandardButton.Ok)
     self.salva_dados(abastecimento_data, entidade='abastecimentos')
