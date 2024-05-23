@@ -6,8 +6,8 @@ class AbstractForm(AbstractTela):
     self.id_row = None
     self.entidade = entidade
 
-  def open_form(self, id_row: int, title: str):
-    self.id_row = id_row
+  def open_form(self, id: int, title: str) -> None:
+    self.id_row = id
     self.setWindowTitle(title)
     self.fill_form()
     self.show()
