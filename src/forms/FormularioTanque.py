@@ -15,7 +15,7 @@ class FormularioTanque(FormBase):
       'tipo': self.inputTipo.currentText(),
       'volume_atual': tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
       'capacidade_maxima': self.inputCapacidade.text().strip().replace(',', '.'),
-      'porcentagem_alerta': self.inputPorcentagem.cleanText(),
+      'porcentagem_alerta': self.inputPorcentagem.cleanText()
     }
     if self.is_form_valido(form_data):
       if self.is_edit():
@@ -63,7 +63,7 @@ class FormularioTanque(FormBase):
     if self.is_edit():
       self.inputId.setText(tanques_data[self.id_row]['id_tanque'])
       self.inputCapacidade.setText(tanques_data[self.id_row]['capacidade_maxima'])
-      self.inputPorcentagem.setSpecialValueText(tanques_data[self.id_row]['porcentagem_alerta'])
+      self.inputPorcentagem.setValue(int(tanques_data[self.id_row]['porcentagem_alerta']))
       self.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo'])
     else:
       self.inputId.clear()

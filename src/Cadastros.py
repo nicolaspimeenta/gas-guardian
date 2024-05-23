@@ -31,6 +31,7 @@ class Cadastros(TelaBase):
 
   def abre_form(self, btn: str) -> None:
     tab_ativa = self.tabWidget.currentIndex()
+    self.desativar_botoes()
 
     if tab_ativa == 0: # Bombas
       selected_row = self.BombasTable.currentRow()
@@ -82,6 +83,7 @@ class Cadastros(TelaBase):
         )
       
   def fetch_data(self) -> None:
+    self.ativar_botoes()
     self.fill_table(self.carrega_dados("pessoas"), self.PessoasTable)
     self.fill_table(self.carrega_dados("tipos-combustivel"), self.TiposTable)
     self.fill_table(self.carrega_dados("tanques"), self.TanquesTable)
@@ -155,6 +157,16 @@ class Cadastros(TelaBase):
       data=[tanque for tanque in self.carrega_dados(entidade='tanques') if tanque['tipo'] != tipo_excluido], 
       entidade='tanques'
       )
+    
+  def ativar_botoes(self):
+    self.NovoBtn.setEnabled(True)
+    self.EditarBtn.setEnabled(True)
+    self.ExcluirBtn.setEnabled(True)
+
+  def desativar_botoes(self):
+    self.NovoBtn.setDisabled(True)
+    self.EditarBtn.setDisabled(True)
+    self.ExcluirBtn.setDisabled(True)
 
   def cria_tela(self, Cadastros) -> None:
     Cadastros.setObjectName("Cadastros")
@@ -401,4 +413,9 @@ class Cadastros(TelaBase):
     self.EditarBtn.clicked.connect(lambda: self.abre_form("Editar"))
     self.ExcluirBtn.clicked.connect(self.excluir)
     self.AtualizarBtn.clicked.connect(self.fetch_data)
+    self.TanquesTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
+    self.PostoTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
+    self.TiposTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
+    self.BombasTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
+    self.PessoasTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
     self.fetch_data()

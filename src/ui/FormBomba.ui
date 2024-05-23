@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>142</height>
+    <width>822</width>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>141</height>
+     <width>821</width>
+     <height>421</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -28,104 +28,255 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>ID da Bomba *</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="inputId">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="escolherTipoBtn">
-      <property name="text">
-       <string>Escolher Tipos de Combustível da Bomba</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="isAutoAbastecimento">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Auto-abastecimento</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QFrame" name="ContainerBotoes">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>100</y>
-     <width>401</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="Cancelar">
-      <property name="text">
-       <string>Cancelar</string>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../../assets/cancel.svg</normaloff>../../assets/cancel.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Confirmar">
-      <property name="text">
-       <string>Confirmar</string>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../../assets/check.svg</normaloff>../../assets/check.svg</iconset>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>76</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>ID da Bomba *</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputId">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>133</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="isAutoAbastecimento">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>30</y>
+      <width>132</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Auto-abastecimento</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="removerBtn">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>180</y>
+      <width>82</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Remover</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../assets/left.svg</normaloff>../../assets/left.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableSelecionados">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>90</y>
+      <width>341</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="showGrid">
+     <bool>false</bool>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>135</number>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Nome</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignVCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Preço (R$)</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignVCenter</set>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="adicionarBtn">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>150</y>
+      <width>82</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Adicionar</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../assets/right.svg</normaloff>../../assets/right.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableTipos">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>341</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="showGrid">
+     <bool>false</bool>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>135</number>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Nome</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignVCenter</set>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Preço (R$)</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignLeading|AlignVCenter</set>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="registrosLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>142</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tipos de Combustíveis:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="selecionadosLabel">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>60</y>
+      <width>142</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Selecionados:</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="ContainerBotoes">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>300</y>
+      <width>821</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="Cancelar">
+       <property name="text">
+        <string>Cancelar</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../assets/cancel.svg</normaloff>../../assets/cancel.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Confirmar">
+       <property name="text">
+        <string>Confirmar</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../assets/check.svg</normaloff>../../assets/check.svg</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>
