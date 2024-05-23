@@ -4,21 +4,21 @@ from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 import datetime
 
-class FormularioAbastecimento(FormBase):
+class ControladorAbastecimento(FormBase):
   def __init__(self):
     super().__init__(entidade='abastecimentos')
     self.cria_tela(self)
 
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados(entidade='abastecimentos')
-    abastecimento_dto = {
+    form_data = {
       'id_bomba': self.inputBomba.currentText(),
       'id_tipo': self.inputTipo.currentText(),
       'preco': self.inputPreco.cleanText(),
       'litros': self.inputLitros.text().strip(),
       'data': datetime.datetime.now().isoformat()
     }
-    abastecimento_data.append(abastecimento_dto)
+    abastecimento_data.append(form_data)
     self.mostra_mensagem("Um novo Abastecimento foi registrado")
     self.salva_dados(abastecimento_data, entidade='abastecimentos')
     self.hide()

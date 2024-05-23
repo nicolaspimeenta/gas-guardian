@@ -1,7 +1,7 @@
 from abc import abstractmethod
-from src.abstract.TelaBase import TelaBase
+from src.abstract import ControladorBase, TelaBase
 
-class FormBase(TelaBase):
+class FormBase(TelaBase, ControladorBase):
   def __init__(self, entidade: str):
     super().__init__()
     self.id_row = None

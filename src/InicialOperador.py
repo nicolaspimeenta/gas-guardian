@@ -7,8 +7,8 @@ class InicialOperador(TelaBase):
     self.cria_tela(self)
 
   def registrar_abastecimento(self) -> None:
-    from src.formularios.FormularioAbastecimento import FormularioAbastecimento
-    self.registrarAbastecimento = FormularioAbastecimento()
+    from src.formularios.ControladorAbastecimento import ControladorAbastecimento
+    self.registrarAbastecimento = ControladorAbastecimento()
     self.registrarAbastecimento.open_form(id=None, title='Registrar Abastecimento')
 
   def desconectar(self) -> None:

@@ -1,27 +1,19 @@
 import json
-from PyQt6 import QtWidgets
+from PyQt6.QtWidgets import QMainWindow, QTableWidget, QMessageBox, QTableWidgetItem
 
-class TelaBase(QtWidgets.QMainWindow):
+class TelaBase(QMainWindow):
   def __init__(self):
     super().__init__()
 
   def mostra_aviso(self, messagem: str) -> None:
-    QtWidgets.QMessageBox.warning(self, "Aviso", messagem,
-    QtWidgets.QMessageBox.StandardButton.Ok)
+    QMessageBox.warning(self, "Aviso", messagem,
+    QMessageBox.StandardButton.Ok)
 
   def mostra_mensagem(self, mensagem: str) -> None:
-    QtWidgets.QMessageBox.information(self, "Sucesso", mensagem,
-    QtWidgets.QMessageBox.StandardButton.Ok)
+    QMessageBox.information(self, "Sucesso", mensagem,
+    QMessageBox.StandardButton.Ok)
 
-  def carrega_dados(self, entidade: str) -> list:
-    with open(f"dados/{entidade}.json", 'r') as file:
-      return json.load(file)
-
-  def salva_dados(self, data: list, entidade: str) -> None:
-    with open(f"dados/{entidade}.json", 'w') as file:
-      json.dump(data, file)
-
-  def fill_table(self, data: list, table: QtWidgets.QTableWidget) -> None:
+  def fill_table(self, data: list, table: QTableWidget) -> None:
     if data:
       table.setRowCount(0)
       table.setRowCount(len(data))
@@ -31,7 +23,7 @@ class TelaBase(QtWidgets.QMainWindow):
           if item is list:
             for i in item:
               i = i[0]
-          cell_item = QtWidgets.QTableWidgetItem(str(item))
+          cell_item = QTableWidgetItem(str(item))
           table.setItem(row, column, cell_item)
     else:
       table.setRowCount(0)
