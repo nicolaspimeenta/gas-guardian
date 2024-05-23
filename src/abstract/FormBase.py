@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from src.abstract.TelaBase import TelaBase
 
 class FormBase(TelaBase):
@@ -14,3 +15,7 @@ class FormBase(TelaBase):
 
   def is_edit(self) -> bool:
     return self.id_row != None
+  
+  @abstractmethod
+  def fill_form(self) -> None:
+    pass

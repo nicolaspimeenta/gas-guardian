@@ -12,7 +12,7 @@ class FormularioPessoa(FormBase):
 
   def confirmar(self) -> None:
     pessoas_data = self.carrega_dados(entidade='pessoas')
-    form_data = {
+    pessoa_dto = {
       'nome': self.inputNome.text().strip(),
       'cpf': self.inputCpf.text().strip(),
       'email': self.inputEmail.text().strip(),
@@ -21,13 +21,13 @@ class FormularioPessoa(FormBase):
       'senha': self.encode_senha(self.inputSenha.text().strip()),
       'is_gestor': self.isGestor.isChecked()
       }
-    if self.is_form_valido(form_data):
+    if self.is_form_valido(form_data=pessoa_dto):
       if self.is_edit():
-        pessoas_data[self.id_row] = form_data
+        pessoas_data[self.id_row] = pessoa_dto
         self.salva_dados(pessoas_data, entidade='pessoas')
         self.hide()
       else:
-        pessoas_data.append(form_data)
+        pessoas_data.append(pessoa_dto)
         QtWidgets.QMessageBox.information(self, "Sucesso", "Uma nova Pessoa foi cadastrada.",
         QtWidgets.QMessageBox.StandardButton.Ok)
         self.salva_dados(pessoas_data, entidade='pessoas')

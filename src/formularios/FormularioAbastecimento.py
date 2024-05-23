@@ -7,21 +7,19 @@ import datetime
 class FormularioAbastecimento(FormBase):
   def __init__(self):
     super().__init__(entidade='abastecimentos')
-    self.abastecimento = None
     self.cria_tela(self)
 
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados(entidade='abastecimentos')
-    self.abastecimento = {
+    abastecimento_dto = {
       'id_bomba': self.inputBomba.currentText(),
       'id_tipo': self.inputTipo.currentText(),
       'preco': self.inputPreco.cleanText(),
       'litros': self.inputLitros.text().strip(),
       'data': datetime.datetime.now().isoformat()
     }
-    abastecimento_data.append(self.abastecimento)
-    QtWidgets.QMessageBox.information(self, "Sucesso", "Um novo Abastecimento foi cadastrado.",
-    QtWidgets.QMessageBox.StandardButton.Ok)
+    abastecimento_data.append(abastecimento_dto)
+    self.mostra_mensagem("Um novo Abastecimento foi registrado")
     self.salva_dados(abastecimento_data, entidade='abastecimentos')
     self.hide()
   
@@ -45,7 +43,6 @@ class FormularioAbastecimento(FormBase):
     for tipo in tipos_data:
       if tipo['nome'] == self.inputTipo.currentText():
         preco_tipo = float(tipo['preco'])
-
     self.inputLitros.setText(str( round(float(self.inputPreco.text().replace(',', '.')) / preco_tipo, 2) ))
 
   def cria_tela(self, FormularioAbastecimento) -> None:

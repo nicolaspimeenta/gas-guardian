@@ -9,6 +9,10 @@ class TelaBase(QtWidgets.QMainWindow):
     QtWidgets.QMessageBox.warning(self, "Aviso", messagem,
     QtWidgets.QMessageBox.StandardButton.Ok)
 
+  def mostra_mensagem(self, mensagem: str) -> None:
+    QtWidgets.QMessageBox.information(self, "Sucesso", mensagem,
+    QtWidgets.QMessageBox.StandardButton.Ok)
+
   def carrega_dados(self, entidade: str) -> list:
     with open(f"dados/{entidade}.json", 'r') as file:
       return json.load(file)
