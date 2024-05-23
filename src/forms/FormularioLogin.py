@@ -3,12 +3,14 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from src.abstract.AbstractForm import AbstractForm
 from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
+from src.InicialOperador import InicialOperador
 
 class FormularioLogin(AbstractForm):
   def __init__(self):
     super().__init__(entidade=None)
     self.inicialGestor = InicialGestor()
     self.inicialGlobal = InicialGlobal()
+    self.inicialOperador = InicialOperador()
     self.cria_tela(self)
 
   def confirmar(self) -> None:
@@ -30,7 +32,8 @@ class FormularioLogin(AbstractForm):
       self.hide()
       self.inicialGestor.show()
     else:
-      self.mostra_aviso("Logado como Operador.")
+      self.hide()
+      self.inicialOperador.show()
       return
 
   def cancelar(self) -> None:

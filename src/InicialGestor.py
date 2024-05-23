@@ -1,5 +1,6 @@
 from src.abstract.AbstractTela import AbstractTela
 from PyQt6 import QtCore, QtGui, QtWidgets
+
 class InicialGestor(AbstractTela):
   def __init__(self):
     super().__init__()

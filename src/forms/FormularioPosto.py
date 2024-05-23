@@ -6,18 +6,17 @@ class FormularioPosto(AbstractForm):
   def __init__(self):
     super().__init__(entidade='posto')
     self.cria_tela(self)
-    self.posto_data = self.carrega_dados(entidade='posto')
 
   def confirmar(self) -> None:
-    # função chamada ao clicar botão "Confirmar"
+    posto_data = self.carrega_dados(entidade='posto')
     form_data = {
       'nomePosto': self.inputNome.text().strip(), 
       'chavePix': self.inputPix.text().strip(),
       'cnpj': self.inputCnpj.text().strip()
       }
     if self.is_form_valido(form_data):
-      self.posto_data[self.id_row] = form_data
-      self.salva_dados(self.posto_data, entidade='posto')
+      posto_data[self.id_row] = form_data
+      self.salva_dados(posto_data, entidade='posto')
       self.hide()
 
   def is_form_valido(self, form_data) -> bool:
@@ -35,9 +34,10 @@ class FormularioPosto(AbstractForm):
     return True
   
   def fill_form(self) -> None:
-    self.inputNome.setText(self.posto_data[self.id_row]['nomePosto'])
-    self.inputCnpj.setText(self.posto_data[self.id_row]['cnpj'])
-    self.inputPix.setText(self.posto_data[self.id_row]['chavePix'])
+    posto_data = self.carrega_dados(entidade='posto')
+    self.inputNome.setText(posto_data[self.id_row]['nomePosto'])
+    self.inputCnpj.setText(posto_data[self.id_row]['cnpj'])
+    self.inputPix.setText(posto_data[self.id_row]['chavePix'])
   
   def cria_tela(self, FormularioPosto) -> None:
     FormularioPosto.setObjectName("FormularioPosto")

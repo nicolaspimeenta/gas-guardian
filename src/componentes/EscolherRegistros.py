@@ -5,37 +5,53 @@ class EscolherRegistrosComponent(AbstractTela):
   def __init__(self, entidade: str):
     super().__init__()
     self.entidade = entidade
-    self.registros_data = self.carrega_dados(entidade=entidade)
-    self.selecionados = []
     self.cria_tela(self)
+    self.selecionados = []
 
   def open(self, selecionados_data: list) -> None:
-    self.selecionados = selecionados_data
-    self.fill_table(self.selecionados, self.tableRegistros)
+    registros_data = self.carrega_dados(entidade=self.entidade)
+    self.fill_table(registros_data, self.tableRegistros)
+    if selecionados_data:
+      if self.entidade == 'tipos-combustivel':
+        for selecionado in selecionados_data:
+          for registro in registros_data:
+            if registro['nome'] == selecionado and registro['nome'] and registro not in self.selecionados:
+              self.selecionados.append(registro)
+
+      self.fill_table(self.selecionados, self.tableSelecionados)
+      
     self.show()
 
-  def confirmar(self) -> None:
-    return
-
   def adicionar(self) -> None:
+    registros_data = self.carrega_dados(entidade=self.entidade)
     selected_row = self.tableRegistros.currentRow()
-    self.selecionados.append(self.registros_data[selected_row])
+
+    if selected_row == -1:
+      self.mostra_aviso("Nenhum registro selecionado.")
+      return
+
+    if registros_data[selected_row] in self.selecionados:
+      self.mostra_aviso("Registro já está na lista de selecionados.")
+      return
+    
+    self.selecionados.append(registros_data[selected_row])
+    self.fill_table(self.selecionados, self.tableSelecionados)
+
+  def remover(self) -> None:
+    selected_row = self.tableSelecionados.currentRow()
+
+    if selected_row == -1:
+      self.mostra_aviso("Nenhum registro selecionado.")
+      return
+    
+    self.selecionados.remove(self.selecionados[selected_row])
     self.fill_table(self.selecionados, self.tableSelecionados)
 
   def cria_tela(self, ComponentEscolherRegistros) -> None:
     ComponentEscolherRegistros.setObjectName("ComponentEscolherRegistros")
-    ComponentEscolherRegistros.resize(602, 268)
-    self.tableRegistros = QtWidgets.QTableWidget(parent=ComponentEscolherRegistros)
-    self.tableRegistros.setGeometry(QtCore.QRect(10, 30, 241, 201))
-    self.tableRegistros.setShowGrid(False)
-    self.tableRegistros.setObjectName("tableRegistros")
-    self.tableRegistros.setColumnCount(0)
-    self.tableRegistros.setRowCount(0)
-    self.tableRegistros.horizontalHeader().setDefaultSectionSize(135)
-    self.tableRegistros.horizontalHeader().setSortIndicatorShown(True)
-    self.tableRegistros.horizontalHeader().setStretchLastSection(True)
+    ComponentEscolherRegistros.resize(823, 240)
     self.tableSelecionados = QtWidgets.QTableWidget(parent=ComponentEscolherRegistros)
-    self.tableSelecionados.setGeometry(QtCore.QRect(350, 30, 241, 201))
+    self.tableSelecionados.setGeometry(QtCore.QRect(470, 30, 341, 201))
     self.tableSelecionados.setShowGrid(False)
     self.tableSelecionados.setObjectName("tableSelecionados")
     self.tableSelecionados.setColumnCount(0)
@@ -44,7 +60,7 @@ class EscolherRegistrosComponent(AbstractTela):
     self.tableSelecionados.horizontalHeader().setSortIndicatorShown(True)
     self.tableSelecionados.horizontalHeader().setStretchLastSection(True)
     self.adicionarBtn = QtWidgets.QPushButton(parent=ComponentEscolherRegistros)
-    self.adicionarBtn.setGeometry(QtCore.QRect(260, 90, 82, 24))
+    self.adicionarBtn.setGeometry(QtCore.QRect(370, 90, 82, 24))
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/right.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
     self.adicionarBtn.setIcon(icon)
@@ -53,51 +69,36 @@ class EscolherRegistrosComponent(AbstractTela):
     self.registrosLabel.setGeometry(QtCore.QRect(10, 0, 142, 32))
     self.registrosLabel.setObjectName("registrosLabel")
     self.selecionadosLabel = QtWidgets.QLabel(parent=ComponentEscolherRegistros)
-    self.selecionadosLabel.setGeometry(QtCore.QRect(350, 0, 142, 32))
+    self.selecionadosLabel.setGeometry(QtCore.QRect(470, 0, 142, 32))
     self.selecionadosLabel.setObjectName("selecionadosLabel")
     self.removerBtn = QtWidgets.QPushButton(parent=ComponentEscolherRegistros)
-    self.removerBtn.setGeometry(QtCore.QRect(260, 120, 82, 24))
+    self.removerBtn.setGeometry(QtCore.QRect(370, 120, 82, 24))
     icon1 = QtGui.QIcon()
     icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/left.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
     self.removerBtn.setIcon(icon1)
     self.removerBtn.setObjectName("removerBtn")
-    self.ContainerBotoes = QtWidgets.QFrame(parent=ComponentEscolherRegistros)
-    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 230, 601, 44))
-    self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-    self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-    self.ContainerBotoes.setObjectName("ContainerBotoes")
-    self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
-    self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
-    icon2 = QtGui.QIcon()
-    icon2.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon2)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
-    spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-    self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
-    icon3 = QtGui.QIcon()
-    icon3.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon3)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
-    _translate = QtCore.QCoreApplication.translate
-    ComponentEscolherRegistros.setWindowTitle(_translate("ComponentEscolherRegistros", "Escolher Registros"))
-    self.tableRegistros.setSortingEnabled(True)
+    self.tableRegistros = QtWidgets.QTableWidget(parent=ComponentEscolherRegistros)
+    self.tableRegistros.setGeometry(QtCore.QRect(10, 30, 341, 201))
+    self.tableRegistros.setShowGrid(False)
+    self.tableRegistros.setObjectName("tableRegistros")
+    self.tableRegistros.setColumnCount(0)
+    self.tableRegistros.setRowCount(0)
+    self.tableRegistros.horizontalHeader().setDefaultSectionSize(135)
+    self.tableRegistros.horizontalHeader().setSortIndicatorShown(True)
+    self.tableRegistros.horizontalHeader().setStretchLastSection(True)
+    ComponentEscolherRegistros.setWindowTitle("Escolher Registros")
     self.tableSelecionados.setSortingEnabled(True)
-    self.adicionarBtn.setText(_translate("ComponentEscolherRegistros", "Adicionar"))
-    self.registrosLabel.setText(_translate("ComponentEscolherRegistros", "Registros:"))
-    self.selecionadosLabel.setText(_translate("ComponentEscolherRegistros", "Selecionados:"))
-    self.removerBtn.setText(_translate("ComponentEscolherRegistros", "Remover"))
-    self.Cancelar.setText(_translate("ComponentEscolherRegistros", "Cancelar"))
-    self.Confirmar.setText(_translate("ComponentEscolherRegistros", "Confirmar"))
+    self.adicionarBtn.setText("Adicionar")
+    self.registrosLabel.setText("Registros:")
+    self.selecionadosLabel.setText("Selecionados:")
+    self.removerBtn.setText("Remover")
+    self.tableRegistros.setSortingEnabled(True)
     QtCore.QMetaObject.connectSlotsByName(ComponentEscolherRegistros)
-    self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
     self.adicionarBtn.clicked.connect(self.adicionar) 
-    self.removerBtn.clicked.connect() #####
-    if self.entidade == 'tipos':
+    self.removerBtn.clicked.connect(self.remover)
+    if self.entidade == 'tipos-combustivel':
+      self.setWindowTitle('Escolher Tipos')
+      self.registrosLabel.setText('Tipos de Combustível:')
       self.tableRegistros.setColumnCount(2)
       self.tableRegistros.setRowCount(0)
       item = QtWidgets.QTableWidgetItem()
@@ -130,4 +131,3 @@ class EscolherRegistrosComponent(AbstractTela):
       item.setText('Nome')
       item = self.tableSelecionados.horizontalHeaderItem(1)
       item.setText('Preço (R$)')
-    self.fill_table(self.registros_data, self.tableRegistros)

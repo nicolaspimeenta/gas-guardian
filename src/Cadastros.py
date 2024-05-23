@@ -13,8 +13,8 @@ class Cadastros(AbstractTela):
     self.formularioPosto = FormularioPosto()
     self.formularioTipo = FormularioTipo()
     self.formularioPessoa = FormularioPessoa()
-    self.formularioTanquee = FormularioBomba()
-    self.formularioBomba = FormularioTanque()
+    self.formularioTanque = FormularioTanque()
+    self.formularioBomba = FormularioBomba()
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:
@@ -31,7 +31,7 @@ class Cadastros(AbstractTela):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formulario.open_form(
+      self.formularioBomba.open_form(
         id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Bomba ({selected_row+1})" if btn=='Editar' else "Nova Bomba"
         )
@@ -104,6 +104,7 @@ class Cadastros(AbstractTela):
       if selected_row == -1:
         self.mostra_aviso("Selecione uma linha para excluir.")
       else:
+        self.exclui_tipos(id=selected_row)
         self.exclui_linha(entidade="tipos-combustivel", id=selected_row)
     
     if tab_ativa == 3: # Pessoas
@@ -124,13 +125,30 @@ class Cadastros(AbstractTela):
     if tab_ativa == 5: # Posto
       self.mostra_aviso("Não é permitido excluir o registro do Posto.")
     
-  def exclui_linha(self, entidade, id) -> None:
+  def exclui_linha(self, entidade: str, id: int) -> None:
     data = self.carrega_dados(entidade)
     del data[id]
     self.salva_dados(data, entidade)
     QtWidgets.QMessageBox.critical(self, "Aviso", f"A linha {id+1} foi excluída",
     QtWidgets.QMessageBox.StandardButton.Ok)
     self.fetch_data()
+
+  def exclui_tipos(self, id: int):
+    tipos_data = self.carrega_dados(entidade='tipos-combustivel')
+    tipo_excluido = tipos_data[id]['nome']
+    #
+    bombas_data = self.carrega_dados(entidade='bombas')
+    for bomba in bombas_data:
+        bomba['tipos_combustivel'] = [tipo for tipo in bomba['tipos_combustivel'] if tipo != tipo_excluido]
+    self.salva_dados(
+      data=bombas_data, 
+      entidade='bombas'
+      )
+    #
+    self.salva_dados(
+      data=[tanque for tanque in self.carrega_dados(entidade='tanques') if tanque['tipo'] != tipo_excluido], 
+      entidade='tanques'
+      )
 
   def cria_tela(self, Cadastros) -> None:
     Cadastros.setObjectName("Cadastros")

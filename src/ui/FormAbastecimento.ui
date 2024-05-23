@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FomularioBomba</class>
- <widget class="QWidget" name="FomularioBomba">
+ <class>FomularioTanque</class>
+ <widget class="QWidget" name="FomularioTanque">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>142</height>
+    <width>300</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>141</height>
+     <width>301</width>
+     <height>201</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -29,7 +29,47 @@
     <enum>QFrame::Raised</enum>
    </property>
    <layout class="QFormLayout" name="formLayout">
+    <item row="1" column="0" colspan="2">
+     <widget class="QComboBox" name="inputBomba">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Bomba</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Tipo de combustivel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QComboBox" name="inputTipo">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
      <widget class="QLabel" name="label">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -38,37 +78,37 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>ID da Bomba *</string>
+       <string>Litros abastecidos</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="inputId">
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Preço</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QDoubleSpinBox" name="inputPreco">
+      <property name="minimum">
+       <double>0.010000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.500000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="inputLitros">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="escolherTipoBtn">
-      <property name="text">
-       <string>Escolher Tipos de Combustível da Bomba</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="isAutoAbastecimento">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Auto-abastecimento</string>
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -78,9 +118,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>100</y>
-     <width>401</width>
-     <height>41</height>
+     <y>160</y>
+     <width>301</width>
+     <height>44</height>
     </rect>
    </property>
    <property name="frameShape">

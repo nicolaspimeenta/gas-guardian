@@ -21,11 +21,16 @@ class AbstractTela(QtWidgets.QMainWindow):
     self.hide()
 
   def fill_table(self, data: list, table: QtWidgets.QTableWidget) -> None:
-    table.setRowCount(0)
-    if len(data) > 0:
+    if data:
+      table.setRowCount(0)
       table.setRowCount(len(data))
       for row, info in enumerate(data):
         info_list = info.values()
         for column, item in enumerate(info_list):
+          if item is list:
+            for i in item:
+              i = i[0]
           cell_item = QtWidgets.QTableWidgetItem(str(item))
           table.setItem(row, column, cell_item)
+    else:
+      table.setRowCount(0)

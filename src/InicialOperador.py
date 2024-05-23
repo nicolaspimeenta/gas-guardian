@@ -1,0 +1,71 @@
+from src.abstract.AbstractTela import AbstractTela
+from PyQt6 import QtCore, QtGui, QtWidgets
+
+class InicialOperador(AbstractTela):
+  def __init__(self):
+    super().__init__()
+    self.cria_tela(self)
+
+  def registrar_abastecimento(self) -> None:
+    from src.forms.FormularioAbastecimento import FormularioAbastecimento
+    self.registrarAbastecimento = FormularioAbastecimento()
+    self.registrarAbastecimento.open_form(id_row=None, title='Registrar Abastecimento')
+
+  def desconectar(self) -> None:
+    self.hide()
+    from src.forms.FormularioLogin import FormularioLogin
+    self.formularioLogin = FormularioLogin()
+    self.formularioLogin.show()
+
+  def cria_tela(self, InicialGestor) -> None:
+    InicialGestor.setObjectName("InicialGestor")
+    InicialGestor.setWindowModality(QtCore.Qt.WindowModality.NonModal)
+    InicialGestor.resize(600, 400)
+    InicialGestor.setMinimumSize(QtCore.QSize(600, 400))
+    InicialGestor.setMaximumSize(QtCore.QSize(600, 400))
+    self.ContainerButtons = QtWidgets.QFrame(parent=InicialGestor)
+    self.ContainerButtons.setGeometry(QtCore.QRect(0, 0, 600, 401))
+    self.ContainerButtons.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+    self.ContainerButtons.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+    self.ContainerButtons.setObjectName("ContainerButtons")
+    self.gridLayout = QtWidgets.QGridLayout(self.ContainerButtons)
+    self.gridLayout.setContentsMargins(10, 100, 10, 100)
+    self.gridLayout.setObjectName("gridLayout")
+    self.registrarAbastecimentoBtn = QtWidgets.QPushButton(parent=self.ContainerButtons)
+    sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
+    sizePolicy.setHorizontalStretch(0)
+    sizePolicy.setVerticalStretch(0)
+    sizePolicy.setHeightForWidth(self.registrarAbastecimentoBtn.sizePolicy().hasHeightForWidth())
+    self.registrarAbastecimentoBtn.setSizePolicy(sizePolicy)
+    font = QtGui.QFont()
+    font.setBold(False)
+    self.registrarAbastecimentoBtn.setFont(font)
+    self.registrarAbastecimentoBtn.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.ArrowCursor))
+    icon = QtGui.QIcon()
+    icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/bomba-combustivel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.registrarAbastecimentoBtn.setIcon(icon)
+    self.registrarAbastecimentoBtn.setDefault(False)
+    self.registrarAbastecimentoBtn.setFlat(False)
+    self.registrarAbastecimentoBtn.setObjectName("registrarAbastecimentoBtn")
+    self.gridLayout.addWidget(self.registrarAbastecimentoBtn, 0, 0, 1, 1)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=InicialGestor)
+    self.ContainerBotoes.setGeometry(QtCore.QRect(0, 360, 601, 44))
+    self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+    self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+    self.ContainerBotoes.setObjectName("ContainerBotoes")
+    self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
+    self.horizontalLayout.setObjectName("horizontalLayout")
+    self.Desconectar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    icon1 = QtGui.QIcon()
+    icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/logout.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+    self.Desconectar.setIcon(icon1)
+    self.Desconectar.setObjectName("Desconectar")
+    self.horizontalLayout.addWidget(self.Desconectar)
+    spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+    self.horizontalLayout.addItem(spacerItem)
+    InicialGestor.setWindowTitle("GasGuardian")
+    self.registrarAbastecimentoBtn.setText("REGISTRAR ABASTECIMENTO")
+    self.Desconectar.setText("Desconectar")
+    QtCore.QMetaObject.connectSlotsByName(InicialGestor)
+    self.registrarAbastecimentoBtn.clicked.connect(self.registrar_abastecimento)
+    self.Desconectar.clicked.connect(self.desconectar)

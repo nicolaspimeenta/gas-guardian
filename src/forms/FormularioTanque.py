@@ -5,32 +5,32 @@ class FormularioTanque(AbstractForm):
   def __init__(self):
     super().__init__(entidade='tanques')
     self.cria_tela(self)
-    self.tanques_data = self.carrega_dados(entidade='tanques')
 
   def confirmar(self) -> None:
-    # função chamada ao clicar botão "Confirmar"
+    tanques_data = self.carrega_dados(entidade='tanques')
     form_data = {
       'id_tanque': self.inputId.text().strip(), 
       'tipo': self.inputTipo.currentText(),
-      'volume_atual': self.tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
+      'volume_atual': tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
       'capacidade_maxima': self.inputCapacidade.text().strip().replace(',', '.'),
       'porcentagem_alerta': self.inputPorcentagem.cleanText(),
     }
     if self.is_form_valido(form_data):
       if self.is_edit():
-        self.tanques_data[self.id_row] = form_data
-        self.salva_dados(self.tanques_data, entidade='tanques')
+        tanques_data[self.id_row] = form_data
+        self.salva_dados(tanques_data, entidade='tanques')
         self.hide()
       else:
-        self.tanques_data.append(form_data)
+        tanques_data.append(form_data)
         QtWidgets.QMessageBox.information(self, "Sucesso", "Um novo Tanque foi cadastrado.",
         QtWidgets.QMessageBox.StandardButton.Ok)
-        self.salva_dados(self.tanques_data, entidade='tanques')
+        self.salva_dados(tanques_data, entidade='tanques')
         self.hide()
 
   def is_form_valido(self, form_data) -> bool:
-    if not (self.is_edit() and form_data['id_tanque'] == self.tanques_data[self.id_row]['id_tanque']):
-      for tanque in self.tanques_data: # Checa se o tanque de combustível já foi cadastrado
+    tanques_data = self.carrega_dados(entidade='tanques')
+    if not (self.is_edit() and form_data['id_tanque'] == tanques_data[self.id_row]['id_tanque']):
+      for tanque in tanques_data: # Checa se o tanque de combustível já foi cadastrado
         if tanque['id_tanque'].lower() == form_data['id_tanque'].lower():
           self.mostra_aviso("Tanque já cadastrado.")
           return False
@@ -52,16 +52,17 @@ class FormularioTanque(AbstractForm):
     return True
   
   def fill_form(self) -> None:
+    tanques_data = self.carrega_dados(entidade='tanques')
     self.inputTipo.clear()
     self.inputTipo.addItems(
       tipo['nome'] for tipo in self.carrega_dados(entidade='tipos-combustivel')
     )
 
     if self.is_edit():
-      self.inputId.setText(self.tanques_data[self.id_row]['id_tanque'])
-      self.inputCapacidade.setText(self.tanques_data[self.id_row]['capacidade_maxima'])
-      self.inputPorcentagem.setSpecialValueText(self.tanques_data[self.id_row]['porcentagem_alerta'])
-      self.inputTipo.setCurrentText(self.tanques_data[self.id_row]['tipo'])
+      self.inputId.setText(tanques_data[self.id_row]['id_tanque'])
+      self.inputCapacidade.setText(tanques_data[self.id_row]['capacidade_maxima'])
+      self.inputPorcentagem.setSpecialValueText(tanques_data[self.id_row]['porcentagem_alerta'])
+      self.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo'])
     else:
       self.inputId.clear()
       self.inputCapacidade.clear()

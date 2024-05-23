@@ -1,1 +1,1 @@
-[]
+[{"id_bomba": "BOM1", "is_auto_abastecimento": false, "tipos_combustivel": ["Diesel"]}, {"id_bomba": "bom2", "is_auto_abastecimento": false, "tipos_combustivel": ["Diesel"]}, {"id_bomba": "bom3", "is_auto_abastecimento": false, "tipos_combustivel": ["Aditivada"]}, {"id_bomba": "bom45", "is_auto_abastecimento": true, "tipos_combustivel": ["Aditivada"]}]
