@@ -1,4 +1,4 @@
-from src.abstract.FormBase import TelaBase
+from src.abstract.TelaBase import TelaBase
 
 class FormBase(TelaBase):
   def __init__(self, entidade: str):

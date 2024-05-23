@@ -1,4 +1,4 @@
-from src.abstract.FormBase import TelaBase
+from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 class InicialOperador(TelaBase):
@@ -9,7 +9,7 @@ class InicialOperador(TelaBase):
   def registrar_abastecimento(self) -> None:
     from src.forms.FormularioAbastecimento import FormularioAbastecimento
     self.registrarAbastecimento = FormularioAbastecimento()
-    self.registrarAbastecimento.open_form(id_row=None, title='Registrar Abastecimento')
+    self.registrarAbastecimento.open_form(id=None, title='Registrar Abastecimento')
 
   def desconectar(self) -> None:
     self.hide()
@@ -17,13 +17,13 @@ class InicialOperador(TelaBase):
     self.formularioLogin = FormularioLogin()
     self.formularioLogin.show()
 
-  def cria_tela(self, InicialGestor) -> None:
-    InicialGestor.setObjectName("InicialGestor")
-    InicialGestor.setWindowModality(QtCore.Qt.WindowModality.NonModal)
-    InicialGestor.resize(600, 400)
-    InicialGestor.setMinimumSize(QtCore.QSize(600, 400))
-    InicialGestor.setMaximumSize(QtCore.QSize(600, 400))
-    self.ContainerButtons = QtWidgets.QFrame(parent=InicialGestor)
+  def cria_tela(self, InicialOperador) -> None:
+    InicialOperador.setObjectName("InicialOperador")
+    InicialOperador.setWindowModality(QtCore.Qt.WindowModality.NonModal)
+    InicialOperador.resize(600, 400)
+    InicialOperador.setMinimumSize(QtCore.QSize(600, 400))
+    InicialOperador.setMaximumSize(QtCore.QSize(600, 400))
+    self.ContainerButtons = QtWidgets.QFrame(parent=InicialOperador)
     self.ContainerButtons.setGeometry(QtCore.QRect(0, 0, 600, 401))
     self.ContainerButtons.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerButtons.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -48,7 +48,7 @@ class InicialOperador(TelaBase):
     self.registrarAbastecimentoBtn.setFlat(False)
     self.registrarAbastecimentoBtn.setObjectName("registrarAbastecimentoBtn")
     self.gridLayout.addWidget(self.registrarAbastecimentoBtn, 0, 0, 1, 1)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=InicialGestor)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=InicialOperador)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 360, 601, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -63,9 +63,9 @@ class InicialOperador(TelaBase):
     self.horizontalLayout.addWidget(self.Desconectar)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    InicialGestor.setWindowTitle("GasGuardian")
+    InicialOperador.setWindowTitle("GasGuardian")
     self.registrarAbastecimentoBtn.setText("REGISTRAR ABASTECIMENTO")
     self.Desconectar.setText("Desconectar")
-    QtCore.QMetaObject.connectSlotsByName(InicialGestor)
+    QtCore.QMetaObject.connectSlotsByName(InicialOperador)
     self.registrarAbastecimentoBtn.clicked.connect(self.registrar_abastecimento)
     self.Desconectar.clicked.connect(self.desconectar)

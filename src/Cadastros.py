@@ -4,7 +4,7 @@
 # UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
 # UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
 
-from src.abstract.FormBase import TelaBase
+from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.forms.FormularioPosto import FormularioPosto
 from src.forms.FormularioPessoa import FormularioPessoa
@@ -38,7 +38,7 @@ class Cadastros(TelaBase):
         self.mostra_aviso("Selecione uma linha para editar.")
         return
       self.formularioBomba.open_form(
-        id_row=selected_row if btn=='Editar' else None,
+        id=selected_row if btn=='Editar' else None,
         title=f"Editando Bomba ({selected_row+1})" if btn=='Editar' else "Nova Bomba"
         )
     
@@ -48,7 +48,7 @@ class Cadastros(TelaBase):
         self.mostra_aviso("Selecione uma linha para editar.")
         return
       self.formularioTanque.open_form(
-        id_row=selected_row if btn=='Editar' else None,
+        id=selected_row if btn=='Editar' else None,
         title=f"Editando Tanque ({selected_row+1})" if btn=='Editar' else "Novo Tanque"
         )
     
@@ -58,7 +58,7 @@ class Cadastros(TelaBase):
         self.mostra_aviso("Selecione uma linha para editar.")
         return
       self.formularioTipo.open_form(
-        id_row=selected_row if btn=='Editar' else None,
+        id=selected_row if btn=='Editar' else None,
         title=f"Editando Tipo ({selected_row+1})" if btn=='Editar' else "Novo Tipo"
         )
 
@@ -68,7 +68,7 @@ class Cadastros(TelaBase):
         self.mostra_aviso("Selecione uma linha para editar.")
         return
       self.formularioPessoa.open_form(
-        id_row=selected_row if btn=='Editar' else None,
+        id=selected_row if btn=='Editar' else None,
         title=f"Editando Funcionário ({selected_row+1})" if btn=='Editar' else "Novo Funcionário"
         )
     
@@ -77,7 +77,7 @@ class Cadastros(TelaBase):
         self.mostra_aviso("Não é permitido criar um registro de Posto.")
         return
       self.formularioPosto.open_form(
-        id_row=0,
+        id=0,
         title="Editando Posto"
         )
       

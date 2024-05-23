@@ -1,4 +1,4 @@
-from src.abstract.FormBase import TelaBase
+from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 class InicialGlobal(TelaBase):
   def __init__(self):
