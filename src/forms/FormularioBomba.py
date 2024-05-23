@@ -135,6 +135,6 @@ class FormularioBomba(AbstractForm):
     self.Confirmar.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioBomba)
     self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
+    self.Cancelar.clicked.connect(self.hide)
     self.escolherTipoBtn.clicked.connect(self.escolherTipo)
   

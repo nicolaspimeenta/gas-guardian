@@ -108,4 +108,4 @@ class FormularioPosto(AbstractForm):
     self.Confirmar.setText(_translate("FormularioPosto", "Confirmar"))
     QtCore.QMetaObject.connectSlotsByName(FormularioPosto)
     self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
+    self.Cancelar.clicked.connect(self.hide)

@@ -161,5 +161,5 @@ class FormularioTanque(AbstractForm):
     self.Confirmar.setText(_translate("formularioTanquee", "Confirmar"))
     QtCore.QMetaObject.connectSlotsByName(formularioTanquee)
     self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
+    self.Cancelar.clicked.connect(self.hide)
   

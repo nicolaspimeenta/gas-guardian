@@ -17,9 +17,6 @@ class AbstractTela(QtWidgets.QMainWindow):
     with open(f"dados/{entidade}.json", 'w') as file:
       json.dump(data, file)
 
-  def cancelar(self) -> None:
-    self.hide()
-
   def fill_table(self, data: list, table: QtWidgets.QTableWidget) -> None:
     if data:
       table.setRowCount(0)

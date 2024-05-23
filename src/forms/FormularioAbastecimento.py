@@ -139,5 +139,5 @@ class FormularioAbastecimento(AbstractForm):
     self.inputBomba.currentIndexChanged.connect(self.bombaChanged)
     self.inputPreco.textChanged.connect(self.precoChanged)
     self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
+    self.Cancelar.clicked.connect(self.hide)
   

@@ -103,4 +103,4 @@ class FormularioLogin(AbstractForm):
     self.Confirmar.setText(_translate("Login", "Confirmar"))
     QtCore.QMetaObject.connectSlotsByName(Login)
     self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.cancelar)
+    self.Cancelar.clicked.connect(self.hide)
