@@ -11,6 +11,10 @@ class ControladorAbastecimento(ControladorBase):
     self.telaAbastecimento = TelaAbastecimento()
     self.conecta_controlador_tela()
 
+  def abre_tela(self) -> None:
+    self.clear_form()
+    self.telaAbastecimento.show()
+
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados(entidade='abastecimentos')
     form_data = {
@@ -31,7 +35,7 @@ class ControladorAbastecimento(ControladorBase):
     self.salva_dados(abastecimento_data, entidade='abastecimentos')
     self.hide()
   
-  def fill_form(self) -> None:
+  def clear_form(self) -> None:
     self.telaAbastecimento.inputBomba.clear()
     self.telaAbastecimento.inputTipo.clear()
     self.telaAbastecimento.inputLitros.clear()
@@ -57,5 +61,5 @@ class ControladorAbastecimento(ControladorBase):
     self.telaAbastecimento.inputBomba.currentIndexChanged.connect(self.bomba_changed)
     self.telaAbastecimento.inputPreco.textChanged.connect(self.preco_changed)
     self.telaAbastecimento.confirmarBtn.clicked.connect(self.confirmar)
-    self.telaAbastecimento.cancelarBtn.clicked.connect(self.hide)
+    self.telaAbastecimento.cancelarBtn.clicked.connect(self.telaAbastecimento.hide)
   

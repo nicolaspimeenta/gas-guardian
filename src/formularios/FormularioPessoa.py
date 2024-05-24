@@ -1,9 +1,10 @@
 # UC001: Cadastrar, Visualizar, Editar e Excluir Usuários
 
 from base64 import b64encode
-from validate_docbr import CPF
 from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
+
+from src.entidades.Pessoa import Pessoa
 
 class FormularioPessoa(FormBase):
   def __init__(self):
@@ -12,22 +13,31 @@ class FormularioPessoa(FormBase):
 
   def confirmar(self) -> None:
     pessoas_data = self.carrega_dados(entidade='pessoas')
-    pessoa_dto = {
+    form_data = {
       'nome': self.inputNome.text().strip(),
       'cpf': self.inputCpf.text().strip(),
       'email': self.inputEmail.text().strip(),
-      'telefoneCelular': self.inputCelular.text().strip(),
+      'telefone_celular': self.inputCelular.text().strip(),
       'login': self.inputLogin.text().strip(),
       'senha': self.encode_senha(self.inputSenha.text().strip()),
       'is_gestor': self.isGestor.isChecked()
       }
-    if self.is_form_valido(form_data=pessoa_dto):
+    if self.is_form_valido(form_data):
+      pessoa_dto = Pessoa(
+        nome=form_data['nome'],
+        cpf=form_data['cpf'],
+        email=form_data['email'],
+        telefone_celular=form_data['telefone_celular'],
+        login=form_data['login'],
+        senha=form_data['senha'],
+        is_gestor=form_data['is_gestor']
+      )
       if self.is_edit():
-        pessoas_data[self.id_row] = pessoa_dto
+        pessoas_data[self.id_row] = pessoa_dto.transforma_para_dict()
         self.salva_dados(pessoas_data, entidade='pessoas')
         self.hide()
       else:
-        pessoas_data.append(pessoa_dto)
+        pessoas_data.append(pessoa_dto.transforma_para_dict())
         QtWidgets.QMessageBox.information(self, "Sucesso", "Uma nova Pessoa foi cadastrada.",
         QtWidgets.QMessageBox.StandardButton.Ok)
         self.salva_dados(pessoas_data, entidade='pessoas')
@@ -40,18 +50,16 @@ class FormularioPessoa(FormBase):
         if pessoa['cpf'] == form_data['cpf']:
           self.mostra_aviso("Pessoa já cadastrada.")
           return False
+        
+    if not (self.is_edit() and form_data['login'] == pessoas_data[self.id_row]['login']):
+      for pessoa in pessoas_data:
+        if pessoa['login'] == form_data['login']:
+          self.mostra_aviso("Login já utilizado.")
+          return False
     
     # Checa se o formulário foi preenchido
     if not form_data['nome'] or not form_data['cpf'] or not form_data['login'] or not form_data['senha']:
       self.mostra_aviso("Preencha todos os campos obrigatórios.")
-      return False
-
-    try:
-      cpf = CPF()
-      if not cpf.validate(form_data['cpf']):
-        raise ValueError
-    except:
-      self.mostra_aviso("CPF Inválido")
       return False
 
     return True
@@ -61,7 +69,7 @@ class FormularioPessoa(FormBase):
     if self.is_edit():
       self.inputNome.setText(pessoas_data[self.id_row]['nome'])
       self.inputCpf.setText(pessoas_data[self.id_row]['cpf'])
-      self.inputCelular.setText(pessoas_data[self.id_row]['telefoneCelular'])
+      self.inputCelular.setText(pessoas_data[self.id_row]['telefone_celular'])
       self.inputEmail.setText(pessoas_data[self.id_row]['email'])
       self.inputLogin.setText(pessoas_data[self.id_row]['login'])
       self.inputSenha.setText(pessoas_data[self.id_row]['senha'])

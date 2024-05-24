@@ -1,15 +1,14 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
-
+from src.controladores.ControladorAbastecimento import ControladorAbastecimento
 class InicialOperador(TelaBase):
   def __init__(self):
     super().__init__()
+    self.controladorAbastecimento = ControladorAbastecimento()
     self.cria_tela(self)
 
   def registrar_abastecimento(self) -> None:
-    from src.formularios.ControladorAbastecimento import ControladorAbastecimento
-    self.registrarAbastecimento = ControladorAbastecimento()
-    self.registrarAbastecimento.open_form(id=None, title='Registrar Abastecimento')
+    self.controladorAbastecimento.abre_tela()
 
   def desconectar(self) -> None:
     self.hide()

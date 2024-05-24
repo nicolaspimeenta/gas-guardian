@@ -1,14 +1,14 @@
 from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox, QComboBox, QDoubleSpinBox, QLineEdit, QPushButton, QMainWindow
 
-class TelaAbastecimento():
+class TelaAbastecimento(QMainWindow):
   def __init__(self):
-    self.inputBomba = None
-    self.inputTipo = None
-    self.inputPreco = None
-    self.inputLitros = None
-    self.confirmarBtn = None
-    self.cancelarBtn = None
+    self.inputBomba = QComboBox()
+    self.inputTipo = QComboBox()
+    self.inputPreco = QDoubleSpinBox()
+    self.inputLitros = QLineEdit()
+    self.confirmarBtn = QPushButton()
+    self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
   def mostra_mensagem(self, mensagem: str) -> None:
