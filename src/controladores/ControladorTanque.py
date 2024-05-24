@@ -2,7 +2,7 @@
 
 from src.abstract.ControladorBase import ControladorBase
 from src.telas.TelaTanque import TelaTanque
-from src.entidades.Bomba import Bomba
+from src.entidades.Tanque import Tanque
 
 class ControladorTanque(ControladorBase):
   def __init__(self):
@@ -14,16 +14,23 @@ class ControladorTanque(ControladorBase):
       'id_tanque': self.tela.inputId.text().strip(), 
       'tipo': self.tela.inputTipo.currentText(),
       'volume_atual': tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
-      'capacidade_maxima': self.tela.inputCapacidade.text().strip().replace(',', '.'),
-      'porcentagem_alerta': self.tela.inputPorcentagem.cleanText()
+      'capacidade_maxima': float(self.tela.inputCapacidade.cleanText().replace(',', '.')),
+      'porcentagem_alerta': int(self.tela.inputPorcentagem.cleanText())
     }
     if self.is_form_valido(form_data):
+      tanque_dto = Tanque(
+        id_tanque=form_data['id_tanque'],
+        tipo_combustivel=form_data['tipo'],
+        volume_atual=form_data['volume_atual'],
+        capacidade_maxima=form_data['capacidade_maxima'],
+        porcentagem_alerta=form_data['porcentagem_alerta']
+      )
       if self.is_edit():
-        tanques_data[self.id_row] = form_data
+        tanques_data[self.id_row] = tanque_dto.transforma_para_dict()
         self.salva_dados(tanques_data)
         self.tela.hide()
       else:
-        tanques_data.append(form_data)
+        tanques_data.append(tanque_dto.transforma_para_dict())
         self.tela.mostra_mensagem('Um novo Tanque foi cadastrado.')
         self.salva_dados(tanques_data)
         self.tela.hide()
@@ -36,19 +43,9 @@ class ControladorTanque(ControladorBase):
           self.tela.mostra_aviso("Tanque já cadastrado.")
           return False
     
-    if not form_data['id_tanque'] or not form_data['capacidade_maxima']:
+    if not form_data['id_tanque'] or not form_data['tipo']:
       self.tela.mostra_aviso("Preencha todos os campos obrigatórios.")
       return False
-    
-    try:
-      float(form_data['capacidade_maxima'])
-    except:
-      self.tela.mostra_aviso("O campo 'Capacidade Máxima' precisa ser um número.")
-      return False
-    
-    if not (float(form_data['capacidade_maxima']) > 0):
-        self.tela.mostra_aviso("O campo 'Capacidade Máxima' precisa ser um número maior que 0.")
-        return False
 
     return True
   
@@ -61,7 +58,7 @@ class ControladorTanque(ControladorBase):
 
     if self.is_edit():
       self.tela.inputId.setText(tanques_data[self.id_row]['id_tanque'])
-      self.tela.inputCapacidade.setText(tanques_data[self.id_row]['capacidade_maxima'])
+      self.tela.inputCapacidade.setValue(float(tanques_data[self.id_row]['capacidade_maxima']))
       self.tela.inputPorcentagem.setValue(int(tanques_data[self.id_row]['porcentagem_alerta']))
       self.tela.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo'])
     else:
