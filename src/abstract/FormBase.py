@@ -1,8 +1,7 @@
 import json
-from PyQt6.QtWidgets import QTableWidget, QMessageBox, QTableWidgetItem
-from src.abstract import ControladorBase, TelaBase
+from PyQt6.QtWidgets import QTableWidget, QMessageBox, QTableWidgetItem, QMainWindow
 
-class FormBase(TelaBase, ControladorBase):
+class FormBase(QMainWindow):
   def __init__(self, entidade: str):
     super().__init__()
     self.id_row = None
