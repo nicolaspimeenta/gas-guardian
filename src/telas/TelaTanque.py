@@ -1,79 +1,22 @@
-# UC003: Cadastrar, Visualizar, Editar e Excluir Tanques de Combustível
+from src.abstract.TelaBase import TelaBase
+from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QLineEdit, QComboBox, QPushButton, QSpinBox
 
-from src.abstract.FormBase import FormBase
-from PyQt6 import QtCore, QtGui, QtWidgets
-
-class FormularioTanque(FormBase):
+class TelaTanque(TelaBase):
   def __init__(self):
-    super().__init__(entidade='tanques')
+    super().__init__()
+    self.inputId = QLineEdit()
+    self.inputCapacidade = QLineEdit()
+    self.inputPorcentagem = QSpinBox()
+    self.inputTipo = QComboBox()
+    self.confirmarBtn = QPushButton()
+    self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
-  def confirmar(self) -> None:
-    tanques_data = self.carrega_dados(entidade='tanques')
-    form_data = {
-      'id_tanque': self.inputId.text().strip(), 
-      'tipo': self.inputTipo.currentText(),
-      'volume_atual': tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
-      'capacidade_maxima': self.inputCapacidade.text().strip().replace(',', '.'),
-      'porcentagem_alerta': self.inputPorcentagem.cleanText()
-    }
-    if self.is_form_valido(form_data):
-      if self.is_edit():
-        tanques_data[self.id_row] = form_data
-        self.salva_dados(tanques_data, entidade='tanques')
-        self.hide()
-      else:
-        tanques_data.append(form_data)
-        QtWidgets.QMessageBox.information(self, "Sucesso", "Um novo Tanque foi cadastrado.",
-        QtWidgets.QMessageBox.StandardButton.Ok)
-        self.salva_dados(tanques_data, entidade='tanques')
-        self.hide()
-
-  def is_form_valido(self, form_data) -> bool:
-    tanques_data = self.carrega_dados(entidade='tanques')
-    if not (self.is_edit() and form_data['id_tanque'] == tanques_data[self.id_row]['id_tanque']):
-      for tanque in tanques_data: # Checa se o tanque de combustível já foi cadastrado
-        if tanque['id_tanque'].lower() == form_data['id_tanque'].lower():
-          self.mostra_aviso("Tanque já cadastrado.")
-          return False
-    
-    if not form_data['id_tanque'] or not form_data['capacidade_maxima'] : # Checa se o formulário foi preenchido
-      self.mostra_aviso("Preencha todos os campos obrigatórios.")
-      return False
-    
-    try:
-      float(form_data['capacidade_maxima'])
-    except:
-      self.mostra_aviso("O campo 'Capacidade Máxima' precisa ser um número.")
-      return False
-    
-    if not (float(form_data['capacidade_maxima']) > 0):
-        self.mostra_aviso("O campo 'Capacidade Máxima' precisa ser um número maior que 0.")
-        return False
-
-    return True
-  
-  def fill_form(self) -> None:
-    tanques_data = self.carrega_dados(entidade='tanques')
-    self.inputTipo.clear()
-    self.inputTipo.addItems(
-      tipo['nome'] for tipo in self.carrega_dados(entidade='tipos-combustivel')
-    )
-
-    if self.is_edit():
-      self.inputId.setText(tanques_data[self.id_row]['id_tanque'])
-      self.inputCapacidade.setText(tanques_data[self.id_row]['capacidade_maxima'])
-      self.inputPorcentagem.setValue(int(tanques_data[self.id_row]['porcentagem_alerta']))
-      self.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo'])
-    else:
-      self.inputId.clear()
-      self.inputCapacidade.clear()
-      self.inputPorcentagem.clear()
-  
-  def cria_tela(self, formularioTanque) -> None:
-    formularioTanque.setObjectName("formularioTanque")
-    formularioTanque.resize(300, 162)
-    self.ContainerForm = QtWidgets.QFrame(parent=formularioTanque)
+  def cria_tela(self, FormularioTanque) -> None:
+    FormularioTanque.setObjectName("FormularioTanque")
+    FormularioTanque.resize(300, 162)
+    self.ContainerForm = QtWidgets.QFrame(parent=FormularioTanque)
     self.ContainerForm.setGeometry(QtCore.QRect(0, 10, 301, 151))
     self.ContainerForm.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerForm.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -131,35 +74,31 @@ class FormularioTanque(FormBase):
     self.inputTipo.setEnabled(True)
     self.inputTipo.setObjectName("inputTipo")
     self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputTipo)
-    self.ContainerBotoes = QtWidgets.QFrame(parent=formularioTanque)
+    self.ContainerBotoes = QtWidgets.QFrame(parent=FormularioTanque)
     self.ContainerBotoes.setGeometry(QtCore.QRect(0, 120, 301, 44))
     self.ContainerBotoes.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
     self.ContainerBotoes.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
     self.ContainerBotoes.setObjectName("ContainerBotoes")
     self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
     self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.cancelarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
+    self.cancelarBtn.setIcon(icon)
+    self.cancelarBtn.setObjectName("Cancelar")
+    self.horizontalLayout.addWidget(self.cancelarBtn)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.confirmarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon1 = QtGui.QIcon()
     icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon1)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
+    self.confirmarBtn.setIcon(icon1)
+    self.confirmarBtn.setObjectName("Confirmar")
+    self.horizontalLayout.addWidget(self.confirmarBtn)
     self.label.setText("ID do Tanque *")
     self.label_3.setText("Porcentagem de Alerta *")
     self.label_2.setText("Capacidade máxima (L) *")
     self.label_4.setText("Tipo de Combustível *")
-    self.Cancelar.setText("Cancelar")
-    self.Confirmar.setText("Confirmar")
-    QtCore.QMetaObject.connectSlotsByName(formularioTanque)
-    #
-    self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.hide)
-  
+    self.cancelarBtn.setText("Cancelar")
+    self.confirmarBtn.setText("Confirmar")
+    QtCore.QMetaObject.connectSlotsByName(FormularioTanque)

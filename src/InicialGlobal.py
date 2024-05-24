@@ -10,9 +10,9 @@ class InicialGlobal(TelaBase):
 
   def acessa_sistema(self) -> None:
     self.hide()
-    from src.formularios.FormularioLogin import FormularioLogin
-    self.formularioLogin = FormularioLogin()
-    self.formularioLogin.show()
+    from src.Login import Login
+    self.login = Login()
+    self.login.show()
 
   def cria_tela(self, InicialGlobal) -> None:
     InicialGlobal.setObjectName("InicialGlobal")

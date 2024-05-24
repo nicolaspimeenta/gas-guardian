@@ -8,6 +8,10 @@ class TelaBase(QMainWindow):
     QMessageBox.warning(self, "Aviso", messagem,
     QMessageBox.StandardButton.Ok)
 
+  def mostra_mensagem(self, messagem: str) -> None:
+    QMessageBox.information(self, "Sucesso", messagem,
+    QMessageBox.StandardButton.Ok)
+
   def fill_table(self, data: list, table: QTableWidget) -> None:
     if data:
       table.setRowCount(0)

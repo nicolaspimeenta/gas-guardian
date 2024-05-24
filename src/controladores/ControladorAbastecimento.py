@@ -7,21 +7,15 @@ from src.telas.TelaAbastecimento import TelaAbastecimento
 
 class ControladorAbastecimento(ControladorBase):
   def __init__(self):
-    super().__init__()
-    self.telaAbastecimento = TelaAbastecimento()
-    self.conecta_controlador_tela()
-
-  def abre_tela(self) -> None:
-    self.clear_form()
-    self.telaAbastecimento.show()
+    super().__init__(tela=TelaAbastecimento, entidade='abastecimentos')
 
   def confirmar(self) -> None:
-    abastecimento_data = self.carrega_dados(entidade='abastecimentos')
+    abastecimento_data = self.carrega_dados()
     form_data = {
-      'id_bomba': self.telaAbastecimento.inputBomba.currentText(),
-      'id_tipo': self.telaAbastecimento.inputTipo.currentText(),
-      'preco': self.telaAbastecimento.inputPreco.cleanText(),
-      'litros': self.telaAbastecimento.inputLitros.text().strip()
+      'id_bomba': self.tela.inputBomba.currentText(),
+      'id_tipo': self.tela.inputTipo.currentText(),
+      'preco': float(self.tela.inputPreco.cleanText().replace(',', '.')),
+      'litros': self.tela.inputLitros.text().strip()
     }
     abastecimento_dto = Abastecimento(
       id_bomba=form_data['id_bomba'],
@@ -31,35 +25,38 @@ class ControladorAbastecimento(ControladorBase):
       data=datetime.now().isoformat()
     )
     abastecimento_data.append(abastecimento_dto.transforma_para_dict())
-    self.telaAbastecimento.mostra_mensagem("Um novo Abastecimento foi registrado")
-    self.salva_dados(abastecimento_data, entidade='abastecimentos')
-    self.hide()
+    self.tela.mostra_mensagem("Um novo Abastecimento foi registrado")
+    self.salva_dados(abastecimento_data)
+    self.tela.hide()
   
-  def clear_form(self) -> None:
-    self.telaAbastecimento.inputBomba.clear()
-    self.telaAbastecimento.inputTipo.clear()
-    self.telaAbastecimento.inputLitros.clear()
-    self.telaAbastecimento.inputPreco.setValue(0.01)
-    self.telaAbastecimento.inputBomba.addItems(
+  def fill_form(self) -> None:
+    self.tela.inputBomba.clear()
+    self.tela.inputTipo.clear()
+    self.tela.inputLitros.clear()
+    self.tela.inputPreco.setValue(0.01)
+    self.tela.inputBomba.addItems(
       bomba['id_bomba'] for bomba in self.carrega_dados(entidade='bombas') if bool(bomba['is_auto_abastecimento']) is False
     )
 
   def bomba_changed(self) -> None:
-    self.telaAbastecimento.inputTipo.clear()
+    self.tela.inputTipo.clear()
     for bomba in self.carrega_dados(entidade='bombas'):
-      if bomba['id_bomba'] == self.telaAbastecimento.inputBomba.currentText():
-        self.telaAbastecimento.inputTipo.addItems(bomba['tipos_combustivel'])
+      if bomba['id_bomba'] == self.tela.inputBomba.currentText():
+        self.tela.inputTipo.addItems(bomba['tipos_combustivel'])
 
   def preco_changed(self) -> None:
     tipos_data = self.carrega_dados(entidade='tipos-combustivel')
     for tipo in tipos_data:
-      if tipo['nome'] == self.telaAbastecimento.inputTipo.currentText():
+      if tipo['nome'] == self.tela.inputTipo.currentText():
         preco_tipo = float(tipo['preco'])
-    self.telaAbastecimento.inputLitros.setText(str( round(float(self.telaAbastecimento.inputPreco.text().replace(',', '.')) / preco_tipo, 2) ))
+    self.tela.inputLitros.setText(str( round(float(self.tela.inputPreco.cleanText().replace(',', '.')) / preco_tipo, 2) ))
 
   def conecta_controlador_tela(self) -> None:
-    self.telaAbastecimento.inputBomba.currentIndexChanged.connect(self.bomba_changed)
-    self.telaAbastecimento.inputPreco.textChanged.connect(self.preco_changed)
-    self.telaAbastecimento.confirmarBtn.clicked.connect(self.confirmar)
-    self.telaAbastecimento.cancelarBtn.clicked.connect(self.telaAbastecimento.hide)
+    self.tela.inputBomba.currentIndexChanged.connect(self.bomba_changed)
+    self.tela.inputPreco.textChanged.connect(self.preco_changed)
+    self.tela.confirmarBtn.clicked.connect(self.confirmar)
+    self.tela.cancelarBtn.clicked.connect(self.tela.hide)
+
+  def is_form_valido(self) -> None:
+    pass
   

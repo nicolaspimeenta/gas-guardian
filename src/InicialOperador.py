@@ -8,13 +8,13 @@ class InicialOperador(TelaBase):
     self.cria_tela(self)
 
   def registrar_abastecimento(self) -> None:
-    self.controladorAbastecimento.abre_tela()
+    self.controladorAbastecimento.abre_tela(id_row=None, title='Registrar Abastecimento')
 
   def desconectar(self) -> None:
     self.hide()
-    from src.formularios.FormularioLogin import FormularioLogin
-    self.formularioLogin = FormularioLogin()
-    self.formularioLogin.show()
+    from src.Login import Login
+    self.login = Login()
+    self.login.show()
 
   def cria_tela(self, InicialOperador) -> None:
     InicialOperador.setObjectName("InicialOperador")

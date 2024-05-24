@@ -3,7 +3,7 @@ Membros:  Nicolas Lazzeri Pimenta (22203241)
 
 # Bibliotecas utilizadas
 pip install validate-docbr
-pip install PyQt6
+pip install pyqt6-tools
 
 # Fonte usada para os ícones
 https://fonts.google.com/icons

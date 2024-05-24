@@ -1,97 +1,21 @@
-# UC001: Cadastrar, Visualizar, Editar e Excluir Usuários
+from src.abstract.TelaBase import TelaBase
+from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QLineEdit, QPushButton, QCheckBox
 
-from base64 import b64encode
-from src.abstract.FormBase import FormBase
-from PyQt6 import QtCore, QtGui, QtWidgets
-
-from src.entidades.Pessoa import Pessoa
-
-class FormularioPessoa(FormBase):
+class TelaPessoa(TelaBase):
   def __init__(self):
-    super().__init__(entidade='pessoas')
+    super().__init__()
+    self.inputNome = QLineEdit()
+    self.inputCpf = QLineEdit()
+    self.inputCelular = QLineEdit()
+    self.inputEmail = QLineEdit()
+    self.inputLogin = QLineEdit()
+    self.inputSenha = QLineEdit()
+    self.isGestor = QCheckBox()
+    self.confirmarBtn = QPushButton()
+    self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
-  def confirmar(self) -> None:
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    form_data = {
-      'nome': self.inputNome.text().strip(),
-      'cpf': self.inputCpf.text().strip(),
-      'email': self.inputEmail.text().strip(),
-      'telefone_celular': self.inputCelular.text().strip(),
-      'login': self.inputLogin.text().strip(),
-      'senha': self.encode_senha(self.inputSenha.text().strip()),
-      'is_gestor': self.isGestor.isChecked()
-      }
-    if self.is_form_valido(form_data):
-      pessoa_dto = Pessoa(
-        nome=form_data['nome'],
-        cpf=form_data['cpf'],
-        email=form_data['email'],
-        telefone_celular=form_data['telefone_celular'],
-        login=form_data['login'],
-        senha=form_data['senha'],
-        is_gestor=form_data['is_gestor']
-      )
-      if self.is_edit():
-        pessoas_data[self.id_row] = pessoa_dto.transforma_para_dict()
-        self.salva_dados(pessoas_data, entidade='pessoas')
-        self.hide()
-      else:
-        pessoas_data.append(pessoa_dto.transforma_para_dict())
-        QtWidgets.QMessageBox.information(self, "Sucesso", "Uma nova Pessoa foi cadastrada.",
-        QtWidgets.QMessageBox.StandardButton.Ok)
-        self.salva_dados(pessoas_data, entidade='pessoas')
-        self.hide()
-
-  def is_form_valido(self, form_data) -> bool:
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    if not (self.is_edit() and form_data['cpf'] == pessoas_data[self.id_row]['cpf']):
-      for pessoa in pessoas_data:
-        if pessoa['cpf'] == form_data['cpf']:
-          self.mostra_aviso("Pessoa já cadastrada.")
-          return False
-        
-    if not (self.is_edit() and form_data['login'] == pessoas_data[self.id_row]['login']):
-      for pessoa in pessoas_data:
-        if pessoa['login'] == form_data['login']:
-          self.mostra_aviso("Login já utilizado.")
-          return False
-    
-    # Checa se o formulário foi preenchido
-    if not form_data['nome'] or not form_data['cpf'] or not form_data['login'] or not form_data['senha']:
-      self.mostra_aviso("Preencha todos os campos obrigatórios.")
-      return False
-
-    return True
-  
-  def fill_form(self) -> None:
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    if self.is_edit():
-      self.inputNome.setText(pessoas_data[self.id_row]['nome'])
-      self.inputCpf.setText(pessoas_data[self.id_row]['cpf'])
-      self.inputCelular.setText(pessoas_data[self.id_row]['telefone_celular'])
-      self.inputEmail.setText(pessoas_data[self.id_row]['email'])
-      self.inputLogin.setText(pessoas_data[self.id_row]['login'])
-      self.inputSenha.setText(pessoas_data[self.id_row]['senha'])
-      self.isGestor.setChecked(bool(pessoas_data[self.id_row]['is_gestor']))
-    else:
-      self.inputNome.clear()
-      self.inputCpf.clear()
-      self.inputCelular.clear()
-      self.inputEmail.clear()
-      self.inputLogin.clear()
-      self.inputSenha.clear()
-      self.isGestor.setChecked(False)
-  
-  def encode_senha(self, senha) -> str:
-    pessoas_data = self.carrega_dados(entidade='pessoas')
-    if self.is_edit() and pessoas_data[self.id_row]['senha'] == senha:
-      return senha
-    senha_bytes = senha.encode('utf-8')
-    senha_codificada = b64encode(senha_bytes)
-    
-    return senha_codificada.decode('utf-8')
-  
   def cria_tela(self, FormularioPessoa) -> None:
     FormularioPessoa.setObjectName("FormularioPessoa")
     FormularioPessoa.resize(300, 217)
@@ -118,6 +42,7 @@ class FormularioPessoa(FormBase):
     self.inputCpf.setSizePolicy(sizePolicy)
     self.inputCpf.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
     self.inputCpf.setObjectName("InputCpf")
+    self.inputCpf.setInputMask("000.000.000-00")
     self.formLayout.setWidget(3, QtWidgets.QFormLayout.ItemRole.FieldRole, self.inputCpf)
     self.label_4 = QtWidgets.QLabel(parent=self.ContainerForm)
     self.label_4.setObjectName("label_4")
@@ -205,20 +130,20 @@ class FormularioPessoa(FormBase):
     self.ContainerBotoes.setObjectName("ContainerBotoes")
     self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
     self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.cancelarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
+    self.cancelarBtn.setIcon(icon)
+    self.cancelarBtn.setObjectName("Cancelar")
+    self.horizontalLayout.addWidget(self.cancelarBtn)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.confirmarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon1 = QtGui.QIcon()
     icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon1)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
+    self.confirmarBtn.setIcon(icon1)
+    self.confirmarBtn.setObjectName("Confirmar")
+    self.horizontalLayout.addWidget(self.confirmarBtn)
     self.label_4.setText("Celular")
     self.inputCelular.setInputMask("(00) 00000-0000")
     self.label_3.setText("Email")
@@ -227,9 +152,6 @@ class FormularioPessoa(FormBase):
     self.label_5.setText("Login *")
     self.label_6.setText("Senha *")
     self.isGestor.setText("Gestor")
-    self.Cancelar.setText("Cancelar")
-    self.Confirmar.setText("Confirmar")
+    self.cancelarBtn.setText("Cancelar")
+    self.confirmarBtn.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioPessoa)
-    #
-    self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.hide)

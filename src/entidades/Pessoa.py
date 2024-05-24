@@ -1,9 +1,9 @@
 class Pessoa():
   def __init__(self, nome: str, cpf: str, email: str, telefone_celular: str, login: str, senha: str, is_gestor: bool):
-    self.nome = nome,
-    self.cpf = cpf,
-    self.email = email,
-    self.telefone_celular = telefone_celular,
+    self.nome = nome
+    self.cpf = cpf
+    self.email = email
+    self.telefone_celular = telefone_celular
     self.login = login
     self.senha = senha
     self.is_gestor = is_gestor

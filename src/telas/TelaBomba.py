@@ -1,97 +1,18 @@
-# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+from src.abstract.TelaBase import TelaBase
+from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QLineEdit, QTableWidget, QPushButton, QCheckBox
 
-from src.abstract.FormBase import FormBase
-from PyQt6 import QtCore, QtGui, QtWidgets
-
-class FormularioBomba(FormBase):
+class TelaBomba(TelaBase):
   def __init__(self):
-    super().__init__(entidade='bombas')
-    self.tiposSelecionados = []
+    super().__init__()
+    self.inputId = QLineEdit()
+    self.isAutoAbastecimento = QCheckBox()
+    self.tableSelecionados = QTableWidget()
+    self.tableTipos = QTableWidget()
+    self.confirmarBtn = QPushButton()
+    self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
-  def confirmar(self) -> None:
-    bombas_data = self.carrega_dados(entidade='bombas')
-    form_data = {
-      'id_bomba': self.inputId.text().strip(),
-      'is_auto_abastecimento': self.isAutoAbastecimento.isChecked(),
-      'tipos_combustivel': [tipo['nome'] for tipo in self.tiposSelecionados]
-    }
-    if self.is_form_valido(form_data):
-      if self.is_edit():
-        bombas_data[self.id_row] = form_data
-        self.salva_dados(bombas_data, entidade='bombas')
-        self.hide()
-      else:
-        bombas_data.append(form_data)
-        QtWidgets.QMessageBox.information(self, "Sucesso", "Uma nova Bomba foi cadastrada.",
-        QtWidgets.QMessageBox.StandardButton.Ok)
-        self.salva_dados(bombas_data, entidade='bombas')
-        self.hide()
-
-  def is_form_valido(self, form_data) -> bool:
-    bombas_data = self.carrega_dados(entidade='bombas')
-    if not (self.is_edit() and form_data['id_bomba'] == bombas_data[self.id_row]['id_bomba']):
-      for bomba in bombas_data:
-        if bomba['id_bomba'].lower() == form_data['id_bomba'].lower():
-          self.mostra_aviso("Bomba já cadastrada.")
-          return False
-    
-    if not form_data['id_bomba']:
-      self.mostra_aviso("Preencha todos os campos obrigatórios.")
-      return False
-    
-    if not len(form_data['tipos_combustivel']):
-      self.mostra_aviso("Selecione pelo menos um tipo de combustível.")
-      return False
-    
-    return True
-  
-  def fill_form(self) -> None:
-    bombas_data = self.carrega_dados(entidade='bombas')
-    self.fill_table(data=self.carrega_dados(entidade='tipos-combustivel'), table=self.tableTipos)
-    self.tiposSelecionados = []
-    if self.is_edit():
-      for tipo in self.carrega_dados(entidade='tipos-combustivel'):
-        for tipo_bomba in bombas_data[self.id_row]['tipos_combustivel']:
-          if tipo['nome'] == tipo_bomba:
-            self.tiposSelecionados.append(tipo)
-      self.inputId.setText(bombas_data[self.id_row]['id_bomba'])
-      self.isAutoAbastecimento.setChecked(bool(bombas_data[self.id_row]['is_auto_abastecimento']))
-      self.fill_table(
-        data=self.tiposSelecionados,
-        table=self.tableSelecionados
-        )
-    else:
-      self.inputId.clear()
-      self.isAutoAbastecimento.setChecked(False)
-      self.tableSelecionados.setRowCount(0)
-
-
-  def adicionar(self) -> None:
-    tipos_data = self.carrega_dados(entidade='tipos-combustivel')
-    selected_row = self.tableTipos.currentRow()
-
-    if selected_row == -1:
-      self.mostra_aviso("Nenhum tipo de combustível selecionado.")
-      return
-
-    if tipos_data[selected_row] in self.tiposSelecionados:
-      self.mostra_aviso("Esse combustível já está na lista de selecionados.")
-      return
-    
-    self.tiposSelecionados.append(tipos_data[selected_row])
-    self.fill_table(self.tiposSelecionados, self.tableSelecionados)
-
-  def remover(self) -> None:
-    selected_row = self.tableSelecionados.currentRow()
-
-    if selected_row == -1:
-      self.mostra_aviso("Nenhum tipo de combustível selecionado.")
-      return
-    
-    self.tiposSelecionados.remove(self.tiposSelecionados[selected_row])
-    self.fill_table(self.tiposSelecionados, self.tableSelecionados)
-  
   def cria_tela(self, FormularioBomba) -> None:
     FormularioBomba.setObjectName("FormularioBomba")
     FormularioBomba.resize(822, 343)
@@ -179,20 +100,20 @@ class FormularioBomba(FormBase):
     self.ContainerBotoes.setObjectName("ContainerBotoes")
     self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
     self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.cancelarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon2 = QtGui.QIcon()
     icon2.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon2)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
+    self.cancelarBtn.setIcon(icon2)
+    self.cancelarBtn.setObjectName("Cancelar")
+    self.horizontalLayout.addWidget(self.cancelarBtn)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.confirmarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon3 = QtGui.QIcon()
     icon3.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon3)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
+    self.confirmarBtn.setIcon(icon3)
+    self.confirmarBtn.setObjectName("Confirmar")
+    self.horizontalLayout.addWidget(self.confirmarBtn)
     FormularioBomba.setWindowTitle("Nova Pessoa")
     self.label.setText("ID da Bomba *")
     self.isAutoAbastecimento.setText("Auto-abastecimento")
@@ -210,14 +131,6 @@ class FormularioBomba(FormBase):
     item.setText("Preço (R$)")
     self.registrosLabel.setText("Tipos de Combustíveis:")
     self.selecionadosLabel.setText("Selecionados:")
-    self.Cancelar.setText("Cancelar")
-    self.Confirmar.setText("Confirmar")
+    self.cancelarBtn.setText("Cancelar")
+    self.confirmarBtn.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioBomba)
-    #
-    self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.hide)
-    self.adicionarBtn.clicked.connect(self.adicionar)
-    self.removerBtn.clicked.connect(self.remover)
-    self.tableTipos.itemDoubleClicked.connect(self.adicionar)
-    self.tableSelecionados.itemDoubleClicked.connect(self.remover)
-  

@@ -1,46 +1,17 @@
-# UC005: Editar os Dados do Posto de Gasolina
+from src.abstract.TelaBase import TelaBase
+from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QLineEdit, QPushButton, QCheckBox
 
-from validate_docbr import CNPJ
-from src.abstract.FormBase import FormBase
-from PyQt6 import QtCore, QtGui, QtWidgets
-
-class FormularioPosto(FormBase):
+class TelaPosto(TelaBase):
   def __init__(self):
-    super().__init__(entidade='posto')
+    super().__init__()
+    self.inputNome = QLineEdit()
+    self.inputCnpj = QLineEdit()
+    self.inputPix = QLineEdit()
+    self.confirmarBtn = QPushButton()
+    self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
-  def confirmar(self) -> None:
-    posto_data = self.carrega_dados(entidade='posto')
-    form_data = {
-      'nomePosto': self.inputNome.text().strip(), 
-      'chavePix': self.inputPix.text().strip(),
-      'cnpj': self.inputCnpj.text().strip()
-      }
-    if self.is_form_valido(form_data):
-      posto_data[self.id_row] = form_data
-      self.salva_dados(posto_data, entidade='posto')
-      self.hide()
-
-  def is_form_valido(self, form_data) -> bool:
-    if not form_data['nomePosto'] or not form_data['cnpj'] or not form_data['chavePix']: # Checa se o formulário foi preenchido
-      self.mostra_aviso("Preencha todos os campos obrigatórios.")
-      return False
-    try:
-      cnpj = CNPJ()
-      if not cnpj.validate(form_data['cnpj']):
-        raise ValueError
-    except:
-      self.mostra_aviso("CNPJ Inválido")
-      return False
-    
-    return True
-  
-  def fill_form(self) -> None:
-    posto_data = self.carrega_dados(entidade='posto')
-    self.inputNome.setText(posto_data[self.id_row]['nomePosto'])
-    self.inputCnpj.setText(posto_data[self.id_row]['cnpj'])
-    self.inputPix.setText(posto_data[self.id_row]['chavePix'])
-  
   def cria_tela(self, FormularioPosto) -> None:
     FormularioPosto.setObjectName("FormularioPosto")
     FormularioPosto.resize(260, 150)
@@ -84,28 +55,25 @@ class FormularioPosto(FormBase):
     self.ContainerBotoes.setObjectName("ContainerBotoes")
     self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
     self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.cancelarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
+    self.cancelarBtn.setIcon(icon)
+    self.cancelarBtn.setObjectName("Cancelar")
+    self.horizontalLayout.addWidget(self.cancelarBtn)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.confirmarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon1 = QtGui.QIcon()
     icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon1)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
+    self.confirmarBtn.setIcon(icon1)
+    self.confirmarBtn.setObjectName("Confirmar")
+    self.horizontalLayout.addWidget(self.confirmarBtn)
     self.inputCnpj.setInputMask("00.000.000/0000-00")
     FormularioPosto.setWindowTitle("Dados do Posto")
     self.label.setText("Nome *")
     self.label_2.setText("CNPJ *")
     self.label_3.setText("Chave PIX *")
-    self.Cancelar.setText("Cancelar")
-    self.Confirmar.setText("Confirmar")
+    self.cancelarBtn.setText("Cancelar")
+    self.confirmarBtn.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioPosto)
-    #
-    self.Confirmar.clicked.connect(self.confirmar)
-    self.Cancelar.clicked.connect(self.hide)

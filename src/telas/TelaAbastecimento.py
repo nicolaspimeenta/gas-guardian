@@ -1,8 +1,10 @@
+from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtWidgets import QMessageBox, QComboBox, QDoubleSpinBox, QLineEdit, QPushButton, QMainWindow
+from PyQt6.QtWidgets import QComboBox, QDoubleSpinBox, QLineEdit, QPushButton
 
-class TelaAbastecimento(QMainWindow):
+class TelaAbastecimento(TelaBase):
   def __init__(self):
+    super().__init__()
     self.inputBomba = QComboBox()
     self.inputTipo = QComboBox()
     self.inputPreco = QDoubleSpinBox()
@@ -10,10 +12,6 @@ class TelaAbastecimento(QMainWindow):
     self.confirmarBtn = QPushButton()
     self.cancelarBtn = QPushButton()
     self.cria_tela(self)
-
-  def mostra_mensagem(self, mensagem: str) -> None:
-    QMessageBox.information(self, "Sucesso", mensagem,
-    QMessageBox.StandardButton.Ok)
 
   def cria_tela(self, FormularioAbastecimento) -> None:
     FormularioAbastecimento.setObjectName("FormularioAbastecimento")

@@ -4,23 +4,22 @@
 # UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
 # UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
 
-from src.abstract.TelaBase import TelaBase
+from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
-from src.formularios.FormularioPosto import FormularioPosto
-from src.formularios.FormularioPessoa import FormularioPessoa
-from src.formularios.FormularioTipo import FormularioTipo
-from src.formularios.FormularioTanque import FormularioTanque
-from src.formularios.FormularioBomba import FormularioBomba
+from src.controladores.ControladorPosto import ControladorPosto
+from src.controladores.ControladorBomba import ControladorBomba
+from src.controladores.ControladorPessoa import ControladorPessoa
+from src.controladores.ControladorTanque import ControladorTanque
+from src.controladores.ControladorTipoCombustivel import ControladorTipoCombustivel
 
-
-class Cadastros(TelaBase):
+class Cadastros(FormBase):
   def __init__(self):
-    super().__init__()
-    self.formularioPosto = FormularioPosto()
-    self.formularioTipo = FormularioTipo()
-    self.formularioPessoa = FormularioPessoa()
-    self.formularioTanque = FormularioTanque()
-    self.formularioBomba = FormularioBomba()
+    super().__init__("")
+    self.controladorTanque = ControladorTanque()
+    self.controladorPosto = ControladorPosto()
+    self.controladorBomba = ControladorBomba()
+    self.controladorPessoa = ControladorPessoa()
+    self.controladorTipoCombustivel = ControladorTipoCombustivel()
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:
@@ -38,8 +37,8 @@ class Cadastros(TelaBase):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioBomba.open_form(
-        id=selected_row if btn=='Editar' else None,
+      self.controladorBomba.abre_tela(
+        id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Bomba ({selected_row+1})" if btn=='Editar' else "Nova Bomba"
         )
     
@@ -48,8 +47,8 @@ class Cadastros(TelaBase):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioTanque.open_form(
-        id=selected_row if btn=='Editar' else None,
+      self.controladorTanque.abre_tela(
+        id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Tanque ({selected_row+1})" if btn=='Editar' else "Novo Tanque"
         )
     
@@ -58,8 +57,8 @@ class Cadastros(TelaBase):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioTipo.open_form(
-        id=selected_row if btn=='Editar' else None,
+      self.controladorTipoCombustivel.abre_tela(
+        id_row=selected_row if btn=='Editar' else None,
         title=f"Editando Tipo ({selected_row+1})" if btn=='Editar' else "Novo Tipo"
         )
 
@@ -68,17 +67,17 @@ class Cadastros(TelaBase):
       if btn=='Editar' and selected_row == -1:
         self.mostra_aviso("Selecione uma linha para editar.")
         return
-      self.formularioPessoa.open_form(
-        id=selected_row if btn=='Editar' else None,
-        title=f"Editando Funcionário ({selected_row+1})" if btn=='Editar' else "Novo Funcionário"
+      self.controladorPessoa.abre_tela(
+        id_row=selected_row if btn=='Editar' else None,
+        title=f"Editando Pessoa ({selected_row+1})" if btn=='Editar' else 'Nova Pessoa'
         )
     
     if tab_ativa == 4: # Posto
       if btn=='Novo':
         self.mostra_aviso("Não é permitido criar um registro de Posto.")
         return
-      self.formularioPosto.open_form(
-        id=0,
+      self.controladorPosto.abre_tela(
+        id_row=0,
         title="Editando Posto"
         )
       

@@ -7,7 +7,7 @@ from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
 from src.InicialOperador import InicialOperador
 
-class FormularioLogin(FormBase):
+class Login(FormBase):
   def __init__(self):
     super().__init__(entidade=None)
     self.inicialGestor = InicialGestor()
@@ -16,7 +16,6 @@ class FormularioLogin(FormBase):
     self.cria_tela(self)
 
   def confirmar(self) -> None:
-    # função chamada ao clicar botão "Confirmar"
     login_digitado = self.inputLogin.text()
     senha_digitado = self.inputSenha.text()
     pessoas_data = self.carrega_dados('pessoas')
@@ -39,7 +38,6 @@ class FormularioLogin(FormBase):
       return
 
   def cancelar(self) -> None:
-    # função chamada ao clicar botão "Cancelar"
     self.hide()
     self.inicialGlobal.show()
 
