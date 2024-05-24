@@ -1,4 +1,3 @@
-import json
 from PyQt6.QtWidgets import QMainWindow, QTableWidget, QMessageBox, QTableWidgetItem
 
 class TelaBase(QMainWindow):
