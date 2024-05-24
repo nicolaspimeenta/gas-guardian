@@ -1,8 +1,6 @@
 import json
-from abc import ABC
 
-
-class ControladorBase(ABC):
+class ControladorBase():
   def carrega_dados(self, entidade: str) -> list:
     with open(f"dados/{entidade}.json", 'r') as file:
       return json.load(file)

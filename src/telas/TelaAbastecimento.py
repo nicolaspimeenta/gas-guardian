@@ -1,13 +1,19 @@
-from src.abstract import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QMessageBox
 
-class TelaAbastecimento(TelaBase):
+class TelaAbastecimento():
   def __init__(self):
     self.inputBomba = None
     self.inputTipo = None
     self.inputPreco = None
     self.inputLitros = None
+    self.confirmarBtn = None
+    self.cancelarBtn = None
     self.cria_tela(self)
+
+  def mostra_mensagem(self, mensagem: str) -> None:
+    QMessageBox.information(self, "Sucesso", mensagem,
+    QMessageBox.StandardButton.Ok)
 
   def cria_tela(self, FormularioAbastecimento) -> None:
     FormularioAbastecimento.setObjectName("FormularioAbastecimento")
@@ -76,25 +82,25 @@ class TelaAbastecimento(TelaBase):
     self.ContainerBotoes.setObjectName("ContainerBotoes")
     self.horizontalLayout = QtWidgets.QHBoxLayout(self.ContainerBotoes)
     self.horizontalLayout.setObjectName("horizontalLayout")
-    self.Cancelar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.cancelarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/cancel.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Cancelar.setIcon(icon)
-    self.Cancelar.setObjectName("Cancelar")
-    self.horizontalLayout.addWidget(self.Cancelar)
+    self.cancelarBtn.setIcon(icon)
+    self.cancelarBtn.setObjectName("Cancelar")
+    self.horizontalLayout.addWidget(self.cancelarBtn)
     spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
     self.horizontalLayout.addItem(spacerItem)
-    self.Confirmar = QtWidgets.QPushButton(parent=self.ContainerBotoes)
+    self.confirmarBtn = QtWidgets.QPushButton(parent=self.ContainerBotoes)
     icon1 = QtGui.QIcon()
     icon1.addPixmap(QtGui.QPixmap(".\\src\\ui\\../../assets/check.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-    self.Confirmar.setIcon(icon1)
-    self.Confirmar.setObjectName("Confirmar")
-    self.horizontalLayout.addWidget(self.Confirmar)
+    self.confirmarBtn.setIcon(icon1)
+    self.confirmarBtn.setObjectName("Confirmar")
+    self.horizontalLayout.addWidget(self.confirmarBtn)
     FormularioAbastecimento.setWindowTitle("Registrar Abastecimento")
     self.label_2.setText("Bomba *")
     self.label_3.setText("Tipo de combustivel *")
     self.label.setText("Litros abastecidos")
     self.label_4.setText("Preço *")
-    self.Cancelar.setText("Cancelar")
-    self.Confirmar.setText("Confirmar")
+    self.cancelarBtn.setText("Cancelar")
+    self.confirmarBtn.setText("Confirmar")
     QtCore.QMetaObject.connectSlotsByName(FormularioAbastecimento)
