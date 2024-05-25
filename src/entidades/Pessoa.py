@@ -1,3 +1,6 @@
+# UC001: Cadastrar, Visualizar, Editar e Excluir Usuários
+
+
 class Pessoa():
   def __init__(self, nome: str, cpf: str, email: str, telefone_celular: str, login: str, senha: str, is_gestor: bool):
     self.nome = nome

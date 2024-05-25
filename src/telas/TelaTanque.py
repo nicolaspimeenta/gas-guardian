@@ -1,3 +1,6 @@
+# UC003: Cadastrar, Visualizar, Editar e Excluir Tanques de Combustível
+
+
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QLineEdit, QComboBox, QPushButton, QSpinBox, QDoubleSpinBox

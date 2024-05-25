@@ -1,3 +1,6 @@
+# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+
+
 class Bomba():
   def __init__(self, id_bomba: str, is_auto_abastecimento: bool, tipos_combustivel: list[str]):
     self.id_bomba = id_bomba

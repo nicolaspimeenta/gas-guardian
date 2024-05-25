@@ -1,3 +1,6 @@
+# UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
+
+
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QLineEdit, QDoubleSpinBox, QPushButton

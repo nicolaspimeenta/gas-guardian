@@ -1,3 +1,6 @@
+# UC008: Registrar um Abastecimento
+
+
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QComboBox, QDoubleSpinBox, QLineEdit, QPushButton

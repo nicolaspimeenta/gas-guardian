@@ -1,4 +1,5 @@
-# UC008: Registrar um Abastecimento
+# UC003: Cadastrar, Visualizar, Editar e Excluir Tanques de Combustível
+
 
 from src.abstract.ControladorBase import ControladorBase
 from src.telas.TelaTanque import TelaTanque

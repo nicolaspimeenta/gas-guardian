@@ -1,3 +1,5 @@
+# UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
+
 class TipoCombustivel():
   def __init__(self, nome: str, preco: float):
     self.nome = nome

@@ -1,4 +1,5 @@
-# UC008: Registrar um Abastecimento
+# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+
 
 from src.abstract.ControladorBase import ControladorBase
 from src.telas.TelaBomba import TelaBomba
@@ -97,7 +98,7 @@ class ControladorBomba(ControladorBase):
     for bomba in bombas_data:
       if antigo_nome in bomba['tipos_combustivel']:
         bomba['tipos_combustivel'] = [novo_nome if x == antigo_nome else x for x in bombas_data]
-        
+
     self.salva_dados(bombas_data)
 
   def conecta_controlador_tela(self) -> None:

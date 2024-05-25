@@ -1,3 +1,6 @@
+# UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
+
+
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QLineEdit, QTableWidget, QPushButton, QCheckBox

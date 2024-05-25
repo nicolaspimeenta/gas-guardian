@@ -1,4 +1,4 @@
-# UC008: Registrar um Abastecimento
+# UC002: Cadastrar, Visualizar, Editar e Excluir Tipos de Combustível
 
 from src.abstract.ControladorBase import ControladorBase
 from src.entidades.TipoCombustivel import TipoCombustivel

@@ -1,4 +1,5 @@
-# UC008: Registrar um Abastecimento
+# UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
+
 
 from src.abstract.ControladorBase import ControladorBase
 from src.telas.TelaPosto import TelaPosto

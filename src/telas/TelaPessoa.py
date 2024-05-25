@@ -1,3 +1,6 @@
+# UC001: Cadastrar, Visualizar, Editar e Excluir Usuários
+
+
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtWidgets, QtCore, QtGui
 from PyQt6.QtWidgets import QLineEdit, QPushButton, QCheckBox
