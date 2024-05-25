@@ -66,7 +66,16 @@ class ControladorTanque(ControladorBase):
       self.tela.inputCapacidade.clear()
       self.tela.inputPorcentagem.clear()
 
+  def atualiza_tipos(self, antigo_nome: str, novo_nome: str):
+    tanques_data = self.carrega_dados()
+    for tanque in tanques_data:
+      if antigo_nome == tanque['tipo']:
+        tanque['tipo'] = novo_nome
+    self.salva_dados(tanques_data)
+
   def conecta_controlador_tela(self) -> None:
     self.tela.confirmarBtn.clicked.connect(self.confirmar)
     self.tela.cancelarBtn.clicked.connect(self.tela.hide)
+
+
   

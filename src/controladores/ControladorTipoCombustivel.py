@@ -3,10 +3,14 @@
 from src.abstract.ControladorBase import ControladorBase
 from src.entidades.TipoCombustivel import TipoCombustivel
 from src.telas.TelaTipoCombustivel import TelaTipoCombustivel
+from src.controladores.ControladorTanque import ControladorTanque
+from src.controladores.ControladorBomba import ControladorBomba
 
 class ControladorTipoCombustivel(ControladorBase):
   def __init__(self):
     super().__init__(tela=TelaTipoCombustivel, entidade='tipos-combustivel')
+    self.controladorTanque = ControladorTanque()
+    self.controladorBomba = ControladorBomba()
 
   def confirmar(self) -> None:
     tipos_data = self.carrega_dados()
@@ -20,6 +24,8 @@ class ControladorTipoCombustivel(ControladorBase):
         preco=form_data['preco']
       )
       if self.is_edit():
+        self.controladorTanque.atualiza_tipos(antigo_nome=tipos_data[self.id_row]['nome'], novo_nome=form_data['nome'])
+        self.controladorBomba.atualiza_tipos(antigo_nome=tipos_data[self.id_row]['nome'], novo_nome=form_data['nome'])
         tipos_data[self.id_row] = tipo_combustivel_dto.transforma_para_dict()
         self.salva_dados(tipos_data)
         self.tela.hide()

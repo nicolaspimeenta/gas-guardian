@@ -1,12 +1,10 @@
 # Trabalho APS - Gas Guardian
-Membros:  Nicolas Lazzeri Pimenta (22203241)
+Membros: Nicolas Lazzeri Pimenta (22203241)
 
 # Bibliotecas utilizadas
-pip install validate-docbr
 pip install pyqt6-tools
+pyqt6-tools designer
 
 # Fonte usada para os ícones
 https://fonts.google.com/icons
 
-
-pyqt6-tools designer

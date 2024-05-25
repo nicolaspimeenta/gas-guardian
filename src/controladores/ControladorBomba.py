@@ -92,6 +92,14 @@ class ControladorBomba(ControladorBase):
     self.tiposSelecionados.remove(self.tiposSelecionados[selected_row])
     self.tela.fill_table(self.tiposSelecionados, self.tela.tableSelecionados)
 
+  def atualiza_tipos(self, antigo_nome: str, novo_nome: str):
+    bombas_data = self.carrega_dados()
+    for bomba in bombas_data:
+      if antigo_nome in bomba['tipos_combustivel']:
+        bomba['tipos_combustivel'] = [novo_nome if x == antigo_nome else x for x in bombas_data]
+        
+    self.salva_dados(bombas_data)
+
   def conecta_controlador_tela(self) -> None:
     self.tela.confirmarBtn.clicked.connect(self.confirmar)
     self.tela.cancelarBtn.clicked.connect(self.tela.hide)
