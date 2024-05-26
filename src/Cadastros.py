@@ -97,14 +97,14 @@ class Cadastros(FormBase):
       if selected_row == -1:
         self.mostra_aviso("Selecione uma linha para excluir.")
       else:
-        self.exclui_linha(entidade="bombas", id=selected_row)
+        self.controladorBomba.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 1: # Tanques
       selected_row = self.TanquesTable.currentRow()
       if selected_row == -1:
         self.mostra_aviso("Selecione uma linha para excluir.")
       else:
-        self.exclui_linha(entidade="tanques", id=selected_row)
+        self.controladorTanque.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 2: # Tipos
       selected_row = self.TiposTable.currentRow()
@@ -112,50 +112,17 @@ class Cadastros(FormBase):
         self.mostra_aviso("Selecione uma linha para excluir.")
       else:
         self.exclui_tipos(id=selected_row)
-        self.exclui_linha(entidade="tipos-combustivel", id=selected_row)
+        self.controladorTipoCombustivel.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 3: # Pessoas
       selected_row = self.PessoasTable.currentRow()
       if selected_row == -1:
         self.mostra_aviso("Selecione uma linha para excluir.")
       else:
-        self.exclui_linha(entidade="pessoas", id=selected_row)
+        self.controladorPessoa.exclui_registro(id_row=selected_row)
     
-    if tab_ativa == 4: # Usuários
-      selected_row = self.UsuariosTable.currentRow()
-      if selected_row == -1: 
-        self.mostra_aviso("Selecione uma linha para excluir.")
-      else:
-        self.exclui_user_id(id=selected_row)
-        self.exclui_linha(entidade="usuarios", id=selected_row)
-    
-    if tab_ativa == 5: # Posto
-      self.mostra_aviso("Não é permitido excluir o registro do Posto.")
-    
-  def exclui_linha(self, entidade: str, id: int) -> None:
-    data = self.carrega_dados(entidade)
-    del data[id]
-    self.salva_dados(data, entidade)
-    QtWidgets.QMessageBox.critical(self, "Aviso", f"A linha {id+1} foi excluída",
-    QtWidgets.QMessageBox.StandardButton.Ok)
-    self.fetch_data()
-
-  def exclui_tipos(self, id: int):
-    tipos_data = self.carrega_dados(entidade='tipos-combustivel')
-    tipo_excluido = tipos_data[id]['nome']
-    #
-    bombas_data = self.carrega_dados(entidade='bombas')
-    for bomba in bombas_data:
-        bomba['tipos_combustivel'] = [tipo for tipo in bomba['tipos_combustivel'] if tipo != tipo_excluido]
-    self.salva_dados(
-      data=bombas_data, 
-      entidade='bombas'
-      )
-    #
-    self.salva_dados(
-      data=[tanque for tanque in self.carrega_dados(entidade='tanques') if tanque['tipo'] != tipo_excluido], 
-      entidade='tanques'
-      )
+    if tab_ativa == 4: # Posto
+      self.controladorPessoa.tela.mostra_aviso("Não é permitido excluir o registro do Posto.")
     
   def ativar_botoes(self):
     self.NovoBtn.setEnabled(True)

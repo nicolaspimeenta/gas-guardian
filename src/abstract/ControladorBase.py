@@ -34,6 +34,12 @@ class ControladorBase(ABC):
     self.tela.setWindowTitle(title)
     self.tela.show()
 
+  def exclui_registro(self, id_row: int) -> None:
+    data = self.carrega_dados(self.entidade)
+    del data[id_row]
+    self.salva_dados(data)
+    self.tela.mostra_mensagem(f'A linha {id_row+1} foi excluída')
+
   def carrega_dados(self, entidade: str = None) -> list:
     with open(f"dados/{self.entidade if entidade is None else entidade}.json", 'r') as file:
       return json.load(file)
