@@ -1,9 +1,8 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class InicialGestor(TelaBase):
+class InicialGestor():
   def __init__(self):
-    super().__init__()
     self.cria_tela(self)
 
   def cadastros(self) -> None:

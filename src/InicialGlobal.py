@@ -1,8 +1,7 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
-class InicialGlobal(TelaBase):
+class InicialGlobal():
   def __init__(self):
-    super().__init__()
     self.cria_tela(self)
 
   def iniciar_abastecimento(self) -> None:

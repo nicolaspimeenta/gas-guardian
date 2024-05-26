@@ -6,19 +6,20 @@ from src.abstract.FormBase import FormBase
 from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
 from src.InicialOperador import InicialOperador
+from src.controladores.ControladorPessoa import ControladorPessoa
 
-class Login(FormBase):
+class Login():
   def __init__(self):
-    super().__init__(entidade=None)
     self.inicialGestor = InicialGestor()
     self.inicialGlobal = InicialGlobal()
     self.inicialOperador = InicialOperador()
+    self.controladorPessoa = ControladorPessoa()
     self.cria_tela(self)
 
   def confirmar(self) -> None:
     login_digitado = self.inputLogin.text()
     senha_digitado = self.inputSenha.text()
-    pessoas_data = self.carrega_dados('pessoas')
+    pessoas_data = self.controladorPessoa.carrega_dados()
     pessoa_logado = None
 
     for pessoa in pessoas_data:
