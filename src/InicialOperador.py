@@ -1,7 +1,7 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.controladores.ControladorAbastecimento import ControladorAbastecimento
-class InicialOperador():
+class InicialOperador(QtWidgets.QMainWindow):
   def __init__(self):
     self.controladorAbastecimento = ControladorAbastecimento()
     self.cria_tela(self)

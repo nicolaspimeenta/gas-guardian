@@ -2,13 +2,12 @@
 
 from base64 import b64decode
 from PyQt6 import QtCore, QtGui, QtWidgets
-from src.abstract.FormBase import FormBase
 from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
 from src.InicialOperador import InicialOperador
 from src.controladores.ControladorPessoa import ControladorPessoa
 
-class Login():
+class Login(QtWidgets.QMainWindow):
   def __init__(self):
     self.inicialGestor = InicialGestor()
     self.inicialGlobal = InicialGlobal()

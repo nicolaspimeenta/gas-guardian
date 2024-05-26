@@ -11,7 +11,7 @@ from src.controladores.ControladorPessoa import ControladorPessoa
 from src.controladores.ControladorTanque import ControladorTanque
 from src.controladores.ControladorTipoCombustivel import ControladorTipoCombustivel
 
-class Cadastros():
+class Cadastros(QtWidgets.QMainWindow):
   def __init__(self):
     self.controladorTanque = ControladorTanque()
     self.controladorPosto = ControladorPosto()

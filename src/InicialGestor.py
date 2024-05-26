@@ -1,7 +1,7 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-class InicialGestor():
+class InicialGestor(QtWidgets.QMainWindow):
   def __init__(self):
     self.cria_tela(self)
 

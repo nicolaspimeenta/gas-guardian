@@ -1,6 +1,6 @@
 from src.abstract.TelaBase import TelaBase
 from PyQt6 import QtCore, QtGui, QtWidgets
-class InicialGlobal():
+class InicialGlobal(QtWidgets.QMainWindow):
   def __init__(self):
     self.cria_tela(self)
 
