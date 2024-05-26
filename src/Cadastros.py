@@ -81,11 +81,11 @@ class Cadastros():
       
   def fetch_data(self) -> None:
     self.ativar_botoes()
-    self.fill_table(self.carrega_dados("pessoas"), self.PessoasTable)
-    self.fill_table(self.carrega_dados("tipos-combustivel"), self.TiposTable)
-    self.fill_table(self.carrega_dados("tanques"), self.TanquesTable)
-    self.fill_table(self.carrega_dados("bombas"), self.BombasTable)
-    self.fill_table(self.carrega_dados("posto"), self.PostoTable)
+    self.controladorPessoa.tela.fill_table(self.controladorPessoa.carrega_dados(), self.PessoasTable)
+    self.controladorTipoCombustivel.tela.fill_table(self.controladorTipoCombustivel.carrega_dados(), self.TiposTable)
+    self.controladorTanque.tela.fill_table(self.controladorTanque.carrega_dados(), self.TanquesTable)
+    self.controladorBomba.tela.fill_table(self.controladorBomba.carrega_dados(), self.BombasTable)
+    self.controladorPosto.tela.fill_table(self.controladorPosto.carrega_dados(), self.PostoTable)
     
   def excluir(self) -> None:
     tab_ativa = self.tabWidget.currentIndex()
