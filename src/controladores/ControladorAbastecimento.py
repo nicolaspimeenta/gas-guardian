@@ -7,7 +7,7 @@ from src.telas.TelaAbastecimento import TelaAbastecimento
 
 class ControladorAbastecimento(ControladorBase):
   def __init__(self):
-    super().__init__(tela=TelaAbastecimento, entidade='abastecimentos')
+    super().__init__(tela=TelaAbastecimento(), entidade='abastecimentos')
 
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados()

@@ -8,7 +8,7 @@ from src.telas.TelaPessoa import TelaPessoa
 
 class ControladorPessoa(ControladorBase):
   def __init__(self):
-    super().__init__(tela=TelaPessoa, entidade='pessoas')
+    super().__init__(tela=TelaPessoa(), entidade='pessoas')
 
   def confirmar(self) -> None:
     pessoas_data = self.carrega_dados()

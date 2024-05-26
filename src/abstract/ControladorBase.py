@@ -1,12 +1,11 @@
 import json
 from abc import ABC, abstractmethod
-from src.abstract.TelaBase import TelaBase
 
 class ControladorBase(ABC):
-  def __init__(self, tela: TelaBase, entidade: str):
+  def __init__(self, tela: object, entidade: str):
     self.id_row = None
     self.entidade = entidade
-    self.tela = tela()
+    self.tela = tela
     self.conecta_controlador_tela()
     
   @abstractmethod

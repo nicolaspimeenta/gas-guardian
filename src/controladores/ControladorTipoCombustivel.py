@@ -8,7 +8,7 @@ from src.controladores.ControladorBomba import ControladorBomba
 
 class ControladorTipoCombustivel(ControladorBase):
   def __init__(self):
-    super().__init__(tela=TelaTipoCombustivel, entidade='tipos-combustivel')
+    super().__init__(tela=TelaTipoCombustivel(), entidade='tipos-combustivel')
     self.controladorTanque = ControladorTanque()
     self.controladorBomba = ControladorBomba()
 

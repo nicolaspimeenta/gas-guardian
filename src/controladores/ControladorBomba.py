@@ -7,7 +7,7 @@ from src.entidades.Bomba import Bomba
 
 class ControladorBomba(ControladorBase):
   def __init__(self):
-    super().__init__(tela=TelaBomba, entidade='bombas')
+    super().__init__(tela=TelaBomba(), entidade='bombas')
     self.tiposSelecionados = []
 
   def confirmar(self) -> None:
