@@ -13,6 +13,7 @@ from src.controladores.ControladorTipoCombustivel import ControladorTipoCombusti
 
 class Cadastros(QtWidgets.QMainWindow):
   def __init__(self):
+    super().__init__()
     self.controladorTanque = ControladorTanque()
     self.controladorPosto = ControladorPosto()
     self.controladorBomba = ControladorBomba()

@@ -3,6 +3,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class InicialGestor(QtWidgets.QMainWindow):
   def __init__(self):
+    super().__init__()
     self.cria_tela(self)
 
   def cadastros(self) -> None:

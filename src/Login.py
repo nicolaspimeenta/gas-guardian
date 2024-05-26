@@ -9,6 +9,7 @@ from src.controladores.ControladorPessoa import ControladorPessoa
 
 class Login(QtWidgets.QMainWindow):
   def __init__(self):
+    super().__init__()
     self.inicialGestor = InicialGestor()
     self.inicialGlobal = InicialGlobal()
     self.inicialOperador = InicialOperador()
