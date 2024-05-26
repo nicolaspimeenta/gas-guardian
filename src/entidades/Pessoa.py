@@ -18,6 +18,6 @@ class Pessoa():
       'email': self.email,
       'telefone_celular': self.telefone_celular,
       'login': self.login,
-      'login': self.senha,
+      'senha': self.senha,
       'is_gestor': self.is_gestor
     }

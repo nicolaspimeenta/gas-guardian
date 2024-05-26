@@ -2,10 +2,8 @@ import json
 from PyQt6.QtWidgets import QTableWidget, QMessageBox, QTableWidgetItem, QMainWindow
 
 class FormBase(QMainWindow):
-  def __init__(self, entidade: str):
+  def __init__(self):
     super().__init__()
-    self.id_row = None
-    self.entidade = entidade
 
   def carrega_dados(self, entidade: str) -> list:
     with open(f"dados/{entidade}.json", 'r') as file:
@@ -14,15 +12,6 @@ class FormBase(QMainWindow):
   def salva_dados(self, data: list, entidade: str) -> None:
     with open(f"dados/{entidade}.json", 'w') as file:
       json.dump(data, file)
-
-  def open_form(self, id: int, title: str) -> None:
-    self.id_row = id
-    self.setWindowTitle(title)
-    self.fill_form()
-    self.show()
-
-  def is_edit(self) -> bool:
-    return self.id_row != None
   
   def mostra_aviso(self, messagem: str) -> None:
     QMessageBox.warning(self, "Aviso", messagem,

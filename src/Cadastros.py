@@ -4,7 +4,6 @@
 # UC005: Cadastrar, Visualizar, Editar os Dados do Posto de Gasolina
 # UC006: Cadastrar, Visualizar, Editar e Excluir Bombas de Combustível
 
-from src.abstract.FormBase import FormBase
 from PyQt6 import QtCore, QtGui, QtWidgets
 from src.controladores.ControladorPosto import ControladorPosto
 from src.controladores.ControladorBomba import ControladorBomba
@@ -12,9 +11,8 @@ from src.controladores.ControladorPessoa import ControladorPessoa
 from src.controladores.ControladorTanque import ControladorTanque
 from src.controladores.ControladorTipoCombustivel import ControladorTipoCombustivel
 
-class Cadastros(FormBase):
+class Cadastros():
   def __init__(self):
-    super().__init__("")
     self.controladorTanque = ControladorTanque()
     self.controladorPosto = ControladorPosto()
     self.controladorBomba = ControladorBomba()
@@ -35,7 +33,7 @@ class Cadastros(FormBase):
     if tab_ativa == 0: # Bombas
       selected_row = self.BombasTable.currentRow()
       if btn=='Editar' and selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para editar.")
+        self.controladorBomba.tela.mostra_aviso("Selecione uma linha para editar.")
         return
       self.controladorBomba.abre_tela(
         id_row=selected_row if btn=='Editar' else None,
@@ -45,7 +43,7 @@ class Cadastros(FormBase):
     if tab_ativa == 1: # Tanques
       selected_row = self.TanquesTable.currentRow()
       if btn=='Editar' and selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para editar.")
+        self.controladorTanque.tela.mostra_aviso("Selecione uma linha para editar.")
         return
       self.controladorTanque.abre_tela(
         id_row=selected_row if btn=='Editar' else None,
@@ -55,7 +53,7 @@ class Cadastros(FormBase):
     if tab_ativa == 2: # Tipos
       selected_row = self.TiposTable.currentRow()
       if btn=='Editar' and selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para editar.")
+        self.controladorTipoCombustivel.tela.mostra_aviso("Selecione uma linha para editar.")
         return
       self.controladorTipoCombustivel.abre_tela(
         id_row=selected_row if btn=='Editar' else None,
@@ -65,7 +63,7 @@ class Cadastros(FormBase):
     if tab_ativa == 3: # Pessoas
       selected_row = self.PessoasTable.currentRow()
       if btn=='Editar' and selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para editar.")
+        self.controladorPessoa.tela.mostra_aviso("Selecione uma linha para editar.")
         return
       self.controladorPessoa.abre_tela(
         id_row=selected_row if btn=='Editar' else None,
@@ -74,7 +72,7 @@ class Cadastros(FormBase):
     
     if tab_ativa == 4: # Posto
       if btn=='Novo':
-        self.mostra_aviso("Não é permitido criar um registro de Posto.")
+        self.controladorPosto.tela.mostra_aviso("Não é permitido criar um registro de Posto.")
         return
       self.controladorPosto.abre_tela(
         id_row=0,
@@ -95,21 +93,21 @@ class Cadastros(FormBase):
     if tab_ativa == 0: # Bombas
       selected_row = self.BombasTable.currentRow()
       if selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para excluir.")
+        self.controladorBomba.tela.mostra_aviso("Selecione uma linha para excluir.")
       else:
         self.controladorBomba.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 1: # Tanques
       selected_row = self.TanquesTable.currentRow()
       if selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para excluir.")
+        self.controladorBomba.tela.mostra_aviso("Selecione uma linha para excluir.")
       else:
         self.controladorTanque.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 2: # Tipos
       selected_row = self.TiposTable.currentRow()
       if selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para excluir.")
+        self.controladorTipoCombustivel.tela.mostra_aviso("Selecione uma linha para excluir.")
       else:
         self.exclui_tipos(id=selected_row)
         self.controladorTipoCombustivel.exclui_registro(id_row=selected_row)
@@ -117,12 +115,14 @@ class Cadastros(FormBase):
     if tab_ativa == 3: # Pessoas
       selected_row = self.PessoasTable.currentRow()
       if selected_row == -1:
-        self.mostra_aviso("Selecione uma linha para excluir.")
+        self.controladorPessoa.tela.mostra_aviso("Selecione uma linha para excluir.")
       else:
         self.controladorPessoa.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 4: # Posto
-      self.controladorPessoa.tela.mostra_aviso("Não é permitido excluir o registro do Posto.")
+      self.controladorPosto.tela.mostra_aviso("Não é permitido excluir o registro do Posto.")
+
+    self.fetch_data()
     
   def ativar_botoes(self):
     self.NovoBtn.setEnabled(True)
