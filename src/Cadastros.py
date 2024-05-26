@@ -10,13 +10,14 @@ from src.controladores.ControladorBomba import ControladorBomba
 from src.controladores.ControladorPessoa import ControladorPessoa
 from src.controladores.ControladorTanque import ControladorTanque
 from src.controladores.ControladorTipoCombustivel import ControladorTipoCombustivel
+from src.telas.TelaBomba import TelaBomba
 
 class Cadastros(QtWidgets.QMainWindow):
   def __init__(self):
     super().__init__()
     self.controladorTanque = ControladorTanque()
     self.controladorPosto = ControladorPosto()
-    self.controladorBomba = ControladorBomba()
+    self.controladorBomba = ControladorBomba(tela=TelaBomba(), entidade='bombas')
     self.controladorPessoa = ControladorPessoa()
     self.controladorTipoCombustivel = ControladorTipoCombustivel()
     self.cria_tela(self)

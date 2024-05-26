@@ -16,7 +16,7 @@ class TelaBomba(TelaBase):
     self.cancelarBtn = QPushButton()
     self.cria_tela(self)
 
-  def cria_tela(self, FormularioBomba) -> None:
+  def cria_tela(self, FormularioBomba: object) -> None:
     FormularioBomba.setObjectName("FormularioBomba")
     FormularioBomba.resize(822, 343)
     self.ContainerForm = QtWidgets.QFrame(parent=FormularioBomba)
