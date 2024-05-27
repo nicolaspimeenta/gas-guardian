@@ -115,7 +115,6 @@ class Cadastros(QtWidgets.QMainWindow):
       if selected_row == -1:
         self.controladorTipoCombustivel.tela.mostra_aviso("Selecione uma linha para excluir.")
       else:
-        self.exclui_tipos(id=selected_row)
         self.controladorTipoCombustivel.exclui_registro(id_row=selected_row)
     
     if tab_ativa == 3: # Pessoas

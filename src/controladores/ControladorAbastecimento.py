@@ -15,7 +15,7 @@ class ControladorAbastecimento(ControladorBase):
       'id_bomba': self.tela.inputBomba.currentText(),
       'id_tipo': self.tela.inputTipo.currentText(),
       'preco': float(self.tela.inputPreco.cleanText().replace(',', '.')),
-      'litros': self.tela.inputLitros.text().strip()
+      'litros': float(self.tela.inputLitros.text().strip())
     }
     abastecimento_dto = Abastecimento(
       id_bomba=form_data['id_bomba'],

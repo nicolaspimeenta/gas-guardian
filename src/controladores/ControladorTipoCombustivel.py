@@ -62,20 +62,14 @@ class ControladorTipoCombustivel(ControladorBase):
 
   def exclui_registro(self, id_row: int) -> None:
     tipos_data = self.carrega_dados(entidade='tipos-combustivel')
-    tipo_excluido = tipos_data[id]['nome']
+    tipo_excluido = tipos_data[id_row]['nome']
     #
     bombas_data = self.carrega_dados(entidade='bombas')
     for bomba in bombas_data:
         bomba['tipos_combustivel'] = [tipo for tipo in bomba['tipos_combustivel'] if tipo != tipo_excluido]
-    self.salva_dados(
-      data=bombas_data, 
-      entidade='bombas'
-      )
+    self.controladorBomba.salva_dados(data=bombas_data)
     #
-    self.salva_dados(
-      data=[tanque for tanque in self.carrega_dados(entidade='tanques') if tanque['tipo'] != tipo_excluido], 
-      entidade='tanques'
-      )
+    self.controladorTanque.salva_dados(data=[tanque for tanque in self.carrega_dados(entidade='tanques') if tanque['tipo'] != tipo_excluido])
     super().exclui_registro(id_row)
 
   def conecta_controlador_tela(self) -> None:

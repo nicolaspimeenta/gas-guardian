@@ -1,1 +1,1 @@
-[]
+[{"id_tanque": "tanque1", "tipo_combustivel": "Gasolina", "volume_atual": 0, "capacidade_maxima": 1000.0, "porcentagem_alerta": 30}, {"id_tanque": "tanque2", "tipo_combustivel": "Diesel", "volume_atual": 0, "capacidade_maxima": 500.0, "porcentagem_alerta": 50}]

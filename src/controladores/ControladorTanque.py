@@ -13,7 +13,7 @@ class ControladorTanque(ControladorBase):
     tanques_data = self.carrega_dados()
     form_data = {
       'id_tanque': self.tela.inputId.text().strip(), 
-      'tipo': self.tela.inputTipo.currentText(),
+      'tipo_combustivel': self.tela.inputTipo.currentText(),
       'volume_atual': tanques_data[self.id_row]['volume_atual'] if self.is_edit() else 0,
       'capacidade_maxima': float(self.tela.inputCapacidade.cleanText().replace(',', '.')),
       'porcentagem_alerta': int(self.tela.inputPorcentagem.cleanText())
@@ -21,7 +21,7 @@ class ControladorTanque(ControladorBase):
     if self.is_form_valido(form_data):
       tanque_dto = Tanque(
         id_tanque=form_data['id_tanque'],
-        tipo_combustivel=form_data['tipo'],
+        tipo_combustivel=form_data['tipo_combustivel'],
         volume_atual=form_data['volume_atual'],
         capacidade_maxima=form_data['capacidade_maxima'],
         porcentagem_alerta=form_data['porcentagem_alerta']
@@ -44,7 +44,7 @@ class ControladorTanque(ControladorBase):
           self.tela.mostra_aviso("Tanque já cadastrado.")
           return False
     
-    if not form_data['id_tanque'] or not form_data['tipo']:
+    if not form_data['id_tanque'] or not form_data['tipo_combustivel']:
       self.tela.mostra_aviso("Preencha todos os campos obrigatórios.")
       return False
 
@@ -61,17 +61,17 @@ class ControladorTanque(ControladorBase):
       self.tela.inputId.setText(tanques_data[self.id_row]['id_tanque'])
       self.tela.inputCapacidade.setValue(float(tanques_data[self.id_row]['capacidade_maxima']))
       self.tela.inputPorcentagem.setValue(int(tanques_data[self.id_row]['porcentagem_alerta']))
-      self.tela.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo'])
+      self.tela.inputTipo.setCurrentText(tanques_data[self.id_row]['tipo_combustivel'])
     else:
       self.tela.inputId.clear()
-      self.tela.inputCapacidade.clear()
-      self.tela.inputPorcentagem.clear()
+      self.tela.inputCapacidade.setValue(1)
+      self.tela.inputPorcentagem.setValue(1)
 
   def atualiza_tipos(self, antigo_nome: str, novo_nome: str):
     tanques_data = self.carrega_dados()
     for tanque in tanques_data:
-      if antigo_nome == tanque['tipo']:
-        tanque['tipo'] = novo_nome
+      if antigo_nome == tanque['tipo_combustivel']:
+        tanque['tipo_combustivel'] = novo_nome
     self.salva_dados(tanques_data)
 
   def conecta_controlador_tela(self) -> None:

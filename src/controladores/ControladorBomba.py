@@ -97,7 +97,7 @@ class ControladorBomba(ControladorBase):
     bombas_data = self.carrega_dados()
     for bomba in bombas_data:
       if antigo_nome in bomba['tipos_combustivel']:
-        bomba['tipos_combustivel'] = [novo_nome if x == antigo_nome else x for x in bombas_data]
+        bomba['tipos_combustivel'] = [novo_nome if x == antigo_nome else x for x in bomba['tipos_combustivel']]
 
     self.salva_dados(bombas_data)
 
