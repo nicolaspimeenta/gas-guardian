@@ -6,6 +6,7 @@ from src.InicialGestor import InicialGestor
 from src.InicialGlobal import InicialGlobal
 from src.InicialOperador import InicialOperador
 from src.controladores.ControladorPessoa import ControladorPessoa
+from src.telas.TelaPessoa import TelaPessoa
 
 class Login(QtWidgets.QMainWindow):
   def __init__(self):
@@ -13,7 +14,7 @@ class Login(QtWidgets.QMainWindow):
     self.inicialGestor = InicialGestor()
     self.inicialGlobal = InicialGlobal()
     self.inicialOperador = InicialOperador()
-    self.controladorPessoa = ControladorPessoa()
+    self.controladorPessoa = ControladorPessoa(tela=TelaPessoa(), entidade='pessoas')
     self.cria_tela(self)
 
   def confirmar(self) -> None:

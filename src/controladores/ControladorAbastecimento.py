@@ -6,8 +6,8 @@ from src.entidades.Abastecimento import Abastecimento
 from src.telas.TelaAbastecimento import TelaAbastecimento
 
 class ControladorAbastecimento(ControladorBase):
-  def __init__(self):
-    super().__init__(tela=TelaAbastecimento(), entidade='abastecimentos')
+  def __init__(self, tela: TelaAbastecimento, entidade: str):
+    super().__init__(tela, entidade)
 
   def confirmar(self) -> None:
     abastecimento_data = self.carrega_dados()
@@ -46,10 +46,11 @@ class ControladorAbastecimento(ControladorBase):
 
   def preco_changed(self) -> None:
     tipos_data = self.carrega_dados(entidade='tipos-combustivel')
+    preco_tipo = None
     for tipo in tipos_data:
       if tipo['nome'] == self.tela.inputTipo.currentText():
         preco_tipo = float(tipo['preco'])
-    self.tela.inputLitros.setText(str( round(float(self.tela.inputPreco.cleanText().replace(',', '.')) / preco_tipo, 2) ))
+      self.tela.inputLitros.setText(str( round(float(self.tela.inputPreco.cleanText().replace(',', '.')) / preco_tipo if preco_tipo else 0, 2) ))
 
   def conecta_controlador_tela(self) -> None:
     self.tela.inputBomba.currentIndexChanged.connect(self.bomba_changed)

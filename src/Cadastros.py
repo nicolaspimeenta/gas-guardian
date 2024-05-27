@@ -11,15 +11,19 @@ from src.controladores.ControladorPessoa import ControladorPessoa
 from src.controladores.ControladorTanque import ControladorTanque
 from src.controladores.ControladorTipoCombustivel import ControladorTipoCombustivel
 from src.telas.TelaBomba import TelaBomba
+from src.telas.TelaPessoa import TelaPessoa
+from src.telas.TelaPosto import TelaPosto
+from src.telas.TelaTanque import TelaTanque
+from src.telas.TelaTipoCombustivel import TelaTipoCombustivel
 
 class Cadastros(QtWidgets.QMainWindow):
   def __init__(self):
     super().__init__()
-    self.controladorTanque = ControladorTanque()
-    self.controladorPosto = ControladorPosto()
+    self.controladorTanque = ControladorTanque(tela=TelaTanque(), entidade='tanques')
+    self.controladorPosto = ControladorPosto(tela=TelaPosto(), entidade='posto')
     self.controladorBomba = ControladorBomba(tela=TelaBomba(), entidade='bombas')
-    self.controladorPessoa = ControladorPessoa()
-    self.controladorTipoCombustivel = ControladorTipoCombustivel()
+    self.controladorPessoa = ControladorPessoa(tela=TelaPessoa(), entidade='pessoas')
+    self.controladorTipoCombustivel = ControladorTipoCombustivel(tela=TelaTipoCombustivel(), entidade='tipos-combustivel')
     self.cria_tela(self)
 
   def tela_inicial(self) -> None:

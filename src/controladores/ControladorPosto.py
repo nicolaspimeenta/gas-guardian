@@ -6,8 +6,8 @@ from src.telas.TelaPosto import TelaPosto
 from src.entidades.Posto import Posto
 
 class ControladorPosto(ControladorBase):
-  def __init__(self):
-    super().__init__(tela=TelaPosto(), entidade='posto')
+  def __init__(self, tela: TelaPosto, entidade: str):
+    super().__init__(tela, entidade)
 
   def confirmar(self) -> None:
     posto_data = self.carrega_dados()

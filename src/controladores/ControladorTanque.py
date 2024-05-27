@@ -6,8 +6,8 @@ from src.telas.TelaTanque import TelaTanque
 from src.entidades.Tanque import Tanque
 
 class ControladorTanque(ControladorBase):
-  def __init__(self):
-    super().__init__(tela=TelaTanque(), entidade='tanques')
+  def __init__(self, tela: TelaTanque, entidade: str):
+    super().__init__(tela, entidade)
 
   def confirmar(self) -> None:
     tanques_data = self.carrega_dados()
