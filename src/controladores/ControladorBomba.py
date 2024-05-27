@@ -68,7 +68,7 @@ class ControladorBomba(ControladorBase):
       self.tela.isAutoAbastecimento.setChecked(False)
       self.tela.tableSelecionados.setRowCount(0)
 
-  def adicionar(self) -> None:
+  def adicionar_tipo(self) -> None:
     tipos_data = self.carrega_dados(entidade='tipos-combustivel')
     selected_row = self.tela.tableTipos.currentRow()
 
@@ -83,7 +83,7 @@ class ControladorBomba(ControladorBase):
     self.tiposSelecionados.append(tipos_data[selected_row])
     self.tela.fill_table(self.tiposSelecionados, self.tela.tableSelecionados)
 
-  def remover(self) -> None:
+  def remover_tipo(self) -> None:
     selected_row = self.tela.tableSelecionados.currentRow()
 
     if selected_row == -1:
@@ -104,8 +104,8 @@ class ControladorBomba(ControladorBase):
   def conecta_controlador_tela(self) -> None:
     self.tela.confirmarBtn.clicked.connect(self.confirmar)
     self.tela.cancelarBtn.clicked.connect(self.tela.hide)
-    self.tela.adicionarBtn.clicked.connect(self.adicionar)
-    self.tela.removerBtn.clicked.connect(self.remover)
-    self.tela.tableTipos.itemDoubleClicked.connect(self.adicionar)
-    self.tela.tableSelecionados.itemDoubleClicked.connect(self.remover)
+    self.tela.adicionarBtn.clicked.connect(self.adicionar_tipo)
+    self.tela.removerBtn.clicked.connect(self.remover_tipo)
+    self.tela.tableTipos.itemDoubleClicked.connect(self.adicionar_tipo)
+    self.tela.tableSelecionados.itemDoubleClicked.connect(self.remover_tipo)
   
