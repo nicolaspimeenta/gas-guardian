@@ -2,6 +2,8 @@
 
 from src.abstract.ControladorBase import ControladorBase
 from src.entidades.TipoCombustivel import TipoCombustivel
+from src.telas.TelaBomba import TelaBomba
+from src.telas.TelaTanque import TelaTanque
 from src.telas.TelaTipoCombustivel import TelaTipoCombustivel
 from src.controladores.ControladorTanque import ControladorTanque
 from src.controladores.ControladorBomba import ControladorBomba
@@ -9,8 +11,8 @@ from src.controladores.ControladorBomba import ControladorBomba
 class ControladorTipoCombustivel(ControladorBase):
   def __init__(self, tela: TelaTipoCombustivel, entidade: str):
     super().__init__(tela, entidade)
-    self.controladorTanque = ControladorTanque()
-    self.controladorBomba = ControladorBomba()
+    self.controladorTanque = ControladorTanque(tela=TelaTanque(), entidade='tanques')
+    self.controladorBomba = ControladorBomba(tela=TelaBomba(), entidade='bombas')
 
   def confirmar(self) -> None:
     tipos_data = self.carrega_dados()
