@@ -32,9 +32,8 @@ class Cadastros(QtWidgets.QMainWindow):
     self.inicialGestor = InicialGestor()
     self.inicialGestor.show()
 
-  def abre_form(self, btn: str) -> None:
+  def abre_formulario(self, btn: str) -> None:
     tab_ativa = self.tabWidget.currentIndex()
-    self.desativar_botoes()
 
     if tab_ativa == 0: # Bombas
       selected_row = self.BombasTable.currentRow()
@@ -86,14 +85,13 @@ class Cadastros(QtWidgets.QMainWindow):
         )
       
   def fetch_data(self) -> None:
-    self.ativar_botoes()
     self.controladorPessoa.tela.fill_table(self.controladorPessoa.carrega_dados(), self.PessoasTable)
     self.controladorTipoCombustivel.tela.fill_table(self.controladorTipoCombustivel.carrega_dados(), self.TiposTable)
     self.controladorTanque.tela.fill_table(self.controladorTanque.carrega_dados(), self.TanquesTable)
     self.controladorBomba.tela.fill_table(self.controladorBomba.carrega_dados(), self.BombasTable)
     self.controladorPosto.tela.fill_table(self.controladorPosto.carrega_dados(), self.PostoTable)
     
-  def excluir(self) -> None:
+  def excluir_registro(self) -> None:
     tab_ativa = self.tabWidget.currentIndex()
 
     if tab_ativa == 0: # Bombas
@@ -128,18 +126,8 @@ class Cadastros(QtWidgets.QMainWindow):
       self.controladorPosto.tela.mostra_aviso("Não é permitido excluir o registro do Posto.")
 
     self.fetch_data()
-    
-  def ativar_botoes(self):
-    self.NovoBtn.setEnabled(True)
-    self.EditarBtn.setEnabled(True)
-    self.ExcluirBtn.setEnabled(True)
 
-  def desativar_botoes(self):
-    self.NovoBtn.setDisabled(True)
-    self.EditarBtn.setDisabled(True)
-    self.ExcluirBtn.setDisabled(True)
-
-  def cria_tela(self, Cadastros) -> None:
+  def cria_tela(self, Cadastros: object) -> None:
     Cadastros.setObjectName("Cadastros")
     Cadastros.resize(800, 400)
     Cadastros.setMinimumSize(QtCore.QSize(600, 400))
@@ -380,13 +368,13 @@ class Cadastros(QtWidgets.QMainWindow):
     #
     self.buttons_list = self.ContainerBotoes.findChildren(QtWidgets.QPushButton)
     self.TelaInicial.clicked.connect(self.tela_inicial)
-    self.NovoBtn.clicked.connect(lambda: self.abre_form("Novo"))
-    self.EditarBtn.clicked.connect(lambda: self.abre_form("Editar"))
-    self.ExcluirBtn.clicked.connect(self.excluir)
+    self.NovoBtn.clicked.connect(lambda: self.abre_formulario("Novo"))
+    self.EditarBtn.clicked.connect(lambda: self.abre_formulario("Editar"))
+    self.ExcluirBtn.clicked.connect(self.excluir_registro)
     self.AtualizarBtn.clicked.connect(self.fetch_data)
-    self.TanquesTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
-    self.PostoTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
-    self.TiposTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
-    self.BombasTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
-    self.PessoasTable.itemDoubleClicked.connect(lambda: self.abre_form("Editar"))
+    self.TanquesTable.itemDoubleClicked.connect(lambda: self.abre_formulario("Editar"))
+    self.PostoTable.itemDoubleClicked.connect(lambda: self.abre_formulario("Editar"))
+    self.TiposTable.itemDoubleClicked.connect(lambda: self.abre_formulario("Editar"))
+    self.BombasTable.itemDoubleClicked.connect(lambda: self.abre_formulario("Editar"))
+    self.PessoasTable.itemDoubleClicked.connect(lambda: self.abre_formulario("Editar"))
     self.fetch_data()
